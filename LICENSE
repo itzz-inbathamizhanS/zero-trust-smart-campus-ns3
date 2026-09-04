@@ -1,0 +1,15 @@
+Copyright (c) 2026 Inbathamizhan S and Team
+
+This software and associated documentation files (the "Software") are provided for academic review and educational purposes only. 
+The algorithms, methods, and network architectures described herein (including the Multi-Factor Behavioural Risk Scoring Engine, Graduated Dynamic Quarantine Mechanism, and Quarantine-Aware Self-Healing Network) are subject to pending patent applications.
+
+You may:
+- View and study the source code for academic and review purposes.
+- Fork the repository for personal, non-commercial review.
+
+You may NOT:
+- Use the Software for any commercial purposes.
+- Modify, distribute, sublicense, or sell copies of the Software.
+- Implement or reproduce the patent-pending risk-scoring, dynamic quarantine, or self-healing mechanisms in any commercial product or public network without explicit written permission from the authors.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
