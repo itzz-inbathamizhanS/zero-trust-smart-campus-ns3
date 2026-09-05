@@ -1,0 +1,4 @@
+time_s,event,primary_status,backup_status,recovery_time_ms
+60.000,LINK_FAILURE,DOWN,UP,0.000
+60.000,RECOVERY_COMPLETE,DOWN,UP,0.000
+90.000,LINK_RESTORED,UP,UP,0.000
