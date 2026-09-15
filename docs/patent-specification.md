@@ -50,7 +50,7 @@ Where:
   w₁ = 0.35, w₂ = 0.25, w₃ = 0.25, w₄ = 0.15
 ```
 
-The risk score incorporates temporal decay (multiplicative factor of 0.97 per evaluation cycle) to automatically reduce scores for devices that cease suspicious activity, enabling autonomous de-quarantine.
+The risk score incorporates temporal decay (multiplicative factor of 0.95 per evaluation cycle) to automatically reduce scores for devices that cease suspicious activity, enabling autonomous de-quarantine.
 
 ### Claim 2: Graduated Dynamic Quarantine Mechanism
 
@@ -60,7 +60,7 @@ A method for applying graduated network containment actions based on the compute
 |-----------|-------|--------|
 | Score < 40 | NORMAL | Full access per zero-trust policy |
 | 40 ≤ Score < 55 | WARNING | Alert generation, enhanced monitoring |
-| 55 ≤ Score < 70 | RATE_LIMITED | Bandwidth throttled to 10% |
+| 55 ≤ Score < 70 | RATE_LIMITED | Severe Alert generated, logging intensified |
 | Score ≥ 70 | QUARANTINED | Network interface disabled, full isolation |
 
 Unlike binary quarantine systems, the graduated approach reduces false-positive impact by allowing borderline devices to continue operating at reduced capacity while under enhanced observation.
@@ -138,28 +138,28 @@ The system operates on a three-tier campus network architecture:
 - **Distribution Layer:** Redundant distribution switches (primary + backup)
 - **Access Layer:** Department-specific CSMA segments (VLANs)
 
-Nine VLANs isolate departments: Administration (10), CSE (20), IT (30), Library (40), COE (50), Hostel (60), IoT Lab (70), Data Centre (80), and Quarantine (999).
+Eight CSMA segments isolate departments: Administration (10), CSE (20), IT (30), Library (40), COE (50), Hostel (60), IoT Lab (70), and Data Centre (80).
 
 ### Zero-Trust Access Policy
 
 The system implements a zero-trust access control matrix where no inter-VLAN communication is permitted unless explicitly authorised. For example:
-- Student VLANs (CSE, IT) may access the Library and Data Centre servers but not Administration or COE
-- The Hostel VLAN may only access the Library
-- Quarantine VLAN has no permitted destinations
+- Student segments (CSE, IT) may access the Library and Data Centre servers but not Administration or COE
+- The Hostel segment may access the Library and the Data Centre servers (e.g. for student portals)
+- Quarantined nodes (interfaces disabled) have no permitted destinations
 
-### Traffic Monitoring
+### Traffic Monitoring (Per-Source Stateful Tracking)
 
-A passive traffic monitor operates on the core router by intercepting the `UnicastForward` trace. For each forwarded packet, it:
-1. Extracts source and destination IP addresses
-2. Checks the zero-trust policy matrix
-3. Detects port scan patterns (>20 unique destination ports from a single source within a time window)
-4. Measures traffic rates per source (anomaly if >80 packets/second)
+A passive traffic monitor operates on the core router by intercepting the `UnicastForward` trace. Unlike traditional systems that use global thresholds, this invention uses **isolated per-device state trackers**. For each forwarded packet, it:
+1. Extracts source IP, destination IP, and destination port
+2. Checks the zero-trust policy matrix for the specific source-destination pair
+3. Detects port scan patterns by maintaining a stateful set of unique destination ports **per source IP** (>10 unique ports within a 5s window)
+4. Measures traffic rates **per source IP** (anomaly if >80 packets/second from a single device)
 
 ### Quarantine Execution
 
 When the risk score exceeds the quarantine threshold (70):
 1. All non-loopback network interfaces on the device are disabled (`Ipv4::SetDown`)
-2. The device is effectively removed from all VLAN communication
+2. The device is effectively removed from all network communication
 3. The quarantine event is logged with timestamp, device IP, and risk score
 4. Other devices on the same VLAN continue operating without interruption
 
@@ -178,7 +178,7 @@ When a primary distribution link fails:
 
 The invention was validated using NS-3 (Network Simulator 3) with the following parameters:
 
-- **Topology:** 60 nodes across 9 VLANs with redundant distribution
+- **Topology:** 58 nodes across 8 department segments with redundant distribution
 - **Simulation Duration:** 120 seconds
 - **Attack Scenario:** Port scanning, unauthorised access, and traffic flooding from a compromised CSE student laptop
 - **Link Failure:** Primary data centre link disabled at t=60s
@@ -186,7 +186,7 @@ The invention was validated using NS-3 (Network Simulator 3) with the following 
 
 ### Results
 
-| Metric | Traditional | Proposed | Improvement |
+| Metric | Traditional | Proposed (Theoretical Est.) | Improvement |
 |--------|------------|----------|------------|
 | Detection Time | 300s | < 5s | 98.3% |
 | Quarantine Time | 600s | < 3s | 99.5% |
@@ -207,7 +207,7 @@ The invention was validated using NS-3 (Network Simulator 3) with the following 
 
 2. The method of Claim 1, wherein the graduated containment actions comprise:
    - generating a warning alert when the risk score exceeds a first threshold;
-   - applying bandwidth rate limiting when the risk score exceeds a second threshold;
+   - classifying the device into a rate-limited state when the risk score exceeds a second threshold;
    - disabling all network interfaces of the device when the risk score exceeds a third threshold.
 
 3. A self-healing method for maintaining network connectivity during link failures while preserving security isolation, comprising:
@@ -222,7 +222,7 @@ The invention was validated using NS-3 (Network Simulator 3) with the following 
 
 ## Abstract
 
-A system and method for autonomous campus network security is disclosed. The system comprises a multi-factor behavioural risk scoring engine that computes real-time risk scores based on four weighted signals (unauthorised access, traffic anomaly, port scan, protocol violation). A graduated quarantine controller applies four levels of containment (normal, warning, rate-limited, quarantined) based on configurable risk score thresholds. A quarantine-aware self-healing controller detects link failures, activates backup paths, and verifies that quarantined devices remain isolated after rerouting. The three components operate in a closed-loop framework enabling autonomous, continuous campus network security. Validation on a 60-node NS-3 simulation demonstrates 98.3% improvement in threat detection time, 99.5% improvement in quarantine activation time, and 95.6% improvement in link recovery time compared to traditional campus network architectures.
+A system and method for autonomous campus network security is disclosed. The system comprises a multi-factor behavioural risk scoring engine that computes real-time risk scores based on four weighted signals (unauthorised access, traffic anomaly, port scan, protocol violation). A graduated quarantine controller applies four levels of containment (normal, warning, rate-limited, quarantined) based on configurable risk score thresholds. A quarantine-aware self-healing controller detects link failures, activates backup paths, and verifies that quarantined devices remain isolated after rerouting. The three components operate in a closed-loop framework enabling autonomous, continuous campus network security. Validation on a 58-node NS-3 simulation computes theoretical estimates demonstrating significant improvements in threat detection time, quarantine activation time, and link recovery time compared to traditional campus network architectures.
 
 ---
 

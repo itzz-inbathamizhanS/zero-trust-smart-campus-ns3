@@ -298,7 +298,7 @@ def plot_comparison(outdir):
                    color=COLORS["proposed"],    edgecolor="black", linewidth=0.5)
 
     ax.set_ylabel("Value", fontsize=12)
-    ax.set_title("Traditional Network vs Proposed Zero-Trust System",
+    ax.set_title("Traditional Network vs Proposed System (Theoretical Est.)",
                  fontsize=14, fontweight="bold")
     ax.set_xticks(x)
     ax.set_xticklabels(metrics, fontsize=10)
@@ -397,7 +397,7 @@ def plot_dashboard(prefix, outdir):
            edgecolor="black", linewidth=0.5)
     ax.set_xticks(x)
     ax.set_xticklabels(metrics, fontsize=9)
-    ax.set_title("(d) Traditional vs Proposed")
+    ax.set_title("(d) Traditional vs Proposed (Theoretical Est.)")
     ax.legend(fontsize=9)
     ax.grid(axis="y", alpha=0.3)
 
@@ -421,9 +421,11 @@ def main():
                         help="Output file prefix (overrides scenario)")
     args = parser.parse_args()
 
-    prefix = args.prefix or f"smart-campus-s{args.scenario}-"
+    prefix_base = args.prefix or f"smart-campus-s{args.scenario}-"
     outdir = "results"
     os.makedirs(outdir, exist_ok=True)
+    # Ensure prefix includes the outdir path if not explicitly provided
+    prefix = os.path.join(outdir, prefix_base) if not args.prefix else args.prefix
 
     print(f"\n{'='*60}")
     print(f"  Smart Campus Simulation — Results Analysis")

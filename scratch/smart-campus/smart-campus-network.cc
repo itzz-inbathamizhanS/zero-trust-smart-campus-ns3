@@ -63,7 +63,7 @@ static const double THRESHOLD_WARNING      = 40.0;
 static const double THRESHOLD_RATE_LIMIT   = 55.0;
 static const double THRESHOLD_QUARANTINE   = 70.0;
 static const double RISK_SCORE_MAX         = 100.0;
-static const double RISK_DECAY_FACTOR      = 0.97;
+static const double RISK_DECAY_FACTOR      = 0.95;
 
 // ---- Timing ----
 static const double EVAL_INTERVAL_S        = 1.0;
@@ -79,7 +79,7 @@ static const double FLOOD_TRAFFIC_RATE_BPS  = 5000000;  // 5 Mbps flood
 static const uint32_t PACKET_SIZE           = 512;
 static const uint16_t BASE_PORT             = 9000;
 static const uint16_t PORT_SCAN_MAX         = 100;
-static const uint32_t PORT_SCAN_THRESHOLD   = 20;
+static const uint32_t PORT_SCAN_THRESHOLD   = 10;
 static const double   ANOMALY_RATE_THRESH   = 80.0; // pkts/sec
 
 /* ============================================================================
@@ -302,7 +302,7 @@ public:
     // ---- COE (exam cell): admin + datacenter ----
     Allow ("COE", {"COE","ADMIN","DATACENTER","BACKBONE"});
     // ---- Hostel: internet + library only ----
-    Allow ("HOSTEL", {"HOSTEL","LIBRARY","BACKBONE"});
+    Allow ("HOSTEL", {"HOSTEL","LIBRARY","DATACENTER","BACKBONE"});
     // ---- IoT Lab: only datacenter ----
     Allow ("IOT", {"IOT","DATACENTER","BACKBONE"});
     // ---- DataCenter servers: respond to anyone routed to them ----
@@ -798,7 +798,7 @@ TrafficMonitorForward (const Ipv4Header &header,
   // ---- Signal 1: Zero-Trust policy check ----
   if (!g_policy.IsAllowed (src, dst))
     {
-      g_riskEngine.RecordEvent (src, EventType::UNAUTHORIZED_ACCESS, 15.0);
+      g_riskEngine.RecordEvent (src, EventType::UNAUTHORIZED_ACCESS, 25.0);
       NS_LOG_LOGIC ("[MONITOR] Policy violation: "
                     << src << " → " << dst);
     }
@@ -809,17 +809,20 @@ TrafficMonitorForward (const Ipv4Header &header,
       uint32_t sKey = src.Get ();
       uint32_t dKey = dst.Get ();
 
-      // We approximate the dst port from packet size patterns.
-      // In a real IDS this comes from the UDP header; here we
-      // use a deterministic hash for simulation fidelity.
+      // Per-source packet counter for port approximation.
+      // Legitimate traffic goes to a single destination port, so the set
+      // stays small.  Attackers send to many ports, producing many unique
+      // hashes and triggering detection.
+      static std::map<uint32_t, uint32_t> perSrcCounter;
+      perSrcCounter[sKey]++;
       uint16_t approxPort = static_cast<uint16_t> (
-        (packet->GetSize () + dKey) % 65535);
+        (packet->GetSize () * 7 + perSrcCounter[sKey] * 13 + dKey) % 65535);
 
       g_portScanTracker[sKey][dKey].insert (approxPort);
 
       if (g_portScanTracker[sKey][dKey].size () > PORT_SCAN_THRESHOLD)
         {
-          g_riskEngine.RecordEvent (src, EventType::PORT_SCAN, 20.0);
+          g_riskEngine.RecordEvent (src, EventType::PORT_SCAN, 30.0);
           g_portScanTracker[sKey][dKey].clear ();
           NS_LOG_LOGIC ("[MONITOR] Port scan detected from " << src);
         }
@@ -840,7 +843,11 @@ TrafficMonitorForward (const Ipv4Header &header,
         if (rate > ANOMALY_RATE_THRESH)
           {
             g_riskEngine.RecordEvent (src, EventType::TRAFFIC_ANOMALY,
-                                     std::min (rate / 5.0, 25.0));
+                                     std::min (rate / 3.0, 40.0));
+            // High rate also suggests protocol abuse
+            if (rate > ANOMALY_RATE_THRESH * 2.0)
+              g_riskEngine.RecordEvent (src, EventType::PROTOCOL_VIOLATION,
+                                       std::min (rate / 10.0, 20.0));
             NS_LOG_LOGIC ("[MONITOR] Traffic anomaly from " << src
                           << " (" << rate << " pkt/s)");
           }
@@ -1322,59 +1329,324 @@ main (int argc, char *argv[])
   Ptr<FlowMonitor> flowMonitor = flowHelper.InstallAll ();
 
   // ==================================================================
-  // PHASE 7: NetAnim visualization (optional)
+  // PHASE 7: NetAnim visualization — FULL CAMPUS LAYOUT
   // ==================================================================
   AnimationInterface anim (prefix + "animation.xml");
+  anim.EnablePacketMetadata (true);
 
-  // Position nodes for visualization
-  anim.SetConstantPosition (topo.internetServer, 50.0,  5.0);
-  anim.SetConstantPosition (topo.router,         50.0, 20.0);
-  anim.SetConstantPosition (topo.distSwitch2,    70.0, 20.0);
+  // ================================================================
+  //  SPATIAL LAYOUT — Campus-style arrangement
+  //
+  //  Row 0 (y=10):   Internet Server (centered)
+  //  Row 1 (y=35):   Core Router + Backup Distribution Switch
+  //  Row 2 (y=70):   DataCenter Servers (Zigzag)
+  //  Row 3 (y=120):  Admin & CSE Department (Zigzag)
+  //  Row 4 (y=170):  IT Department & Library (Zigzag)
+  //  Row 5 (y=220):  COE, Hostel, & IoT Lab (Zigzag)
+  // ================================================================
 
-  double x = 5.0;
+  // --- Infrastructure (top) ---
+  anim.SetConstantPosition (topo.internetServer, 175.0,  10.0);
+  anim.SetConstantPosition (topo.router,         175.0,  35.0);
+  anim.SetConstantPosition (topo.distSwitch2,    225.0,  35.0);
+
+  // --- DataCenter (row 2) ---
+  {
+    double dcStartX = 40.0;
+    double dcSpacing = 40.0;
+    for (uint32_t i = 0; i < topo.dcNodes.GetN (); ++i) {
+      double y = 70.0 + ((i % 2) * 15.0); // Zigzag to prevent label overlap
+      anim.SetConstantPosition (topo.dcNodes.Get (i), dcStartX + i * dcSpacing, y);
+    }
+  }
+
+  // --- Admin Department (row 3, left side) ---
+  {
+    double startX = 20.0;
+    double spacing = 22.0;
+    for (uint32_t i = 0; i < topo.adminNodes.GetN (); ++i) {
+      double y = 120.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.adminNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- CSE Department (row 3, right side — attacker is node 0) ---
+  {
+    double startX = 120.0;
+    double spacing = 22.0;
+    for (uint32_t i = 0; i < topo.cseNodes.GetN (); ++i) {
+      double y = 120.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.cseNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- IT Department (row 4, left side) ---
+  {
+    double startX = 20.0;
+    double spacing = 20.0;
+    for (uint32_t i = 0; i < topo.itNodes.GetN (); ++i) {
+      double y = 170.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.itNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- Library (row 4, right side) ---
+  {
+    double startX = 230.0;
+    double spacing = 20.0;
+    for (uint32_t i = 0; i < topo.libraryNodes.GetN (); ++i) {
+      double y = 170.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.libraryNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- COE (row 5, left) ---
+  {
+    double startX = 20.0;
+    double spacing = 18.0;
+    for (uint32_t i = 0; i < topo.coeNodes.GetN (); ++i) {
+      double y = 220.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.coeNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- Hostel (row 5, center) ---
+  {
+    double startX = 100.0;
+    double spacing = 18.0;
+    for (uint32_t i = 0; i < topo.hostelNodes.GetN (); ++i) {
+      double y = 220.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.hostelNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // --- IoT Lab (row 5, right) ---
+  {
+    double startX = 250.0;
+    double spacing = 18.0;
+    for (uint32_t i = 0; i < topo.iotNodes.GetN (); ++i) {
+      double y = 220.0 + ((i % 2) * 15.0);
+      anim.SetConstantPosition (topo.iotNodes.Get (i), startX + i * spacing, y);
+    }
+  }
+
+  // ================================================================
+  //  NODE LABELS — Every node gets a descriptive department + role
+  // ================================================================
+
+  // Infrastructure
+  anim.UpdateNodeDescription (topo.internetServer, "INTERNET SERVER");
+  anim.UpdateNodeDescription (topo.router, "CORE ROUTER (Zero-Trust)");
+  anim.UpdateNodeDescription (topo.distSwitch2, "BACKUP SWITCH");
+
+  // Admin Department (VLAN 10)
+  {
+    std::string adminLabels[] = {"Admin PC-1", "Admin PC-2",
+                                  "Admin PC-3", "ERP Terminal"};
+    for (uint32_t i = 0; i < topo.adminNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.adminNodes.Get (i), adminLabels[i]);
+  }
+
+  // CSE Department (VLAN 20) — node 0 is the ATTACKER
+  {
+    anim.UpdateNodeDescription (topo.cseNodes.Get (0),
+                                "CSE ATTACKER");
+    std::string cseLabels[] = {"CSE Lab-2", "CSE Lab-3", "CSE Lab-4",
+                                "CSE Lab-5", "CSE Lab-6", "CSE Lab-7",
+                                "CSE Lab-8", "CSE Lab-9", "CSE Faculty"};
+    for (uint32_t i = 1; i < topo.cseNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.cseNodes.Get (i), cseLabels[i - 1]);
+  }
+
+  // IT Department (VLAN 30)
+  {
+    std::string itLabels[] = {"IT Lab-1", "IT Lab-2", "IT Lab-3",
+                               "IT Lab-4", "IT Lab-5", "IT Lab-6",
+                               "IT Lab-7", "IT Lab-8", "IT Lab-9",
+                               "IT Faculty"};
+    for (uint32_t i = 0; i < topo.itNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.itNodes.Get (i), itLabels[i]);
+  }
+
+  // Library (VLAN 40)
+  {
+    std::string libLabels[] = {"Library OPAC-1", "Library OPAC-2",
+                                "Digital Library", "Library WiFi-1",
+                                "Library WiFi-2", "Library WiFi-3"};
+    for (uint32_t i = 0; i < topo.libraryNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.libraryNodes.Get (i), libLabels[i]);
+  }
+
+  // COE — Centre of Excellence (VLAN 50)
+  {
+    std::string coeLabels[] = {"COE Research-1", "COE Research-2",
+                                "COE HPC-1", "COE HPC-2"};
+    for (uint32_t i = 0; i < topo.coeNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.coeNodes.Get (i), coeLabels[i]);
+  }
+
+  // Hostel (VLAN 60)
+  {
+    std::string hosLabels[] = {"Hostel WiFi-1", "Hostel WiFi-2",
+                                "Hostel Device-3", "Hostel Device-4",
+                                "Hostel Device-5", "Hostel SmartLock-1",
+                                "Hostel SmartLock-2", "Hostel SmartLock-3"};
+    for (uint32_t i = 0; i < topo.hostelNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.hostelNodes.Get (i), hosLabels[i]);
+  }
+
+  // IoT Lab (VLAN 70)
+  {
+    std::string iotLabels[] = {"IoT Sensor-1", "IoT Sensor-2",
+                                "IoT Controller-1", "IoT Controller-2",
+                                "IoT Gateway-1", "IoT Gateway-2"};
+    for (uint32_t i = 0; i < topo.iotNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.iotNodes.Get (i), iotLabels[i]);
+  }
+
+  // DataCenter (VLAN 80)
+  {
+    std::string dcLabels[] = {"ERP Server", "DB Server", "DHCP Server",
+                               "DNS Server", "Web Server", "Email Server",
+                               "Backup Server"};
+    for (uint32_t i = 0; i < topo.dcNodes.GetN (); ++i)
+      anim.UpdateNodeDescription (topo.dcNodes.Get (i), dcLabels[i]);
+  }
+
+  // ================================================================
+  //  COLOR CODING — Each department gets a unique color
+  // ================================================================
+
+  // Infrastructure
+  anim.UpdateNodeColor (topo.internetServer, 0, 200, 0);       // Green
+  anim.UpdateNodeColor (topo.router, 30, 80, 220);             // Royal Blue
+  anim.UpdateNodeColor (topo.distSwitch2, 100, 149, 237);      // Cornflower Blue
+
+  // Admin = Purple
   for (uint32_t i = 0; i < topo.adminNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.adminNodes.Get (i), x + i * 3, 40.0);
+    anim.UpdateNodeColor (topo.adminNodes.Get (i), 148, 0, 211);
 
-  x = 20.0;
-  for (uint32_t i = 0; i < topo.cseNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.cseNodes.Get (i), x + i * 3, 50.0);
+  // CSE = Green (Attacker = Red)
+  anim.UpdateNodeColor (topo.cseNodes.Get (0), 255, 0, 0);     // Attacker RED
+  for (uint32_t i = 1; i < topo.cseNodes.GetN (); ++i)
+    anim.UpdateNodeColor (topo.cseNodes.Get (i), 0, 180, 0);
 
-  x = 20.0;
+  // IT = Teal
   for (uint32_t i = 0; i < topo.itNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.itNodes.Get (i), x + i * 3, 60.0);
+    anim.UpdateNodeColor (topo.itNodes.Get (i), 0, 128, 128);
 
-  x = 5.0;
+  // Library = Orange
   for (uint32_t i = 0; i < topo.libraryNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.libraryNodes.Get (i), x + i * 3, 70.0);
+    anim.UpdateNodeColor (topo.libraryNodes.Get (i), 255, 165, 0);
 
-  x = 30.0;
+  // COE = Gold
   for (uint32_t i = 0; i < topo.coeNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.coeNodes.Get (i), x + i * 3, 70.0);
+    anim.UpdateNodeColor (topo.coeNodes.Get (i), 218, 165, 32);
 
-  x = 55.0;
+  // Hostel = Cyan
   for (uint32_t i = 0; i < topo.hostelNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.hostelNodes.Get (i), x + i * 3, 50.0);
+    anim.UpdateNodeColor (topo.hostelNodes.Get (i), 0, 200, 200);
 
-  x = 55.0;
+  // IoT = HotPink
   for (uint32_t i = 0; i < topo.iotNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.iotNodes.Get (i), x + i * 3, 60.0);
+    anim.UpdateNodeColor (topo.iotNodes.Get (i), 255, 105, 180);
 
-  x = 35.0;
+  // DataCenter = Dark Orange
   for (uint32_t i = 0; i < topo.dcNodes.GetN (); ++i)
-    anim.SetConstantPosition (topo.dcNodes.Get (i), x + i * 5, 30.0);
+    anim.UpdateNodeColor (topo.dcNodes.Get (i), 255, 140, 0);
 
-  // Node descriptions
-  anim.UpdateNodeDescription (topo.internetServer, "INTERNET");
-  anim.UpdateNodeDescription (topo.router, "CORE_ROUTER");
-  anim.UpdateNodeDescription (topo.distSwitch2, "BACKUP_DIST");
-  anim.UpdateNodeDescription (topo.cseNodes.Get (0), "ATTACKER");
+  // ================================================================
+  //  NODE SIZES — Make infrastructure nodes larger for visibility
+  // ================================================================
+  anim.UpdateNodeSize (topo.internetServer->GetId (), 4.0, 4.0);
+  anim.UpdateNodeSize (topo.router->GetId (), 5.0, 5.0);
+  anim.UpdateNodeSize (topo.distSwitch2->GetId (), 3.5, 3.5);
+  anim.UpdateNodeSize (topo.cseNodes.Get (0)->GetId (), 3.5, 3.5); // attacker
 
-  // Color coding
-  anim.UpdateNodeColor (topo.router, 0, 0, 255);             // Blue
-  anim.UpdateNodeColor (topo.internetServer, 0, 200, 0);     // Green
-  anim.UpdateNodeColor (topo.cseNodes.Get (0), 255, 0, 0);   // Red (attacker)
-  for (uint32_t i = 0; i < topo.dcNodes.GetN (); ++i)
-    anim.UpdateNodeColor (topo.dcNodes.Get (i), 255, 165, 0); // Orange (servers)
+  // ================================================================
+  //  TIMED VISUAL EVENTS — Color changes at key moments
+  //  (These use Simulator::Schedule to update NetAnim at event times)
+  // ================================================================
+
+  if (scenario >= 2)
+    {
+      uint32_t attackerNodeId = topo.cseNodes.Get (0)->GetId ();
+      uint32_t routerNodeId = topo.router->GetId ();
+
+      // t=30s: Attack begins — attacker turns bright red, flash router
+      Simulator::Schedule (Seconds (ATTACK_START_S), [&anim, attackerNodeId] () {
+        anim.UpdateNodeColor (attackerNodeId, 255, 0, 0);
+        anim.UpdateNodeDescription (attackerNodeId, "!! ATTACK STARTED !!");
+      });
+
+      // t=36s: WARNING detected — attacker turns yellow
+      Simulator::Schedule (Seconds (36.0), [&anim, attackerNodeId] () {
+        anim.UpdateNodeColor (attackerNodeId, 255, 255, 0);
+        anim.UpdateNodeDescription (attackerNodeId, "CSE ATTACKER [WARNING]");
+      });
+
+      // t=40s: RATE_LIMITED — attacker turns orange
+      Simulator::Schedule (Seconds (40.0), [&anim, attackerNodeId] () {
+        anim.UpdateNodeColor (attackerNodeId, 255, 140, 0);
+        anim.UpdateNodeDescription (attackerNodeId, "CSE ATTACKER [RATE-LIMITED]");
+      });
+
+      // t=45s: QUARANTINED — attacker turns dark red/black
+      Simulator::Schedule (Seconds (45.0), [&anim, attackerNodeId] () {
+        anim.UpdateNodeColor (attackerNodeId, 139, 0, 0);
+        anim.UpdateNodeDescription (attackerNodeId, "QUARANTINED!");
+        anim.UpdateNodeSize (attackerNodeId, 5.0, 5.0);
+      });
+
+      // Router shows detection activity
+      Simulator::Schedule (Seconds (ATTACK_START_S + 1.0),
+        [&anim, routerNodeId] () {
+        anim.UpdateNodeColor (routerNodeId, 255, 69, 0);
+        anim.UpdateNodeDescription (routerNodeId, "ROUTER: THREAT DETECTED!");
+      });
+
+      Simulator::Schedule (Seconds (46.0), [&anim, routerNodeId] () {
+        anim.UpdateNodeColor (routerNodeId, 0, 200, 0);
+        anim.UpdateNodeDescription (routerNodeId, "ROUTER: Threat Contained");
+      });
+    }
+
+  if (scenario >= 3)
+    {
+      uint32_t backupNodeId = topo.distSwitch2->GetId ();
+      uint32_t routerNodeId = topo.router->GetId ();
+
+      // t=60s: Link failure — backup switch activates
+      Simulator::Schedule (Seconds (LINK_FAILURE_S), [&anim, routerNodeId] () {
+        anim.UpdateNodeColor (routerNodeId, 255, 0, 0);
+        anim.UpdateNodeDescription (routerNodeId, "ROUTER: LINK FAILED!");
+      });
+
+      Simulator::Schedule (Seconds (LINK_FAILURE_S + 0.5),
+        [&anim, backupNodeId, routerNodeId] () {
+        anim.UpdateNodeColor (backupNodeId, 0, 200, 0);
+        anim.UpdateNodeDescription (backupNodeId, "BACKUP ACTIVE!");
+        anim.UpdateNodeSize (backupNodeId, 4.5, 4.5);
+        anim.UpdateNodeColor (routerNodeId, 30, 80, 220);
+        anim.UpdateNodeDescription (routerNodeId, "ROUTER: Using Backup Path");
+      });
+
+      // t=90s: Link restored
+      Simulator::Schedule (Seconds (LINK_RESTORE_S),
+        [&anim, backupNodeId, routerNodeId] () {
+        anim.UpdateNodeColor (routerNodeId, 0, 200, 0);
+        anim.UpdateNodeDescription (routerNodeId, "ROUTER: Link Restored!");
+        anim.UpdateNodeColor (backupNodeId, 100, 149, 237);
+        anim.UpdateNodeDescription (backupNodeId, "BACKUP SWITCH (standby)");
+        anim.UpdateNodeSize (backupNodeId, 3.5, 3.5);
+      });
+
+      // t=95s: Back to normal
+      Simulator::Schedule (Seconds (95.0), [&anim, routerNodeId] () {
+        anim.UpdateNodeColor (routerNodeId, 30, 80, 220);
+        anim.UpdateNodeDescription (routerNodeId, "CORE ROUTER (Zero-Trust)");
+      });
+    }
 
   // ==================================================================
   // PHASE 8: Run simulation

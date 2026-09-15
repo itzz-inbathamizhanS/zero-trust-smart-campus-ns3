@@ -54,7 +54,7 @@ This project presents a novel **Zero-Trust Self-Healing Smart Campus Network** t
 
 3. **Quarantine-Aware Self-Healing Network** — Autonomously detects link failures via heartbeat monitoring, activates backup distribution paths, recomputes routing tables, and critically **verifies that quarantined devices remain isolated** after rerouting — a capability absent from all existing self-healing networks.
 
-The system is validated through comprehensive NS-3 simulation with 60 nodes across 9 VLANs, demonstrating **98.3% improvement in threat detection time**, **99.5% improvement in quarantine activation time**, and **95.6% improvement in link recovery time** compared to traditional campus network architectures.
+The system is validated through comprehensive NS-3 simulation with 58 nodes across 8 department network segments. The implementation calculates a theoretical estimate demonstrating significant potential improvements in threat detection time, quarantine activation time, and link recovery time compared to traditional campus network architectures.
 
 ---
 
@@ -82,7 +82,7 @@ A college is expanding into a **Smart Digital Campus** with:
 
 ## Objectives
 
-1. **Design** a zero-trust campus network architecture with VLAN segmentation across 9 departments
+1. **Design** a zero-trust campus network architecture with segmentation across 8 departments
 2. **Implement** a real-time multi-factor behavioural risk scoring algorithm
 3. **Develop** a graduated dynamic quarantine mechanism that minimises false-positive impact
 4. **Create** a quarantine-aware self-healing system that maintains security during link failures
@@ -217,7 +217,7 @@ A college is expanding into a **Smart Digital Campus** with:
 
 ## Network Topology
 
-### Campus Layout — 60 Nodes, 9 VLANs
+### Campus Layout — 58 Nodes, 8 Departments
 
 | VLAN ID | Department | Subnet | Nodes | Device Types |
 |---------|-----------|--------|-------|-------------|
@@ -229,7 +229,8 @@ A college is expanding into a **Smart Digital Campus** with:
 | 60 | Hostel | 10.0.60.0/24 | 8 | Student Devices, Wi-Fi APs, Smart Locks |
 | 70 | IoT Laboratory | 10.0.70.0/24 | 6 | Sensors, Controllers, Edge Gateways |
 | 80 | Data Centre | 10.0.80.0/24 | 7 | Servers, Storage, Backup Systems |
-| 999 | Quarantine | 10.0.99.0/24 | Dynamic | Isolated compromised devices |
+
+*(Note: Quarantine is enforced by disabling affected device interfaces rather than moving them to a dedicated VLAN.)*
 
 ### Backbone Links
 
@@ -288,7 +289,7 @@ A college is expanding into a **Smart Digital Campus** with:
 │
 ├── 10.0.82.0/30 — Backup DC Link (Dist 2 ↔ DC)
 │
-└── 10.0.99.0/24 — Quarantine VLAN 999 (no routing)
+└── (Note: Quarantined nodes have interfaces disabled, not routed to a separate VLAN)
 ```
 
 ---
@@ -306,16 +307,16 @@ The system enforces **"never trust, always verify"** — no inter-VLAN traffic i
 | **IT Department** | ❌ | ❌ | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
 | **Library** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ✅ |
 | **COE** | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ✅ |
-| **Hostel** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ | ❌ |
+| **Hostel** | ❌ | ❌ | ❌ | ✅ | ❌ | ✅ | ❌ | ✅ |
 | **IoT Lab** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
-| **Quarantine** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| **Quarantined Node** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 **Policy Rules:**
 - ✅ Admin can reach everywhere (full access for management)
 - ✅ Academic VLANs (CSE, IT) can reach Library and DataCenter only
-- ✅ Hostel can only reach Library (e-books, digital resources)
+- ✅ Hostel can reach Library and DataCenter (e-books, student portal, ERP)
 - ✅ IoT Lab can only reach DataCenter (data upload to servers)
-- ❌ Quarantine VLAN has zero access to anything
+- ❌ Quarantined Nodes are isolated (interfaces shut down) and have zero access
 - ❌ No lateral movement between student departments
 
 ---
@@ -336,35 +337,36 @@ RiskScore(device) = w₁·A(d) + w₂·T(d) + w₃·P(d) + w₄·V(d)
 |--------|--------|--------|-------------------|-------------|
 | **A** | w₁ = 0.35 | Unauthorised Access Attempts | Count of packets violating zero-trust policy | 0–100 |
 | **T** | w₂ = 0.25 | Traffic Volume Anomaly | Packets/second vs baseline (>80 pps = anomaly) | 0–100 |
-| **P** | w₃ = 0.25 | Port Scan Activity | Unique destination ports in 5-second window (>20 = scan) | 0–100 |
-| **V** | w₄ = 0.15 | Protocol Violations | Malformed packets, invalid headers | 0–100 |
+| **P** | w₃ = 0.25 | Port Scan Activity | Unique destination ports in 5-second window (>10 = scan) | 0–100 |
+| **V** | w₄ = 0.15 | Protocol Violations | High-rate flood proxy (>160 pps implies abuse) | 0–100 |
 
 #### Temporal Decay
 
-To prevent permanent quarantine of devices that were briefly suspicious, a **temporal decay factor** of 0.97 is applied every evaluation cycle (every 2 seconds):
+To prevent permanent quarantine of devices that were briefly suspicious, a **temporal decay factor** of 0.95 is applied every evaluation cycle (every 1 second):
 
 ```
-Score(t) = Score(t-1) × 0.97 + NewSignals(t)
+Score(t) = Score(t-1) × 0.95 + NewSignals(t)
 ```
 
 This means:
-- A device scoring 100 will decay to ~50 in ~23 cycles (~46 seconds) if it stops being suspicious
+- A device scoring 100 will decay to ~50 in ~14 cycles (~14 seconds) if it stops being suspicious
 - Active threats keep scoring high because new signals counteract the decay
 - Devices automatically de-quarantine when legitimate behaviour resumes
 
-#### Traffic Monitor Implementation
+#### Traffic Monitor Implementation (Per-Source Stateful Tracking)
 
-The traffic monitor operates as a passive callback on the Core Router's `Ipv4::UnicastForward` trace source. For every packet forwarded:
+The traffic monitor operates as a passive callback on the Core Router's `Ipv4::UnicastForward` trace source. Unlike traditional firewalls that use global counters (which suffer from high false positives during heavy normal traffic), our engine maintains **isolated, per-source state trackers** for every device:
 
 ```
 1. Extract source IP, destination IP, destination port
 2. Check zero-trust policy matrix
-   → If DENIED: increment A(source) by 15 points
-3. Track unique destination ports per source (sliding 5s window)
-   → If unique_ports > 20: set P(source) = min(100, ports × 5)
-4. Track packets per second per source
-   → If pps > 80: set T(source) = min(100, (pps - 80) × 2)
-5. Re-evaluate risk score every 2 seconds
+   → If DENIED: increment A(source) by 25 points
+3. Track unique destination ports PER SOURCE (stateful set over sliding 5s window)
+   → If unique_ports > 10 for this specific IP: increment P(source) by 30 points
+4. Track packets per second PER SOURCE
+   → If pps > 80: increment T(source) by min(pps / 3.0, 40)
+   → If pps > 160: increment V(source) by min(pps / 10.0, 20)
+5. Re-evaluate risk score every 1 second
 ```
 
 ---
@@ -381,8 +383,8 @@ Unlike traditional binary quarantine (either allowed or blocked), our system imp
 │       NORMAL     WARNING    RATE_LIMIT   QUARANTINE        │
 │       (green)    (yellow)   (orange)     (red)             │
 │                                                             │
-│   ✅ Full        ⚠️ Alert    🟠 Throttle   🔴 Full         │
-│   access        + logging   to 10%       isolation         │
+│   ✅ Full        ⚠️ Alert    🟠 Alert+Log  🔴 Full         │
+│   access        + logging                isolation         │
 │                                                             │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -390,9 +392,11 @@ Unlike traditional binary quarantine (either allowed or blocked), our system imp
 | Level | Score Range | Action | Network Effect | Reversible? |
 |-------|------------|--------|---------------|------------|
 | **NORMAL** | 0 – 39 | No action | Full access per zero-trust policy | — |
-| **WARNING** | 40 – 54 | Generate alert | Logging intensified, admin notified | ✅ Auto (decay) |
-| **RATE_LIMITED** | 55 – 69 | Throttle bandwidth | Data rate reduced to 10% of normal | ✅ Auto (decay) |
+| **WARNING** | 40 – 54 | Generate alert | Logging intensified | ✅ Auto (decay) |
+| **RATE_LIMITED** | 55 – 69 | Severe Alert | Logging intensified | ✅ Auto (decay) |
 | **QUARANTINED** | 70 – 100 | Disable interfaces | All non-loopback interfaces shut down | ✅ Auto (decay) |
+
+*(Note: The implementation currently classifies devices into a rate-limited risk state, but actual traffic-control enforcement is not simulated.)*
 
 #### Why Graduated?
 
@@ -400,7 +404,7 @@ Traditional quarantine has a **false positive problem**: if a student downloads 
 
 Our graduated system:
 1. First moves them to WARNING (admin is alerted, student continues working)
-2. If behaviour continues, moves to RATE_LIMITED (still connected but throttled)
+2. If behaviour continues, moves to RATE_LIMITED (classification escalates)
 3. Only QUARANTINES if multiple signals confirm malicious behaviour
 
 This reduces false-positive disruptions by an estimated **85%** while maintaining rapid response to genuine threats.
@@ -455,11 +459,11 @@ Time ─────────────────────────
 5. Malware spreads to DataCenter servers
 
 **Scenario with our system:**
-1. Device X is quarantined on VLAN 20
+1. Device X is quarantined (its interfaces are disabled)
 2. Primary DC link fails
 3. Self-healing activates backup path
-4. **Quarantine check runs** — verifies Device X is still isolated
-5. Device X remains quarantined — DataCenter is safe ✅
+4. **Quarantine check runs** — logs that Device X's interfaces are still successfully down
+5. Device X remains quarantined organically — DataCenter is safe ✅
 
 ---
 
@@ -527,7 +531,7 @@ The entire simulation is implemented in a single, well-structured C++ file divid
 │  Lines 551-650: TrafficMonitorForward() callback, packet inspection │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Section 10: Topology Builder                                       │
-│  Lines 651-900: CreateCampusTopology(), 9 VLANs, 60 nodes,         │
+│  Lines 651-900: CreateCampusTopology(), 8 VLANs, 58 nodes,         │
 │                   IP assignment, routing, FlowMonitor, NetAnim      │
 ├──────────────────────────────────────────────────────────────────────┤
 │  Section 11: Legitimate Traffic Generator                           │
@@ -784,17 +788,6 @@ Each simulation run generates the following files (prefixed with `smart-campus-s
 
 ## Expected Results
 
-### Scenario 4 (Combined) — Key Metrics
-
-| Metric | Traditional Network | Our Proposed System | Improvement |
-|--------|-------------------|-------------------|------------|
-| **Threat Detection Time** | 5–30 minutes | < 5 seconds | **98.3%** |
-| **Quarantine Activation** | 10–60 minutes | < 3 seconds | **99.5%** |
-| **Link Recovery Time** | 30–60 seconds | < 2 seconds | **95.6%** |
-| **Infected Nodes** | 60–80% of network | < 5% | **92.9%** |
-| **Network Availability** | 40–60% during attack | > 95% | **90%** |
-| **Packet Loss** | 8–15% | < 1% | **91.7%** |
-
 ### Risk Score Timeline (Scenario 4)
 
 ```
@@ -842,9 +835,9 @@ python3 ../analysis/analyze-results.py --scenario 4
 ## NetAnim Visualisation
 
 NetAnim provides a **live animated replay** of the simulation showing:
-- 📍 All 60 campus nodes positioned by department
+- 📍 All 60 campus nodes positioned by department using a **Zigzag Grid Layout** (to perfectly prevent label overlap on 16:9 monitors)
 - 📡 Packet flows between nodes (animated)
-- 🔴 Quarantined nodes turning red
+- 🔴 Quarantined nodes turning red dynamically
 - 🔄 Link failures and backup path activation
 
 ### Launching NetAnim
@@ -870,7 +863,7 @@ cd ~/ns-allinone-3.41/netanim-3.109
 | Threat Detection | Manual | Signature-based | ML-based | **Behavioural risk scoring** |
 | Quarantine Type | Manual, binary | Manual, binary | Automated, binary | **Automated, graduated** |
 | Self-Healing | OSPF/STP | VRRP/HSRP | Controller failover | **Quarantine-aware** |
-| Security During Failover | ❌ Not verified | ❌ Not verified | ❌ Not verified | **✅ Verified** |
+| Security During Failover | ❌ Not verified | ❌ Not verified | ❌ Not verified | **✅ Verified (via logging)** |
 | Autonomous Operation | ❌ Manual | ❌ Manual | ⚠️ Partial | **✅ Fully autonomous** |
 | False Positive Handling | ❌ None | ❌ None | ❌ None | **✅ Graduated response** |
 | Closed-Loop | ❌ | ❌ | ⚠️ Partial | **✅ Full closed-loop** |
@@ -926,7 +919,7 @@ zero-trust-smart-campus-ns3/
 │           ├── Self-Healing Controller     ← Patent Claim 3
 │           ├── Malicious Traffic App       ← Attack simulator
 │           ├── Traffic Monitor             ← Behavioural detection
-│           └── Campus Topology Builder     ← 60 nodes, 9 VLANs
+│           └── Campus Topology Builder     ← 58 nodes, 8 VLANs
 │
 ├── analysis/
 │   └── analyze-results.py                 ← Python analysis script (6 graphs)
