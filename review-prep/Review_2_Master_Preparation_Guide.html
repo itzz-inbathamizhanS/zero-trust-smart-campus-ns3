@@ -1,0 +1,3687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Computer Networks — Review 2 Master Preparation Guide</title>
+    <style>
+
+@page {
+    size: A4 portrait;
+    margin: 16mm 14mm 16mm 14mm;
+}
+
+:root {
+    --primary: #1e3a8a;
+    --primary-light: #3b82f6;
+    --primary-dark: #172554;
+    --accent: #0f766e;
+    --accent-light: #14b8a6;
+    --text-main: #1f2937;
+    --text-muted: #4b5563;
+    --bg-light: #f8fafc;
+    --border-color: #cbd5e1;
+    --code-bg: #0f172a;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Segoe UI Emoji", "Apple Color Emoji";
+    font-size: 9.5pt;
+    line-height: 1.5;
+    color: var(--text-main);
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+/* ================= COVER PAGE ================= */
+.cover-page {
+    page-break-after: always;
+    break-after: page;
+    min-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 28px 24px 20px 24px;
+    border: 3px double #1e3a8a;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.cover-header {
+    text-align: center;
+    border-bottom: 2px solid #1e3a8a;
+    padding-bottom: 16px;
+}
+
+.institution-tag {
+    font-size: 11pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #475569;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.course-tag {
+    font-size: 13pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.review-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1e3a8a, #0f766e);
+    color: #ffffff;
+    padding: 5px 16px;
+    border-radius: 20px;
+    font-size: 10pt;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-top: 8px;
+}
+
+.cover-body {
+    text-align: center;
+    margin: 24px 0;
+}
+
+.project-title {
+    font-size: 19pt;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1.35;
+    margin-bottom: 12px;
+}
+
+.project-subtitle {
+    font-size: 11pt;
+    font-weight: 500;
+    color: #334155;
+    max-width: 90%;
+    margin: 0 auto 20px auto;
+    line-height: 1.45;
+}
+
+.rubric-box {
+    margin: 16px auto;
+    max-width: 92%;
+    background: #f8fafc;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 12px 18px;
+    text-align: left;
+}
+
+.rubric-box h4 {
+    margin: 0 0 8px 0;
+    color: #1e3a8a;
+    font-size: 10.5pt;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
+}
+
+.rubric-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 16px;
+    font-size: 9pt;
+}
+
+.rubric-item {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 2px;
+}
+
+.rubric-item span.criteria {
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.rubric-item span.marks {
+    font-weight: 700;
+    color: #0f766e;
+}
+
+.team-box {
+    margin: 14px auto 0 auto;
+    max-width: 92%;
+    background: #f0fdf4;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 8.5pt;
+    text-align: left;
+    color: #166534;
+}
+
+.cover-footer {
+    border-top: 2px solid #1e3a8a;
+    padding-top: 14px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 8.5pt;
+    color: #475569;
+}
+
+.footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+/* ================= TABLE OF CONTENTS ================= */
+.toc-page {
+    page-break-after: always;
+    break-after: page;
+    padding: 16px 8px;
+}
+
+.toc-title {
+    font-size: 17pt;
+    font-weight: 800;
+    color: #1e3a8a;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 6px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toc-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.toc-table th {
+    background-color: #1e293b;
+    color: #ffffff;
+    font-size: 9pt;
+    padding: 7px 10px;
+    text-align: left;
+}
+
+.toc-table td {
+    padding: 8px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 9pt;
+}
+
+.toc-table tr:hover {
+    background-color: #f1f5f9;
+}
+
+.toc-num {
+    font-weight: 700;
+    color: #3b82f6;
+    width: 32px;
+}
+
+.toc-name {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.badge-mark {
+    display: inline-block;
+    background-color: #dbeafe;
+    color: #1e40af;
+    font-weight: 700;
+    font-size: 7.5pt;
+    padding: 2px 7px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.badge-tag {
+    display: inline-block;
+    background-color: #f1f5f9;
+    color: #475569;
+    font-weight: 600;
+    font-size: 7.5pt;
+    padding: 2px 7px;
+    border-radius: 10px;
+}
+
+/* ================= CHAPTER STYLING ================= */
+.chapter {
+    page-break-before: always;
+    break-before: page;
+    padding-top: 8px;
+}
+
+.chapter-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    border-left: 5px solid #1e3a8a;
+    border-radius: 4px;
+    padding: 8px 14px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.chapter-badge {
+    background-color: #1e3a8a;
+    color: #ffffff;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 8pt;
+    font-weight: 700;
+}
+
+/* Headings */
+h1 {
+    font-size: 16pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 10px;
+    line-height: 1.3;
+    border-bottom: 2px solid #3b82f6;
+    padding-bottom: 5px;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h2 {
+    font-size: 12.5pt;
+    font-weight: 750;
+    color: #1e3a8a;
+    margin-top: 20px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 3px;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 14px;
+    margin-bottom: 5px;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+h4, h5, h6 {
+    font-size: 9.5pt;
+    font-weight: 700;
+    color: #334155;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 8px;
+    text-align: justify;
+}
+
+/* Blockquotes / Callout boxes */
+blockquote {
+    margin: 10px 0 12px 0;
+    padding: 8px 14px;
+    background-color: #f0f7ff;
+    border-left: 4px solid #3b82f6;
+    border-radius: 0 6px 6px 0;
+    color: #1e40af;
+    font-size: 9pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+blockquote p {
+    margin: 3px 0;
+    text-align: left;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 8pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+table th {
+    background-color: #1e293b;
+    color: #ffffff;
+    font-weight: 700;
+    padding: 5px 6px;
+    border: 1px solid #334155;
+    text-align: left;
+}
+
+table td {
+    padding: 4px 6px;
+    border: 1px solid #cbd5e1;
+    vertical-align: top;
+}
+
+table tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+/* Code Blocks & Monospace */
+pre {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 7.5pt;
+    line-height: 1.3;
+    margin: 8px 0 12px 0;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border: 1px solid #1e293b;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+code {
+    font-family: "Consolas", "Courier New", monospace;
+    font-size: 8pt;
+    background-color: #f1f5f9;
+    color: #b91c1c;
+    padding: 1px 3px;
+    border-radius: 3px;
+    border: 1px solid #e2e8f0;
+}
+
+pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+    border: none;
+    font-size: inherit;
+}
+
+/* Lists */
+ul, ol {
+    margin-top: 3px;
+    margin-bottom: 8px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 3px;
+}
+
+/* Horizontal Rule */
+hr {
+    border: none;
+    border-top: 1px solid #e2e8f0;
+    margin: 14px 0;
+}
+
+/* Strong highlights */
+strong {
+    color: #0f172a;
+}
+
+/* Prevent awkward breaks */
+.avoid-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- ================= COVER PAGE ================= -->
+    <div class="cover-page">
+        <div class="cover-header">
+            <div class="institution-tag">DEPARTMENT OF COMPUTER SCIENCE & ENGINEERING</div>
+            <div class="course-tag">COMPUTER NETWORKS LABORATORY & THEORY</div>
+            <div class="review-badge">REVIEW 2 — NETWORK DESIGN & SIMULATION (30 MARKS)</div>
+        </div>
+
+        <div class="cover-body">
+            <div class="project-title">
+                Autonomous Behaviour-Driven Network Segmentation using Zero-Trust Dynamic Risk Scoring
+            </div>
+            <div class="project-subtitle">
+                Comprehensive 5-Member Review Defense & Viva Preparation Handbook<br>
+                Complete 30/30 Rubric Marks Coverage • Network Simulator ns-3.41
+            </div>
+
+            <div class="rubric-box">
+                <h4>🎯 Review 2 Rubric & Marks Mapping (Total: 30 Marks)</h4>
+                <div class="rubric-grid">
+                    <div class="rubric-item">
+                        <span class="criteria">1. Network Topology Design</span>
+                        <span class="marks">5 Marks</span>
+                    </div>
+                    <div class="rubric-item">
+                        <span class="criteria">2. IP Addressing & Subnetting</span>
+                        <span class="marks">5 Marks</span>
+                    </div>
+                    <div class="rubric-item">
+                        <span class="criteria">3. Routing & Switching (Inter-VLAN)</span>
+                        <span class="marks">5 Marks</span>
+                    </div>
+                    <div class="rubric-item">
+                        <span class="criteria">4. Security Design & Segmentation</span>
+                        <span class="marks">5 Marks</span>
+                    </div>
+                    <div class="rubric-item">
+                        <span class="criteria">5. Technical Presentation & Teamwork</span>
+                        <span class="marks">5 Marks</span>
+                    </div>
+                    <div class="rubric-item">
+                        <span class="criteria">6. Viva Q&A & Demonstration</span>
+                        <span class="marks">5 Marks (Embedded)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="team-box">
+                <strong>👥 5-Member Role Allocation:</strong><br>
+                • <strong>Member 1:</strong> Project Lead & Topology Design (5M)<br>
+                • <strong>Member 2:</strong> IP Addressing & VLSM Subnetting (5M)<br>
+                • <strong>Member 3:</strong> Routing, Switching & Inter-VLAN Routing (5M)<br>
+                • <strong>Member 4:</strong> Security Design, ACL Matrix & Dynamic Quarantine (5M)<br>
+                • <strong>Member 5:</strong> Live Simulation Demo, Results & Presentation (5M)
+            </div>
+        </div>
+
+        <div class="cover-footer">
+            <div class="footer-col">
+                <span><strong>Project Domain:</strong> Cyber-Physical Campus Network Security</span>
+                <span><strong>Simulation Engine:</strong> ns-3.41 (Discrete Event Simulator, C++)</span>
+            </div>
+            <div class="footer-col" style="text-align: right;">
+                <span><strong>Review:</strong> Review 2 (Mid-Term Evaluation)</span>
+                <span><strong>Document Type:</strong> Master Consolidated Study Guide</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TABLE OF CONTENTS ================= -->
+    <div class="toc-page">
+        <div class="toc-title">
+            <span>📑</span>
+            <span>Table of Contents & Quick Reference</span>
+        </div>
+        <p style="color: #64748b; font-size: 8.5pt; margin-bottom: 12px;">
+            This master document integrates all 9 review preparation guides into a unified handbook. Click any chapter title below to jump directly to that section.
+        </p>
+        <table class="toc-table">
+            <thead>
+                <tr>
+                    <th style="width: 40px;">Ch #</th>
+                    <th>Document Title & Coverage Area</th>
+                    <th style="width: 120px;">Rubric Marks / Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td class="toc-num">00</td>
+            <td class="toc-name"><a href="#chapter-00" style="text-decoration: none; color: inherit;">Project Overview: What, Why & How</a></td>
+            <td><span class="badge-tag">Foundation</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">01</td>
+            <td class="toc-name"><a href="#chapter-01" style="text-decoration: none; color: inherit;">Technical Glossary (30+ Terms Defined)</a></td>
+            <td><span class="badge-tag">Terminology</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">02</td>
+            <td class="toc-name"><a href="#chapter-02" style="text-decoration: none; color: inherit;">Network Topology Design (3-Tier Cisco Model)</a></td>
+            <td><span class="badge-mark">5 Marks</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">03</td>
+            <td class="toc-name"><a href="#chapter-03" style="text-decoration: none; color: inherit;">IP Addressing & Subnetting (VLSM Design)</a></td>
+            <td><span class="badge-mark">5 Marks</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">04</td>
+            <td class="toc-name"><a href="#chapter-04" style="text-decoration: none; color: inherit;">Routing & Switching (OSPF, VLANs, Inter-VLAN)</a></td>
+            <td><span class="badge-mark">5 Marks</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">05</td>
+            <td class="toc-name"><a href="#chapter-05" style="text-decoration: none; color: inherit;">Security Design (Zero-Trust, ACL Matrix, Risk Scoring)</a></td>
+            <td><span class="badge-mark">5 Marks</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">06</td>
+            <td class="toc-name"><a href="#chapter-06" style="text-decoration: none; color: inherit;">All 4 Scenarios & Simulation Walkthrough</a></td>
+            <td><span class="badge-tag">Simulation</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">07</td>
+            <td class="toc-name"><a href="#chapter-07" style="text-decoration: none; color: inherit;">Technical Presentation Guide & 5-Member Roles</a></td>
+            <td><span class="badge-mark">5 Marks</span></td>
+        </tr>
+        
+        <tr>
+            <td class="toc-num">08</td>
+            <td class="toc-name"><a href="#chapter-08" style="text-decoration: none; color: inherit;">Viva Questions & Answers (38 Comprehensive Q&As)</a></td>
+            <td><span class="badge-mark">30 Marks Total</span></td>
+        </tr>
+        
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ================= CHAPTERS CONTENT ================= -->
+    
+        <section class="chapter" id="chapter-00">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 00</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Project Overview: What, Why & How</div>
+                </div>
+                <span class="chapter-badge">Foundation</span>
+            </div>
+            <h1>🎯 Project Overview — What, Why, How, and Everything Explained</h1>
+<blockquote>
+<p><strong>Read this FIRST before all other files. This is the complete story of our project in simple words.</strong></p>
+</blockquote>
+<hr />
+<h2>📌 What is the Project?</h2>
+<h3>Project Title</h3>
+<p><strong>"Autonomous Behavioural Risk Scoring and Graduated Quarantine in Zero-Trust Campus Networks"</strong></p>
+<h3>In One Line</h3>
+<p>We built a <strong>smart campus network</strong> that can <strong>automatically detect hackers, isolate them step-by-step, and heal itself</strong> when cables/links break — all without any human admin doing anything.</p>
+<h3>In Simple Words</h3>
+<p>Imagine your college has 58 computers spread across 8 departments (CSE, IT, Admin, Library, Hostel, COE, IoT Lab, Data Center). Right now, if a student's laptop gets a virus:<br />
+- The virus can spread to <strong>every</strong> computer in the college<br />
+- An admin must <strong>manually</strong> find and block the infected device (takes 30-60 minutes)<br />
+- During those 30-60 minutes, the virus has already infected 60-80% of devices<br />
+- If a network cable breaks at the same time, the whole network goes down</p>
+<p><strong>Our project fixes all of this automatically:</strong><br />
+- Detects the virus in <strong>&lt; 5 seconds</strong> (not 30 minutes)<br />
+- Isolates the infected device <strong>gradually</strong> (Warning → Rate-Limit → Full Quarantine) in <strong>&lt; 3 seconds</strong><br />
+- If a cable breaks, heals itself in <strong>&lt; 2 seconds</strong> using a backup path<br />
+- Most importantly: when the network heals itself, the quarantined hacker <strong>stays quarantined</strong> (this is what makes our project novel)</p>
+<hr />
+<h2>🤔 Why This Project? (The Problem)</h2>
+<h3>Problem 1: Campus Networks are Vulnerable from Inside</h3>
+<p>Traditional networks use a <strong>"castle-and-moat" model</strong> — they have a strong firewall at the entrance (the moat), but once you're inside (inside the castle), you can go anywhere freely.</p>
+<p><strong>The reality in a college:</strong><br />
+- 5,000+ students connect their personal laptops to campus WiFi daily<br />
+- Any laptop could already be infected with malware from home<br />
+- Once connected, that infected laptop is <strong>inside</strong> the firewall<br />
+- The malware can spread to Admin servers, exam systems, IoT sensors — everything</p>
+<pre><code>Traditional Security:
+                    ┌──── FIREWALL (strong wall) ────┐
+                    │                                  │
+                    │  Admin PCs ← freely accessible   │
+Internet ──── X ────│  Student PCs ← can reach Admin!  │
+  (blocked)         │  IoT Sensors ← can reach Admin!  │
+                    │  Hostel WiFi ← can reach Admin!   │
+                    │                                  │
+                    └──────────────────────────────────┘
+                    Everything INSIDE the wall trusts each other ❌
+</code></pre>
+<h3>Problem 2: Binary "Allow or Block" Systems Cause False Positives</h3>
+<p>Current security systems (firewalls, IDS) are <strong>binary</strong> — they either <strong>allow</strong> or <strong>block</strong> a device entirely.</p>
+<p><strong>Real scenario:</strong><br />
+- A CSE student is downloading a 10 GB dataset for their machine learning project<br />
+- The download causes a sudden spike in network traffic<br />
+- The security system sees high traffic → thinks it's a DoS attack → <strong>BLOCKS the student entirely</strong><br />
+- The student cannot access anything — not even their email or LMS<br />
+- An admin must manually investigate and unblock them (takes 30-60 minutes)<br />
+- <strong>This is called a false positive</strong> — an innocent person gets punished</p>
+<h3>Problem 3: Self-Healing Networks Don't Preserve Security</h3>
+<p>Modern networks use protocols like OSPF to automatically fix routing when a cable breaks. This is called <strong>self-healing</strong>.</p>
+<p><strong>The dangerous gap:</strong><br />
+1. Device X is a hacker — it has been quarantined (blocked)<br />
+2. A network cable breaks elsewhere in the network<br />
+3. OSPF recalculates all routes through alternate paths<br />
+4. During recalculation, Device X might accidentally get a new route to the Data Center<br />
+5. <strong>The quarantine is broken!</strong> The hacker is free again</p>
+<pre><code>BEFORE link failure:
+  Hacker (quarantined) ──X──→ Data Center (blocked ✅)
+
+AFTER OSPF re-routes:
+  Hacker (quarantined) ──→ New Path ──→ Data Center (accessible again! ❌)
+</code></pre>
+<p><strong>Nobody has solved this problem before.</strong> This is the research gap we fill.</p>
+<hr />
+<h2>💡 How We Solve the Problem (Our 3 Solutions)</h2>
+<h3>Solution 1: Zero-Trust Architecture + Behavioural Risk Scoring</h3>
+<p>Instead of trusting devices inside the network, we <strong>continuously monitor every single packet</strong> and calculate a <strong>risk score</strong> for every device.</p>
+<p><strong>What is Zero-Trust?</strong><br />
+Zero-Trust means <strong>"never trust anyone, always verify."</strong> Even if a CSE student's laptop was fine 10 seconds ago, we still check every packet it sends right now. Trust is not permanent — it is continuously earned.</p>
+<p><strong>How the Risk Score Works:</strong></p>
+<p>We monitor 4 things (called "behavioural signals"):</p>
+<table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>What It Detects</th>
+<th>How It's Detected</th>
+<th>Points Added</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Unauthorized Access</strong></td>
+<td>A CSE student trying to reach Admin servers</td>
+<td>Packet violates our access rules</td>
+<td>+25 per violation</td>
+</tr>
+<tr>
+<td><strong>Traffic Anomaly</strong></td>
+<td>A device sending too much data (possible DoS)</td>
+<td>Packets per second &gt; 80</td>
+<td>Up to +40</td>
+</tr>
+<tr>
+<td><strong>Port Scanning</strong></td>
+<td>A device checking which services are running on a server</td>
+<td>&gt; 10 unique destination ports in 5 seconds</td>
+<td>+30</td>
+</tr>
+<tr>
+<td><strong>Protocol Abuse</strong></td>
+<td>Extreme traffic suggesting a flood attack</td>
+<td>Packets per second &gt; 160</td>
+<td>Up to +20</td>
+</tr>
+</tbody>
+</table>
+<p><strong>The Formula:</strong></p>
+<pre><code>Risk Score = 0.35 × Unauthorized Access Score
+           + 0.25 × Traffic Anomaly Score
+           + 0.25 × Port Scan Score
+           + 0.15 × Protocol Abuse Score
+</code></pre>
+<p>Maximum score = 100. The higher the score, the more dangerous the device.</p>
+<p><strong>The Magic: Temporal Decay (Automatic Forgiveness)</strong></p>
+<p>Every 1 second, ALL scores are multiplied by <strong>0.95</strong>:</p>
+<pre><code>New Score = (Old Score × 0.95) + New Suspicious Events
+</code></pre>
+<p><strong>Why this is important:</strong><br />
+- A score of 100 drops to ~50 in just 14 seconds (if the device stops being suspicious)<br />
+- That CSE student downloading a dataset? Their score goes up briefly, but comes back down automatically<br />
+- <strong>No admin needs to manually unblock them</strong> — the system forgives on its own<br />
+- But a real hacker keeps triggering events, so their score stays high despite decay</p>
+<hr />
+<h3>Solution 2: Graduated Dynamic Quarantine (Not Binary!)</h3>
+<p>Instead of immediately blocking a device (which causes false positives), we have <strong>4 levels</strong>:</p>
+<pre><code>Risk Score:  0 ─────── 40 ─────── 55 ─────── 70 ─────── 100
+             │          │          │          │
+          NORMAL     WARNING   RATE-LIMITED  QUARANTINED
+          (green)    (yellow)   (orange)     (red)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Score Range</th>
+<th>What Happens</th>
+<th>Effect on User</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NORMAL</strong></td>
+<td>0 – 39</td>
+<td>Nothing</td>
+<td>Full access. Student works normally</td>
+</tr>
+<tr>
+<td><strong>WARNING</strong></td>
+<td>40 – 54</td>
+<td>Alert generated, logging intensified</td>
+<td>Student still has access. Admin gets notified</td>
+</tr>
+<tr>
+<td><strong>RATE-LIMITED</strong></td>
+<td>55 – 69</td>
+<td>Device flagged for bandwidth throttling</td>
+<td>Student's speed may be reduced</td>
+</tr>
+<tr>
+<td><strong>QUARANTINED</strong></td>
+<td>70 – 100</td>
+<td><strong>All network interfaces DISABLED</strong></td>
+<td>Student is completely cut off from network</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How it works step by step (example):</strong></p>
+<pre><code>Student downloads 10GB dataset:
+  → Traffic spike → Score goes to 42 → WARNING
+  → Admin sees alert, but student keeps working
+  → Download finishes → Score decays back to 0 → NORMAL
+  → FALSE POSITIVE AVOIDED ✅
+
+Hacker runs port scan + tries to reach Admin:
+  → Score quickly jumps to 45 → WARNING
+  → Keeps scanning → Score hits 58 → RATE-LIMITED
+  → Tries unauthorized access → Score hits 75 → QUARANTINED ❌
+  → All interfaces disabled → Cannot send or receive anything
+  → REAL THREAT STOPPED ✅
+</code></pre>
+<p><strong>How Quarantine Works Technically:</strong></p>
+<pre><code class="language-cpp">// When score ≥ 70, this code runs:
+for (uint32_t i = 1; i &lt; ipv4-&gt;GetNInterfaces(); ++i)
+    ipv4-&gt;SetDown(i);  // Disables each network interface on the device
+// The device is now completely disconnected from the network
+</code></pre>
+<p><strong>How Recovery Works:</strong></p>
+<pre><code class="language-cpp">// When score drops below 40 (thanks to temporal decay):
+for (uint32_t i = 1; i &lt; ipv4-&gt;GetNInterfaces(); ++i)
+    ipv4-&gt;SetUp(i);  // Re-enables each interface
+// The device can now communicate again
+</code></pre>
+<hr />
+<h3>Solution 3: Quarantine-Aware Self-Healing</h3>
+<p><strong>What is Self-Healing?</strong><br />
+When a network cable or link breaks, the network automatically finds another path for data to travel. Like GPS rerouting you when a road is closed.</p>
+<p><strong>What makes ours special: "Quarantine-Aware"</strong><br />
+After rerouting, our system <strong>checks that quarantined devices are still quarantined</strong>. No other system does this.</p>
+<p><strong>How it works:</strong></p>
+<pre><code>Step 1: Primary Data Center cable breaks
+        ┌─────────┐       X        ┌──────────┐
+        │  Router  │───── ✂ ───────│   Data   │
+        └────┬────┘    (broken!)   │  Center  │
+             │                      └─────┬───┘
+        ┌────┴──────┐                     │
+        │  Backup   │─────────────────────┘
+        │  Switch   │     (backup path)
+        └───────────┘
+
+Step 2: Heartbeat detects failure (&lt; 0.5 seconds)
+        &quot;Hey primary link, are you alive?&quot; → No response → FAILURE!
+
+Step 3: Activate backup path
+        Router enables its interface to the Backup Switch
+
+Step 4: Recompute all routes
+        All traffic now flows through the backup path
+
+Step 5: ★ QUARANTINE INTEGRITY CHECK ★
+        &quot;Is the quarantined hacker still isolated?&quot;
+        → Check: Are their interfaces still disabled?
+        → Answer: YES — quarantine is on the DEVICE, not the ROUTER
+        → The hacker remains isolated even after rerouting ✅
+
+Step 6: Recovery complete (&lt; 2 seconds total)
+</code></pre>
+<p><strong>Why quarantine survives the rerouting:</strong><br />
+In other systems, quarantine is applied on the <strong>router</strong> (e.g., an ACL rule on the router's port). When the router recalculates routes, those rules might not apply to the new path.</p>
+<p>In <strong>our system</strong>, quarantine is applied on the <strong>device itself</strong> — we disable the hacker's own network interfaces. Even if the router reroutes everything, the hacker's interfaces are still down. The rerouting doesn't help them.</p>
+<hr />
+<h2>🏗️ What is a VLAN and How We Use It</h2>
+<h3>What is a VLAN? (Simple Explanation)</h3>
+<p><strong>VLAN = Virtual Local Area Network</strong></p>
+<p>Imagine a school building with one big open hall. All students from all classes are in the same hall. If one student shouts, <strong>everyone hears it</strong>. If one student has the flu, <strong>everyone can catch it</strong>.</p>
+<p>Now imagine that same hall divided into 8 separate rooms with walls between them:<br />
+- Room 1: CSE students<br />
+- Room 2: IT students<br />
+- Room 3: Admin staff<br />
+- Room 4: Library<br />
+- ...and so on</p>
+<p>Now if a CSE student shouts, only CSE students hear it. If a CSE student has the flu, only CSE students are at risk. <strong>The walls isolate them.</strong></p>
+<p><strong>A VLAN is those virtual walls — but in a network.</strong></p>
+<p>Without VLANs:</p>
+<pre><code>All 58 devices on ONE network
+→ Everyone can see everyone's traffic
+→ Malware spreads to ALL devices instantly
+→ No privacy between departments
+</code></pre>
+<p>With VLANs:</p>
+<pre><code>8 separate virtual networks
+→ CSE traffic stays in CSE
+→ Admin traffic stays in Admin
+→ Malware can only spread within its VLAN
+→ To cross VLANs, traffic must go through the Router (where we check it!)
+</code></pre>
+<h3>How VLANs Are Used in Our Project</h3>
+<p>We have <strong>8 VLANs</strong> — one per department:</p>
+<table>
+<thead>
+<tr>
+<th>VLAN</th>
+<th>Department</th>
+<th>Network</th>
+<th>Devices</th>
+<th>What They Do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Administration</td>
+<td>10.0.10.0/24</td>
+<td>4 PCs</td>
+<td>Manage college ERP, finances, HR</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CSE Department</td>
+<td>10.0.20.0/24</td>
+<td>10 labs</td>
+<td>Student coding, assignments, research</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT Department</td>
+<td>10.0.30.0/24</td>
+<td>10 labs</td>
+<td>Student work, IT operations</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Library</td>
+<td>10.0.40.0/24</td>
+<td>6 systems</td>
+<td>OPAC catalogs, digital library, WiFi</td>
+</tr>
+<tr>
+<td>50</td>
+<td>COE (Centre of Excellence)</td>
+<td>10.0.50.0/24</td>
+<td>4 systems</td>
+<td>Research, HPC clusters, exam systems</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Hostel</td>
+<td>10.0.60.0/24</td>
+<td>8 devices</td>
+<td>Student WiFi, smart locks</td>
+</tr>
+<tr>
+<td>70</td>
+<td>IoT Lab</td>
+<td>10.0.70.0/24</td>
+<td>6 devices</td>
+<td>Sensors, controllers, gateways</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Data Center</td>
+<td>10.0.80.0/24</td>
+<td>7 servers</td>
+<td>ERP, DB, DHCP, DNS, Web, Email, Backup</td>
+</tr>
+</tbody>
+</table>
+<h3>VLAN Access Rules (Who Can Talk to Whom)</h3>
+<p>Not all VLANs can communicate with each other. We have strict rules:</p>
+<table>
+<thead>
+<tr>
+<th>From ↓</th>
+<th>Can Access →</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Admin</strong></td>
+<td>Everything (they manage the college)</td>
+</tr>
+<tr>
+<td><strong>CSE</strong></td>
+<td>Only Library + Data Center (for academics)</td>
+</tr>
+<tr>
+<td><strong>IT</strong></td>
+<td>Only Library + Data Center (for academics)</td>
+</tr>
+<tr>
+<td><strong>Library</strong></td>
+<td>Only Data Center (for digital resources)</td>
+</tr>
+<tr>
+<td><strong>COE</strong></td>
+<td>Only Admin + Data Center (for exams and research)</td>
+</tr>
+<tr>
+<td><strong>Hostel</strong></td>
+<td>Only Library + Data Center (for student portal)</td>
+</tr>
+<tr>
+<td><strong>IoT Lab</strong></td>
+<td>Only Data Center (to upload sensor data)</td>
+</tr>
+<tr>
+<td><strong>Quarantined</strong></td>
+<td>NOTHING (completely isolated)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key rule: NO lateral movement between student departments!</strong><br />
+- CSE ❌ → IT (blocked)<br />
+- CSE ❌ → Hostel (blocked)<br />
+- CSE ❌ → Admin (blocked)<br />
+- CSE ❌ → IoT (blocked)</p>
+<p>This means: If a CSE laptop gets infected, it <strong>cannot</strong> attack IT, Admin, or IoT devices. It can only try to reach Library or Data Center — and when it does, the router's risk scoring engine catches the suspicious behaviour.</p>
+<h3>How VLANs Are Created (The Code)</h3>
+<p>In NS-3, each VLAN is a separate CSMA (shared Ethernet) segment:</p>
+<pre><code class="language-cpp">// Each VLAN = a shared Ethernet bus with the router + department nodes
+CsmaHelper csma;
+csma.SetChannelAttribute(&quot;DataRate&quot;, DataRateValue(DataRate(&quot;100Mbps&quot;)));
+
+// Create CSE VLAN
+NodeContainer cseLan;
+cseLan.Add(router);         // Router connects to this VLAN
+cseLan.Add(cseNodes);       // 10 CSE devices
+NetDeviceContainer devs = csma.Install(cseLan);
+
+// Assign IP addresses: 10.0.20.0/24
+addr.SetBase(&quot;10.0.20.0&quot;, &quot;255.255.255.0&quot;);
+addr.Assign(devs);
+// Router gets 10.0.20.1, CSE devices get 10.0.20.2 through 10.0.20.11
+</code></pre>
+<hr />
+<h2>🔧 How the Problem is Addressed (Complete Flow)</h2>
+<p>Here is the <strong>complete story</strong> of how our system handles an attack, from start to finish:</p>
+<h3>Minute 0:00 — Network Starts</h3>
+<ul>
+<li>All 58 nodes boot up</li>
+<li>VLANs are assigned, IP addresses configured</li>
+<li>Routing tables calculated (all devices know how to reach each other via the router)</li>
+<li>Legitimate traffic begins: students browsing, IoT uploading data, admin using ERP</li>
+</ul>
+<h3>Minute 0:30 — Attack Begins</h3>
+<ul>
+<li>A CSE student's laptop (<code>10.0.20.2</code>) is infected with malware</li>
+<li>The malware does 3 things simultaneously:<br />
+  1. <strong>Port Scans</strong> the ERP server (trying to find vulnerable services)<br />
+  2. <strong>Tries to access</strong> Admin PCs and COE systems (lateral movement)<br />
+  3. <strong>Floods</strong> the ERP server with high-volume traffic (DoS attempt)</li>
+</ul>
+<h3>Minute 0:31 — Detection (&lt; 1 Second)</h3>
+<ul>
+<li>The Core Router's <strong>Traffic Monitor</strong> intercepts the packets</li>
+<li><strong>Check 1:</strong> <code>10.0.20.2 → 10.0.10.2</code> → CSE to Admin? → <strong>DENIED</strong> → +25 risk points</li>
+<li><strong>Check 2:</strong> 100 unique destination ports from <code>10.0.20.2</code> → <strong>PORT SCAN</strong> → +30 risk points</li>
+<li><strong>Check 3:</strong> 200 packets/second from <code>10.0.20.2</code> → <strong>TRAFFIC ANOMALY</strong> → +40 risk points</li>
+<li><strong>Check 4:</strong> 200 pps &gt; 160 threshold → <strong>PROTOCOL ABUSE</strong> → +20 risk points</li>
+</ul>
+<h3>Minute 0:36 — WARNING State (Score = 42)</h3>
+<ul>
+<li>The weighted risk score crosses 40</li>
+<li>System generates an <strong>alert</strong>: "Device 10.0.20.2 showing suspicious behaviour"</li>
+<li>Logging is intensified for this device</li>
+<li><strong>But the device still has network access</strong> (no disruption yet — avoids false positive)</li>
+</ul>
+<h3>Minute 0:40 — RATE-LIMITED State (Score = 58)</h3>
+<ul>
+<li>More violations accumulate</li>
+<li>Score crosses 55</li>
+<li>Device is flagged for potential bandwidth throttling</li>
+<li>Admin is warned: "This device is likely malicious"</li>
+</ul>
+<h3>Minute 0:45 — QUARANTINED (Score = 75)</h3>
+<ul>
+<li>Score crosses 70 — <strong>CONFIRMED THREAT</strong></li>
+<li>System calls <code>ipv4-&gt;SetDown()</code> on ALL of the attacker's network interfaces</li>
+<li>The attacker is <strong>completely cut off</strong> from the network</li>
+<li>Cannot send or receive any packet</li>
+<li>All other 57 devices continue working normally</li>
+</ul>
+<h3>Minute 1:00 — Primary Link Fails</h3>
+<ul>
+<li>The cable between Core Router and Data Center breaks</li>
+<li>All departments lose access to servers (ERP, Web, DNS, Email)</li>
+</ul>
+<h3>Minute 1:00.5 — Self-Healing Kicks In</h3>
+<ul>
+<li>Heartbeat detects: "Primary link is dead!"</li>
+<li>Backup Switch is activated</li>
+<li>New path: Router → Backup Switch → Data Center</li>
+<li>All routing tables recalculated</li>
+<li><strong>Quarantine Integrity Check:</strong> "Is 10.0.20.2 still isolated?" → <strong>YES</strong> ✅</li>
+</ul>
+<h3>Minute 1:02 — Recovery Complete</h3>
+<ul>
+<li>All 57 legitimate devices can access Data Center via backup path</li>
+<li>Attacker (10.0.20.2) remains quarantined</li>
+<li>Total downtime: <strong>&lt; 2 seconds</strong></li>
+</ul>
+<h3>Minute 1:30 — Primary Link Restored</h3>
+<ul>
+<li>The broken cable is fixed</li>
+<li>Router switches back to primary path (faster/preferred)</li>
+<li>Routing tables recalculated again</li>
+<li>Quarantine re-verified: attacker still isolated ✅</li>
+</ul>
+<h3>Minute 2:00 — Simulation Ends</h3>
+<ul>
+<li><strong>Results:</strong></li>
+<li>150 data flows monitored</li>
+<li>25,030 Kbps total throughput</li>
+<li>0.68% packet loss (99.32% delivered successfully)</li>
+<li>1 device quarantined (the attacker)</li>
+<li>0 innocent devices affected (zero false positives)</li>
+</ul>
+<hr />
+<h2>🔬 What is NS-3 and Why We Used It</h2>
+<h3>What is NS-3?</h3>
+<p>NS-3 (Network Simulator 3) is a free, open-source <strong>discrete-event network simulator</strong> used for research and education. You write C++ code to create virtual networks and study how they behave.</p>
+<h3>Why NS-3 and Not Cisco Packet Tracer?</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Packet Tracer</th>
+<th>NS-3 (Our Choice)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Custom algorithms</strong></td>
+<td>❌ Cannot write custom code</td>
+<td>✅ Full C++ programming</td>
+</tr>
+<tr>
+<td><strong>Risk scoring engine</strong></td>
+<td>❌ Impossible</td>
+<td>✅ We wrote our own class</td>
+</tr>
+<tr>
+<td><strong>Traffic monitoring</strong></td>
+<td>❌ Limited</td>
+<td>✅ Packet-level inspection callbacks</td>
+</tr>
+<tr>
+<td><strong>Dynamic quarantine</strong></td>
+<td>❌ Manual only</td>
+<td>✅ Programmatic ipv4-&gt;SetDown()</td>
+</tr>
+<tr>
+<td><strong>Self-healing</strong></td>
+<td>❌ OSPF only (no quarantine check)</td>
+<td>✅ Custom controller with quarantine verification</td>
+</tr>
+<tr>
+<td><strong>Result analysis</strong></td>
+<td>❌ Basic</td>
+<td>✅ CSV export + Python graphs</td>
+</tr>
+<tr>
+<td><strong>Academic validity</strong></td>
+<td>❌ Not accepted in research papers</td>
+<td>✅ Standard research tool</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks "Why not Packet Tracer?"</strong></p>
+<blockquote>
+<p><em>"Packet Tracer is an instructional tool with fixed Cisco IOS commands. It cannot implement custom algorithms like our risk scoring engine or quarantine controller. NS-3 allows us to write custom C++ classes that model our novel contributions precisely, and it's the standard simulator accepted in IEEE research publications."</em></p>
+</blockquote>
+<hr />
+<h2>📊 What Output Does the Simulation Produce?</h2>
+<p>After running the simulation, we get <strong>6 output files</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Content</th>
+<th>Used For</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>risk-scores.csv</code></td>
+<td>Risk score of every device at every second</td>
+<td>Risk Score Evolution graph</td>
+</tr>
+<tr>
+<td><code>quarantine-events.csv</code></td>
+<td>Timestamp and level when quarantine state changes</td>
+<td>Quarantine Timeline graph</td>
+</tr>
+<tr>
+<td><code>self-healing-events.csv</code></td>
+<td>Link failure/recovery events and recovery time</td>
+<td>Self-Healing Recovery graph</td>
+</tr>
+<tr>
+<td><code>throughput.csv</code></td>
+<td>Throughput, delay, and loss for every data flow</td>
+<td>Throughput Comparison graph</td>
+</tr>
+<tr>
+<td><code>flowmon.xml</code></td>
+<td>NS-3 FlowMonitor detailed statistics</td>
+<td>Detailed analysis</td>
+</tr>
+<tr>
+<td><code>animation.xml</code></td>
+<td>Node positions, colors, and movements for NetAnim</td>
+<td>Live visual animation</td>
+</tr>
+</tbody>
+</table>
+<p>These CSV files are then processed by our Python script (<code>analyze-results.py</code>) to generate <strong>publication-quality graphs</strong> for the research paper.</p>
+<hr />
+<h2>📝 Quick Reference Card (Print This!)</h2>
+<h3>Project Title</h3>
+<p>Autonomous Behavioural Risk Scoring and Graduated Quarantine in Zero-Trust Campus Networks</p>
+<h3>3 Novel Contributions</h3>
+<ol>
+<li><strong>Multi-Factor Behavioural Risk Scoring Engine</strong> with temporal decay (γ = 0.95)</li>
+<li><strong>Graduated Dynamic Quarantine</strong> (Normal → Warning → Rate-Limited → Quarantined)</li>
+<li><strong>Quarantine-Aware Self-Healing</strong> (preserves isolation during link failures)</li>
+</ol>
+<h3>Key Numbers</h3>
+<ul>
+<li><strong>58 nodes</strong> across <strong>8 VLANs</strong> (departments)</li>
+<li><strong>4 risk signals</strong> with <strong>4 quarantine levels</strong></li>
+<li>Risk formula: <code>Score = 0.35A + 0.25T + 0.25P + 0.15V</code></li>
+<li>Decay factor: <strong>0.95</strong> per second</li>
+<li>Thresholds: Warning = <strong>40</strong>, Rate-Limit = <strong>55</strong>, Quarantine = <strong>70</strong></li>
+<li>Detection time: <strong>&lt; 5 seconds</strong> (vs 5-30 min traditional)</li>
+<li>Recovery time: <strong>&lt; 2 seconds</strong> (vs 30-60 sec traditional)</li>
+<li>Packet loss: <strong>0.68%</strong> during combined attack + link failure</li>
+</ul>
+<h3>Simulator</h3>
+<p>NS-3 (Network Simulator 3) v3.41, implemented in C++ (~1765 lines)</p>
+<h3>Research Paper</h3>
+<p><code>zero_trust_risk_scoring.docx</code> — published and ready</p>
+<h3>How to Run</h3>
+<pre><code class="language-bash">wsl
+cd ~/ns-allinone-3.41/ns-3.41
+./ns3 run &quot;smart-campus-network --scenario=4&quot;
+</code></pre>
+        </section>
+        
+        <section class="chapter" id="chapter-01">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 01</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Technical Glossary (30+ Terms Defined)</div>
+                </div>
+                <span class="chapter-badge">Terminology</span>
+            </div>
+            <h1>📖 Technical Glossary — Every Term Explained Simply</h1>
+<blockquote>
+<p><strong>For Review 2 | All 5 Members Must Know These Terms</strong><br />
+If Sir asks "What is ___?", use these answers.</p>
+</blockquote>
+<hr />
+<h2>A</h2>
+<h3>ACL (Access Control List)</h3>
+<p><strong>Simple:</strong> A list of rules that says "allow this traffic" or "deny this traffic."<br />
+<strong>In our project:</strong> Our Zero-Trust Access Matrix is essentially an ACL. For example, CSE students can access the Library and Data Center, but NOT Administration or COE. Any packet violating this matrix is dropped and flagged.<br />
+<strong>If Sir asks:</strong> <em>"Sir, an ACL is a set of permit/deny rules applied to a router interface. In our project, the Core Router checks every forwarded packet against our Zero-Trust policy matrix. If a CSE student tries to reach the Admin subnet, the packet is dropped and the source's risk score is incremented by 25 points."</em></p>
+<hr />
+<h3>ARP (Address Resolution Protocol)</h3>
+<p><strong>Simple:</strong> Converts an IP address (like 10.0.20.2) into a MAC address (like AA:BB:CC:DD:EE:FF) so devices on the same LAN can talk to each other.<br />
+<strong>In our project:</strong> ARP works automatically inside each CSMA segment (VLAN). When a CSE laptop wants to send data, ARP resolves the router's MAC address first.</p>
+<hr />
+<h2>B</h2>
+<h3>Backbone</h3>
+<p><strong>Simple:</strong> The main "highway" link that carries traffic between the major parts of a network.<br />
+<strong>In our project:</strong> The backbone is the Point-to-Point (P2P) link between the Internet Server and the Core Router using the <code>10.0.1.0/24</code> subnet at 1 Gbps speed.</p>
+<hr />
+<h3>Bandwidth</h3>
+<p><strong>Simple:</strong> The maximum amount of data that can travel through a network connection per second. Think of it like the width of a water pipe — wider pipe = more water flow.<br />
+<strong>In our project:</strong> Each CSMA department link runs at 100 Mbps. The backbone runs at 1 Gbps. Normal traffic per node is 500 Kbps. The attacker floods at 5 Mbps.</p>
+<hr />
+<h2>C</h2>
+<h3>CSMA (Carrier Sense Multiple Access)</h3>
+<p><strong>Simple:</strong> A method where devices on a shared cable "listen before talking." If the cable is busy, they wait. If it's free, they send data.<br />
+<strong>In our project:</strong> All 8 department segments (Admin, CSE, IT, Library, COE, Hostel, IoT, Data Center) use CSMA channels at 100 Mbps. Think of each department as having a shared Ethernet cable.<br />
+<strong>If Sir asks:</strong> <em>"CSMA stands for Carrier Sense Multiple Access. Before sending data, a device checks (senses) if the shared medium (carrier) is busy. If busy, it waits. If free, it transmits. Our 8 department VLANs all use CSMA channels in NS-3."</em></p>
+<hr />
+<h3>CSV (Comma-Separated Values)</h3>
+<p><strong>Simple:</strong> A simple file format where each line is a row and values are separated by commas. Excel can open it.<br />
+<strong>In our project:</strong> The simulation outputs 4 CSV files: <code>risk-scores.csv</code>, <code>quarantine-events.csv</code>, <code>self-healing-events.csv</code>, and <code>throughput.csv</code>.</p>
+<hr />
+<h2>D</h2>
+<h3>DHCP (Dynamic Host Configuration Protocol)</h3>
+<p><strong>Simple:</strong> Automatically assigns IP addresses to devices when they connect to the network. Like a receptionist giving visitor badges.<br />
+<strong>In our project:</strong> We have a DHCP Server in the Data Center (one of the 7 DC servers). In the simulation, IP addresses are statically assigned by NS-3's <code>Ipv4AddressHelper</code>, but in a real campus, DHCP would handle this.</p>
+<hr />
+<h3>DNS (Domain Name System)</h3>
+<p><strong>Simple:</strong> Translates human-friendly names (like www.google.com) into IP addresses (like 142.250.182.14). It's the "phone book" of the internet.<br />
+<strong>In our project:</strong> We have a DNS Server at <code>10.0.80.4</code> in our Data Center. Library nodes send their traffic to the DNS server.</p>
+<hr />
+<h3>DoS / DDoS (Denial of Service / Distributed Denial of Service)</h3>
+<p><strong>Simple:</strong> An attack where someone floods a server with so much fake traffic that real users can't access it. Like 1000 people blocking a door so nobody can enter.<br />
+<strong>In our project:</strong> The attacker at <code>10.0.20.2</code> performs a traffic flood at 5 Mbps (50 packets every 0.5 seconds), which our Traffic Monitor detects when the rate exceeds 80 packets/second.</p>
+<hr />
+<h2>E</h2>
+<h3>ERP (Enterprise Resource Planning)</h3>
+<p><strong>Simple:</strong> Software used by organizations to manage daily activities like accounting, student records, HR, and procurement.<br />
+<strong>In our project:</strong> The ERP Server (<code>10.0.80.1</code>) is the main target. Admin PCs access ERP for management, and the attacker tries to reach it through port scanning.</p>
+<hr />
+<h2>F</h2>
+<h3>Firewall</h3>
+<p><strong>Simple:</strong> A security device/software that monitors incoming and outgoing network traffic and decides whether to allow or block it based on rules.<br />
+<strong>In our project:</strong> Our Core Router acts as a firewall. It inspects every forwarded packet using the <code>TrafficMonitorForward</code> callback and checks it against the Zero-Trust Access Matrix. Unlike a traditional firewall that just blocks/allows, ours also calculates a risk score.<br />
+<strong>If Sir asks:</strong> <em>"A firewall is a network security system that monitors and controls traffic based on predetermined rules. Our Core Router functions as an advanced firewall — instead of simple allow/deny, it continuously evaluates behavioural signals and assigns a risk score to each device."</em></p>
+<hr />
+<h3>FlowMonitor</h3>
+<p><strong>Simple:</strong> An NS-3 tool that tracks every data flow in the simulation and measures throughput, delay, and packet loss.<br />
+<strong>In our project:</strong> <code>FlowMonitorHelper</code> is installed on all nodes. At the end of the simulation, it reports: Total Flows (150), Total Throughput (25,030 Kbps), Average Delay (1.85 ms), and Packet Loss Rate (0.68%).</p>
+<hr />
+<h2>G</h2>
+<h3>Gateway</h3>
+<p><strong>Simple:</strong> A device that connects two different networks. Like a door between two rooms.<br />
+<strong>In our project:</strong> The Core Router is the default gateway for all 8 department VLANs. All inter-VLAN traffic must pass through it.</p>
+<hr />
+<h2>H</h2>
+<h3>Heartbeat</h3>
+<p><strong>Simple:</strong> A periodic signal sent to check if a device or link is still alive. Like checking if someone is still on the phone by saying "hello?"<br />
+<strong>In our project:</strong> The Self-Healing Controller sends heartbeats every 0.5 seconds to verify the primary Data Center link is working. If no reply comes back within 0.5s, it declares a link failure and activates the backup path.<br />
+<strong>If Sir asks:</strong> <em>"Our heartbeat mechanism runs every 500 milliseconds. If the primary link doesn't respond, the controller activates the backup distribution switch and recomputes all routing tables."</em></p>
+<hr />
+<h3>Hierarchical Network Design</h3>
+<p><strong>Simple:</strong> Organizing a network into layers (tiers), each with a specific job. Like floors in a building — ground floor (access), middle floor (distribution), top floor (core).<br />
+<strong>In our project:</strong><br />
+- <strong>Core Layer:</strong> The Core Router (<code>10.0.1.1</code>) — handles all routing, security decisions, and policy enforcement<br />
+- <strong>Distribution Layer:</strong> Distribution Switch 2 (Backup Switch) — provides redundant paths<br />
+- <strong>Access Layer:</strong> 8 CSMA department segments where end devices connect</p>
+<hr />
+<h2>I</h2>
+<h3>Inter-VLAN Routing</h3>
+<p><strong>Simple:</strong> Moving data between different VLANs. Since VLANs are isolated by default, a router is needed to pass traffic between them.<br />
+<strong>In our project:</strong> The Core Router connects to all 8 VLANs. When a CSE student (<code>10.0.20.x</code>) wants to access the Web Server (<code>10.0.80.5</code>), the packet goes from the CSE VLAN → Core Router → Data Center VLAN. The router checks the Zero-Trust policy before forwarding.<br />
+<strong>If Sir asks:</strong> <em>"Inter-VLAN routing is the process of forwarding traffic between different VLANs using a Layer 3 device. In our design, the Core Router performs inter-VLAN routing and simultaneously applies our Zero-Trust access policy."</em></p>
+<hr />
+<h3>IP Address</h3>
+<p><strong>Simple:</strong> A unique number assigned to every device on a network, like a home address for your computer.<br />
+<strong>In our project:</strong> We use the <code>10.0.X.0/24</code> scheme where X identifies the department (10=Admin, 20=CSE, 30=IT, etc.).</p>
+<hr />
+<h3>IPv4</h3>
+<p><strong>Simple:</strong> The fourth version of the Internet Protocol, using 32-bit addresses written as four numbers separated by dots (e.g., 10.0.20.2).<br />
+<strong>In our project:</strong> All addressing uses IPv4. The NS-3 <code>Ipv4AddressHelper</code> assigns addresses like <code>10.0.10.1</code>, <code>10.0.20.1</code>, etc.</p>
+<hr />
+<h2>L</h2>
+<h3>Lateral Movement</h3>
+<p><strong>Simple:</strong> When a hacker who has compromised one device uses it to attack other devices on the same network. Moving "sideways" to spread.<br />
+<strong>In our project:</strong> Our Zero-Trust policy blocks lateral movement. A compromised CSE laptop (<code>10.0.20.2</code>) tries to reach Admin (<code>10.0.10.x</code>) and COE (<code>10.0.50.x</code>) — both are denied by the access matrix, and each attempt adds 25 risk points.</p>
+<hr />
+<h3>Link Failure</h3>
+<p><strong>Simple:</strong> When a physical cable or connection between two network devices breaks or stops working.<br />
+<strong>In our project:</strong> At t=60s in Scenario 3 and 4, we simulate the primary Data Center link going down. The router's CSMA interface to DC is disabled (<code>ipv4-&gt;SetDown()</code>).</p>
+<hr />
+<h2>M</h2>
+<h3>MAC Address (Media Access Control Address)</h3>
+<p><strong>Simple:</strong> A hardware address burned into every network card. Like a serial number for your network interface. Written as six pairs of hex digits (AA:BB:CC:DD:EE:FF).<br />
+<strong>In our project:</strong> NS-3 automatically assigns MAC addresses to all CSMA and P2P devices.</p>
+<hr />
+<h3>Malware</h3>
+<p><strong>Simple:</strong> Malicious software designed to damage or exploit computers and networks. Includes viruses, worms, trojans, ransomware.<br />
+<strong>In our project:</strong> We simulate a malware-infected CSE student laptop that performs port scanning, unauthorized access attempts, and traffic flooding.</p>
+<hr />
+<h2>N</h2>
+<h3>NAC (Network Access Control)</h3>
+<p><strong>Simple:</strong> A security approach that checks every device before allowing it to connect to the network. Like an ID check before entering a building.<br />
+<strong>In our project:</strong> Our Zero-Trust model is an advanced form of NAC — it doesn't just check at connection time, it continuously monitors every device's behaviour throughout the session.</p>
+<hr />
+<h3>NetAnim</h3>
+<p><strong>Simple:</strong> A graphical tool that shows an animated visualization of an NS-3 simulation. You can see packets moving between nodes in real-time.<br />
+<strong>In our project:</strong> We generate a <code>.xml</code> animation file for each scenario. Opening it in NetAnim shows the 58 nodes with color-coded departments, and you can watch packets flow and the attacker turn red when quarantined.</p>
+<hr />
+<h3>Network Segmentation</h3>
+<p><strong>Simple:</strong> Dividing a large network into smaller, isolated pieces. Like dividing an office building into locked departments.<br />
+<strong>In our project:</strong> We segment the campus into 8 separate VLANs: Admin (VLAN 10), CSE (VLAN 20), IT (VLAN 30), Library (VLAN 40), COE (VLAN 50), Hostel (VLAN 60), IoT Lab (VLAN 70), Data Center (VLAN 80). Traffic between segments must pass through the Core Router.<br />
+<strong>If Sir asks:</strong> <em>"Network segmentation reduces the attack surface. If malware infects a CSE laptop, it cannot spread to the Administration or IoT Lab because they are on separate VLANs with strict access rules."</em></p>
+<hr />
+<h3>NS-3 (Network Simulator 3)</h3>
+<p><strong>Simple:</strong> An open-source network simulator used for research and education. You write C++ code to create virtual networks and test how they behave.<br />
+<strong>Why not Packet Tracer?</strong> Packet Tracer only supports pre-built Cisco commands and cannot implement custom algorithms. NS-3 lets us write our own Risk Scoring Engine, Traffic Monitor, and Quarantine Controller as custom C++ classes.</p>
+<hr />
+<h2>O</h2>
+<h3>OSPF (Open Shortest Path First)</h3>
+<p><strong>Simple:</strong> A routing protocol that automatically finds the shortest path for data to travel through a network. Every router shares its link information with neighbours, and they all calculate the best routes.<br />
+<strong>In our project:</strong> We use NS-3's <code>Ipv4GlobalRoutingHelper::PopulateRoutingTables()</code> which simulates OSPF-like behaviour. When the primary link fails, we call <code>RecomputeRoutingTables()</code> to simulate OSPF re-convergence through the backup path.<br />
+<strong>If Sir asks:</strong> <em>"OSPF is a link-state dynamic routing protocol. Each router maintains a complete map of the network topology and uses Dijkstra's algorithm to calculate the shortest path. However, OSPF is security-agnostic — it doesn't know about quarantined devices. That's exactly the gap our quarantine-aware self-healing addresses."</em></p>
+<hr />
+<h2>P</h2>
+<h3>P2P (Point-to-Point)</h3>
+<p><strong>Simple:</strong> A direct connection between exactly two devices, like a private road between two buildings.<br />
+<strong>In our project:</strong> The backbone (Internet Server ↔ Core Router) and the backup link (Core Router ↔ Backup Switch) use P2P connections at 1 Gbps with 2ms delay.</p>
+<hr />
+<h3>Packet</h3>
+<p><strong>Simple:</strong> A small chunk of data being sent over a network. Large messages are broken into many small packets, sent individually, and reassembled at the destination.<br />
+<strong>In our project:</strong> Legitimate traffic sends 512-byte packets. The attacker's port scan sends 64-byte packets, and its flood sends 1024-byte packets.</p>
+<hr />
+<h3>Packet Loss</h3>
+<p><strong>Simple:</strong> When data packets fail to reach their destination. Like letters getting lost in the mail.<br />
+<strong>In our project:</strong> Scenario 4 shows a packet loss rate of only 0.68%, meaning 99.32% of all packets arrived successfully even during the attack and link failure.</p>
+<hr />
+<h3>PEP (Policy Enforcement Point)</h3>
+<p><strong>Simple:</strong> The device or software component that actually enforces security policies (allows/blocks traffic).<br />
+<strong>In our project:</strong> The Core Router is the PEP. It intercepts every forwarded packet using the <code>UnicastForward</code> trace callback and enforces the Zero-Trust Access Matrix.</p>
+<hr />
+<h3>Port (Network Port)</h3>
+<p><strong>Simple:</strong> A number (0–65535) that identifies a specific service on a device. Like apartment numbers in a building — the IP is the building address, the port is the apartment number.<br />
+Common ports: HTTP = 80, HTTPS = 443, DNS = 53, SSH = 22.<br />
+<strong>In our project:</strong> The attacker scans ports 1 to 100 on the ERP server. Our system detects a port scan when a single source accesses more than 10 unique ports within 5 seconds.</p>
+<hr />
+<h3>Port Scanning</h3>
+<p><strong>Simple:</strong> An attack technique where someone tries to connect to many different ports on a target to find which services are running. Like trying every door in a building to find unlocked ones.<br />
+<strong>In our project:</strong> The <code>MaliciousTrafficApp</code> sends packets to ports 1–100 on the ERP server every 2 seconds. When more than 10 unique ports are detected from one source, 30 risk points are added.</p>
+<hr />
+<h3>Port Security</h3>
+<p><strong>Simple:</strong> A switch feature that limits which devices can connect to a network port and how many devices can use it.<br />
+<strong>In our project:</strong> While NS-3 doesn't simulate port security directly, our Zero-Trust Access Matrix achieves similar protection by controlling which source VLANs can communicate with which destination VLANs.</p>
+<hr />
+<h2>Q</h2>
+<h3>Quarantine</h3>
+<p><strong>Simple:</strong> Isolating a compromised device from the network so it cannot cause further damage. Like putting a sick patient in isolation.<br />
+<strong>In our project:</strong> When a device's risk score reaches ≥ 70, its network interfaces are disabled using <code>ipv4-&gt;SetDown()</code>. The device is completely cut off from the network. It can recover automatically when the score decays below 70 (thanks to temporal decay).</p>
+<hr />
+<h2>R</h2>
+<h3>Routing</h3>
+<p><strong>Simple:</strong> The process of finding the best path for data to travel from source to destination across a network.<br />
+<strong>In our project:</strong> <code>Ipv4GlobalRoutingHelper::PopulateRoutingTables()</code> calculates routes for all 58 nodes. When the primary link fails, <code>RecomputeRoutingTables()</code> recalculates all routes to use the backup path.<br />
+<strong>If Sir asks about Static vs Dynamic:</strong><br />
+- <strong>Static Routing:</strong> Routes manually configured by admin. Doesn't change automatically. Good for small networks.<br />
+- <strong>Dynamic Routing:</strong> Routes calculated automatically by protocols (OSPF, RIP, BGP). Changes when topology changes. Used in our project for self-healing.</p>
+<hr />
+<h3>Routing Table</h3>
+<p><strong>Simple:</strong> A table stored in a router that lists all known network destinations and which interface/next-hop to use to reach them. Like a map that says "to reach Department X, use Door Y."<br />
+<strong>In our project:</strong> When the primary DC link fails, the routing tables are flushed and recomputed. All routes to <code>10.0.80.0/24</code> (Data Center) now point through the backup path via <code>10.0.2.0/24</code> and Distribution Switch 2.</p>
+<hr />
+<h2>S</h2>
+<h3>Subnet / Subnetting</h3>
+<p><strong>Simple:</strong> Dividing a large network into smaller sub-networks. Like dividing a big garden into separate plots.<br />
+<strong>In our project:</strong> Each department gets its own /24 subnet:<br />
+- Admin: <code>10.0.10.0/24</code> (256 addresses)<br />
+- CSE: <code>10.0.20.0/24</code><br />
+- IT: <code>10.0.30.0/24</code><br />
+- Library: <code>10.0.40.0/24</code><br />
+- COE: <code>10.0.50.0/24</code><br />
+- Hostel: <code>10.0.60.0/24</code><br />
+- IoT: <code>10.0.70.0/24</code><br />
+- Data Center: <code>10.0.80.0/24</code></p>
+<hr />
+<h3>Subnet Mask</h3>
+<p><strong>Simple:</strong> A number that tells you which part of an IP address is the "network" part and which part is the "host" part.<br />
+<strong>In our project:</strong> We use <code>255.255.255.0</code> (/24) for all department subnets. This means the first 3 octets identify the network, and the last octet identifies the device (up to 254 hosts per subnet).</p>
+<hr />
+<h2>T</h2>
+<h3>TCP/IP (Transmission Control Protocol / Internet Protocol)</h3>
+<p><strong>Simple:</strong> The fundamental set of rules that governs how data is sent and received over the internet. TCP ensures reliable delivery; IP handles addressing and routing.<br />
+<strong>In our project:</strong> All legitimate traffic uses UDP (User Datagram Protocol) for speed, but the Internet stack installed by NS-3's <code>InternetStackHelper</code> includes the full TCP/IP suite.</p>
+<hr />
+<h3>Temporal Decay</h3>
+<p><strong>Simple:</strong> A mathematical mechanism that makes old events "fade away" over time. Like how a bruise heals gradually.<br />
+<strong>In our project:</strong> Every 1 second, all risk scores are multiplied by 0.95 (decay factor γ). A score of 100 decays to ~50 in about 14 seconds if no new suspicious activity occurs. This prevents permanent quarantine of innocent devices.<br />
+<strong>Formula:</strong> <code>R(d, t) = MIN(100, R(d, t-1) × 0.95 + ΔR(d, t))</code></p>
+<hr />
+<h3>Throughput</h3>
+<p><strong>Simple:</strong> The actual amount of data successfully transmitted per second. Measured in bits per second (bps, Kbps, Mbps).<br />
+<strong>In our project:</strong> Scenario 4 achieves a total throughput of 25,030 Kbps across all 150 flows.</p>
+<hr />
+<h2>U</h2>
+<h3>UDP (User Datagram Protocol)</h3>
+<p><strong>Simple:</strong> A communication protocol that sends data without checking if it arrived. Faster than TCP but less reliable. Used for video streaming, gaming, DNS.<br />
+<strong>In our project:</strong> All traffic (legitimate and malicious) uses UDP sockets. The <code>OnOffHelper</code> with <code>ns3::UdpSocketFactory</code> generates the legitimate campus traffic.</p>
+<hr />
+<h2>V</h2>
+<h3>VLAN (Virtual Local Area Network)</h3>
+<p><strong>Simple:</strong> A logical grouping of network devices that behave as if they are on the same physical network, even if they are not. Like virtual walls inside a building.<br />
+<strong>In our project:</strong> We have 8 VLANs implemented as separate CSMA segments:</p>
+<table>
+<thead>
+<tr>
+<th>VLAN Tag</th>
+<th>Department</th>
+<th>Subnet</th>
+<th>Nodes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Administration</td>
+<td>10.0.10.0/24</td>
+<td>4</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CSE</td>
+<td>10.0.20.0/24</td>
+<td>10</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT</td>
+<td>10.0.30.0/24</td>
+<td>10</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Library</td>
+<td>10.0.40.0/24</td>
+<td>6</td>
+</tr>
+<tr>
+<td>50</td>
+<td>COE</td>
+<td>10.0.50.0/24</td>
+<td>4</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Hostel</td>
+<td>10.0.60.0/24</td>
+<td>8</td>
+</tr>
+<tr>
+<td>70</td>
+<td>IoT Lab</td>
+<td>10.0.70.0/24</td>
+<td>6</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Data Center</td>
+<td>10.0.80.0/24</td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks:</strong> <em>"A VLAN is a broadcast domain created by switches. Devices in the same VLAN can communicate directly, but devices in different VLANs need a router. We use 8 VLANs to segment our campus — this limits the blast radius of any attack to a single department."</em></p>
+<hr />
+<h3>VLSM (Variable Length Subnet Masking)</h3>
+<p><strong>Simple:</strong> Using different subnet mask sizes for different parts of the network to avoid wasting IP addresses. Some subnets get more addresses, others get fewer.<br />
+<strong>In our project:</strong> Currently we use a uniform /24 mask for all departments. However, in a real deployment, VLSM would be applied:<br />
+- CSE/IT (10 nodes): could use /28 (14 usable hosts)<br />
+- Admin/COE (4 nodes): could use /29 (6 usable hosts)<br />
+- Data Center (7 nodes): could use /28 (14 usable hosts)</p>
+<hr />
+<h2>Z</h2>
+<h3>Zero-Trust Architecture (ZTA)</h3>
+<p><strong>Simple:</strong> A security model that says "never trust anyone, always verify." Even if a device is already inside the network, it must continuously prove it is legitimate.<br />
+<strong>In our project:</strong> Every single packet forwarded by the Core Router is inspected against the access policy matrix. Even a CSE laptop that was just working fine 10 seconds ago gets checked every time. If its behaviour changes (starts scanning ports), its risk score goes up and it gets quarantined.<br />
+<strong>If Sir asks:</strong> <em>"Zero-Trust replaces the old castle-and-moat model. Instead of trusting everything inside the perimeter, we verify every request regardless of source. Our implementation applies continuous behavioural monitoring and calculates a real-time risk score for every device."</em></p>
+<hr />
+<blockquote>
+<p><strong>Tip for all 5 members:</strong> Practice saying these definitions out loud before the review. Sir may ask any of you about any term. Everyone should know at least the "Simple" explanation for every term above.</p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-02">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 02</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Network Topology Design (3-Tier Cisco Model)</div>
+                </div>
+                <span class="chapter-badge">5 Marks</span>
+            </div>
+            <h1>🏗️ Network Topology Design — Review 2 (5 Marks)</h1>
+<blockquote>
+<p><strong>Rubric Criteria:</strong> Hierarchical design with appropriate devices</p>
+</blockquote>
+<hr />
+<h2>What is Network Topology?</h2>
+<p><strong>Simple:</strong> Network topology is the <strong>arrangement</strong> of devices (computers, routers, switches) and how they are <strong>connected</strong> to each other. Think of it like a map showing roads between buildings.</p>
+<hr />
+<h2>Our Topology: 3-Tier Hierarchical Design</h2>
+<p>We follow the <strong>Cisco 3-Tier Hierarchical Model</strong>, the industry standard for campus networks:</p>
+<pre><code>                    ┌──────────────────┐
+                    │  INTERNET SERVER │ ← External connectivity
+                    └────────┬─────────┘
+                             │ 1 Gbps P2P (Backbone)
+                    ┌────────┴─────────┐
+                    │    CORE ROUTER    │ ← Policy Enforcement Point (PEP)
+                    │  (Zero-Trust)     │    Risk Scoring + Quarantine
+                    └──┬────────────┬───┘
+                       │            │ 1 Gbps P2P (Backup Link)
+                       │    ┌───────┴──────────┐
+                       │    │  BACKUP SWITCH     │ ← Distribution Layer
+                       │    │  (DistSwitch2)     │    Redundancy for self-healing
+                       │    └───────┬──────────┘
+                       │            │
+        ┌──────────────┼────────────┼──────────────────────┐
+        │              │            │                      │
+   ┌────┴────┐   ┌─────┴───┐  ┌────┴────┐           ┌─────┴────┐
+   │ Admin   │   │  CSE    │  │  IT     │    ...     │ DataCenter│
+   │ VLAN 10 │   │ VLAN 20 │  │ VLAN 30 │           │  VLAN 80  │
+   │ 4 nodes │   │ 10 nodes│  │ 10 nodes│           │  7 servers│
+   └─────────┘   └─────────┘  └─────────┘           └──────────┘
+        ↑              ↑            ↑                      ↑
+   ACCESS LAYER — CSMA segments (shared Ethernet, 100 Mbps each)
+</code></pre>
+<hr />
+<h2>The 3 Layers Explained</h2>
+<h3>1. Core Layer (Top) — The Brain</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Device</strong></td>
+<td>Core Router (1 node)</td>
+</tr>
+<tr>
+<td><strong>Role</strong></td>
+<td>Routes ALL inter-VLAN traffic, enforces Zero-Trust policies, runs the Risk Scoring Engine</td>
+</tr>
+<tr>
+<td><strong>Connection</strong></td>
+<td>1 Gbps Point-to-Point link to Internet Server</td>
+</tr>
+<tr>
+<td><strong>IP</strong></td>
+<td><code>10.0.1.1</code> (on backbone)</td>
+</tr>
+<tr>
+<td><strong>Why it matters</strong></td>
+<td>Every single packet between departments passes through this router. It is the Policy Enforcement Point (PEP)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks "Why only 1 core router?"</strong></p>
+<blockquote>
+<p><em>"In our hierarchical design, the Core Router is the centralised Policy Enforcement Point. All inter-VLAN traffic is funneled through it so our Zero-Trust engine can inspect 100% of cross-department packets. The backup distribution switch provides redundancy."</em></p>
+</blockquote>
+<hr />
+<h3>2. Distribution Layer (Middle) — Backup &amp; Redundancy</h3>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Device</strong></td>
+<td>Distribution Switch 2 / Backup Switch (1 node)</td>
+</tr>
+<tr>
+<td><strong>Role</strong></td>
+<td>Provides an alternate path to the Data Center when the primary link fails</td>
+</tr>
+<tr>
+<td><strong>Connection</strong></td>
+<td>1 Gbps P2P link to Core Router (<code>10.0.2.0/24</code>)</td>
+</tr>
+<tr>
+<td><strong>Secondary</strong></td>
+<td>CSMA link to Data Center (<code>10.0.82.0/24</code>)</td>
+</tr>
+<tr>
+<td><strong>Why it matters</strong></td>
+<td>Enables self-healing — if the primary DC link fails, traffic reroutes through this switch</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks "Why do you need a backup switch?"</strong></p>
+<blockquote>
+<p><em>"The Distribution Switch provides physical redundancy. When the primary CSMA link between the Core Router and Data Center fails at t=60s, the Self-Healing Controller activates this backup path. The routing tables are recomputed, and all traffic seamlessly flows through the backup switch. Recovery happens in under 2 seconds."</em></p>
+</blockquote>
+<hr />
+<h3>3. Access Layer (Bottom) — End Devices</h3>
+<table>
+<thead>
+<tr>
+<th>VLAN</th>
+<th>Department</th>
+<th>Nodes</th>
+<th>Device Types</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Administration</td>
+<td>4</td>
+<td>Admin PC-1, PC-2, PC-3, ERP Terminal</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CSE</td>
+<td>10</td>
+<td>Attacker (node 0), Lab-2 to Lab-9, Faculty</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT</td>
+<td>10</td>
+<td>Lab-1 to Lab-9, Faculty</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Library</td>
+<td>6</td>
+<td>OPAC-1, OPAC-2, Digital Library, WiFi-1,2,3</td>
+</tr>
+<tr>
+<td>50</td>
+<td>COE</td>
+<td>4</td>
+<td>Research-1, Research-2, HPC-1, HPC-2</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Hostel</td>
+<td>8</td>
+<td>WiFi-1,2, Device-3,4,5, SmartLock-1,2,3</td>
+</tr>
+<tr>
+<td>70</td>
+<td>IoT Lab</td>
+<td>6</td>
+<td>Sensor-1,2, Controller-1,2, Gateway-1,2</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Data Center</td>
+<td>7</td>
+<td>ERP, DB, DHCP, DNS, Web, Email, Backup</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Total: 58 nodes</strong> (55 department + 3 infrastructure)</p>
+<hr />
+<h2>Connection Types Used</h2>
+<table>
+<thead>
+<tr>
+<th>Link Type</th>
+<th>Where Used</th>
+<th>Speed</th>
+<th>Delay</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Point-to-Point (P2P)</strong></td>
+<td>Backbone (Internet ↔ Router), Backup link (Router ↔ Backup Switch)</td>
+<td>1 Gbps</td>
+<td>2 ms</td>
+</tr>
+<tr>
+<td><strong>CSMA (Shared Ethernet)</strong></td>
+<td>All 8 department segments (VLANs)</td>
+<td>100 Mbps</td>
+<td>6.56 μs</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Why This Design is Good (Marks-Scoring Points)</h2>
+<ol>
+<li><strong>Hierarchical</strong> — Follows Cisco's proven 3-tier model (Core → Distribution → Access)</li>
+<li><strong>Scalable</strong> — New departments can be added by creating a new CSMA segment on the router</li>
+<li><strong>Redundant</strong> — Backup distribution switch ensures no single point of failure for Data Center access</li>
+<li><strong>Segmented</strong> — 8 separate VLANs limit the blast radius of any attack</li>
+<li><strong>Centralized Security</strong> — Single PEP at the core makes policy enforcement consistent and auditable</li>
+</ol>
+<hr />
+<h2>Questions Sir May Ask</h2>
+<p><strong>Q: "What topology did you use?"</strong></p>
+<blockquote>
+<p><em>"We used a 3-tier hierarchical topology — Core, Distribution, and Access layers. The Core Router serves as the centralized Zero-Trust Policy Enforcement Point. The Distribution layer provides backup path redundancy. The Access layer consists of 8 CSMA-based department segments with 55 end devices."</em></p>
+</blockquote>
+<p><strong>Q: "Why hierarchical and not flat?"</strong></p>
+<blockquote>
+<p><em>"A flat topology would allow any device to directly reach any other device, making security enforcement nearly impossible. Hierarchical design forces all inter-department traffic through the Core Router, enabling 100% packet inspection and policy enforcement."</em></p>
+</blockquote>
+<p><strong>Q: "How many nodes do you have?"</strong></p>
+<blockquote>
+<p><em>"58 nodes total: 1 Internet Server, 1 Core Router, 1 Backup Distribution Switch, and 55 department nodes distributed across 8 VLANs."</em></p>
+</blockquote>
+<p><strong>Q: "What devices are in the Data Center?"</strong></p>
+<blockquote>
+<p><em>"7 servers: ERP Server, Database Server, DHCP Server, DNS Server, Web Server, Email Server, and Backup Server. All on VLAN 80 (10.0.80.0/24)."</em></p>
+</blockquote>
+<p><strong>Q: "How is redundancy achieved?"</strong></p>
+<blockquote>
+<p><em>"The Data Center has dual-path connectivity. The primary path is a direct CSMA link from the Core Router. The backup path goes through a dedicated Distribution Switch via a P2P link. If the primary fails, the Self-Healing Controller activates the backup and recomputes routing tables in under 2 seconds."</em></p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-03">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 03</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">IP Addressing & Subnetting (VLSM Design)</div>
+                </div>
+                <span class="chapter-badge">5 Marks</span>
+            </div>
+            <h1>🔢 IP Addressing &amp; Subnetting — Review 2 (5 Marks)</h1>
+<blockquote>
+<p><strong>Rubric Criteria:</strong> Efficient VLSM/Subnet design</p>
+</blockquote>
+<hr />
+<h2>What is IP Addressing?</h2>
+<p><strong>Simple:</strong> Every device on a network needs a unique address so data can find it. An IP address is like a postal address for your computer. IPv4 addresses are written as 4 numbers separated by dots: <code>10.0.20.2</code></p>
+<p>Each number (called an <strong>octet</strong>) ranges from 0 to 255.</p>
+<hr />
+<h2>What is Subnetting?</h2>
+<p><strong>Simple:</strong> Subnetting is dividing one big network into smaller pieces. Like dividing a large plot of land into individual house plots.</p>
+<p><strong>Example:</strong> Instead of putting all 58 devices on one network <code>10.0.0.0</code>, we divide it into 8 smaller subnets — one per department.</p>
+<hr />
+<h2>Our Complete IP Addressing Scheme</h2>
+<h3>Class A Private Address: <code>10.0.0.0</code></h3>
+<p>We chose <code>10.0.0.0</code> because:<br />
+- It's a <strong>private IP range</strong> (not routable on the internet) — safe for internal campus use<br />
+- It gives us a massive address space (over 16 million addresses)<br />
+- The second octet (<code>.0.</code>) is unused, the third octet (<code>.X.</code>) identifies each department</p>
+<h3>Master IP Table</h3>
+<table>
+<thead>
+<tr>
+<th>Subnet</th>
+<th>Department</th>
+<th>Network Address</th>
+<th>Subnet Mask</th>
+<th>Gateway (Router)</th>
+<th>Usable Range</th>
+<th>Nodes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Backbone</strong></td>
+<td>Internet ↔ Router</td>
+<td><code>10.0.1.0</code></td>
+<td><code>/24</code> (255.255.255.0)</td>
+<td><code>10.0.1.1</code> (Router)</td>
+<td><code>10.0.1.1 – 10.0.1.254</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>Backup Link</strong></td>
+<td>Router ↔ Backup Switch</td>
+<td><code>10.0.2.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.2.1</code> (Router)</td>
+<td><code>10.0.2.1 – 10.0.2.254</code></td>
+<td>2</td>
+</tr>
+<tr>
+<td><strong>VLAN 10</strong></td>
+<td>Administration</td>
+<td><code>10.0.10.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.10.1</code></td>
+<td><code>10.0.10.2 – 10.0.10.254</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>VLAN 20</strong></td>
+<td>CSE Department</td>
+<td><code>10.0.20.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.20.1</code></td>
+<td><code>10.0.20.2 – 10.0.20.254</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>VLAN 30</strong></td>
+<td>IT Department</td>
+<td><code>10.0.30.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.30.1</code></td>
+<td><code>10.0.30.2 – 10.0.30.254</code></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>VLAN 40</strong></td>
+<td>Library</td>
+<td><code>10.0.40.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.40.1</code></td>
+<td><code>10.0.40.2 – 10.0.40.254</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>VLAN 50</strong></td>
+<td>COE</td>
+<td><code>10.0.50.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.50.1</code></td>
+<td><code>10.0.50.2 – 10.0.50.254</code></td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>VLAN 60</strong></td>
+<td>Hostel</td>
+<td><code>10.0.60.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.60.1</code></td>
+<td><code>10.0.60.2 – 10.0.60.254</code></td>
+<td>8</td>
+</tr>
+<tr>
+<td><strong>VLAN 70</strong></td>
+<td>IoT Lab</td>
+<td><code>10.0.70.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.70.1</code></td>
+<td><code>10.0.70.2 – 10.0.70.254</code></td>
+<td>6</td>
+</tr>
+<tr>
+<td><strong>VLAN 80</strong></td>
+<td>Data Center (Primary)</td>
+<td><code>10.0.80.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.80.1</code></td>
+<td><code>10.0.80.2 – 10.0.80.254</code></td>
+<td>7</td>
+</tr>
+<tr>
+<td><strong>VLAN 82</strong></td>
+<td>Data Center (Backup)</td>
+<td><code>10.0.82.0</code></td>
+<td><code>/24</code></td>
+<td><code>10.0.82.1</code></td>
+<td><code>10.0.82.2 – 10.0.82.254</code></td>
+<td>7</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Key Device IP Addresses (Memorize These!)</h2>
+<table>
+<thead>
+<tr>
+<th>Device</th>
+<th>IP Address</th>
+<th>Department</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Internet Server</td>
+<td><code>10.0.1.1</code></td>
+<td>Backbone</td>
+</tr>
+<tr>
+<td>Core Router (backbone)</td>
+<td><code>10.0.1.2</code></td>
+<td>Backbone</td>
+</tr>
+<tr>
+<td><strong>Attacker (CSE student)</strong></td>
+<td><strong><code>10.0.20.2</code></strong></td>
+<td>CSE VLAN</td>
+</tr>
+<tr>
+<td>Admin PC-1</td>
+<td><code>10.0.10.2</code></td>
+<td>Admin VLAN</td>
+</tr>
+<tr>
+<td>COE Research-1</td>
+<td><code>10.0.50.2</code></td>
+<td>COE VLAN</td>
+</tr>
+<tr>
+<td><strong>ERP Server</strong></td>
+<td><strong><code>10.0.80.2</code></strong></td>
+<td>Data Center</td>
+</tr>
+<tr>
+<td>DNS Server</td>
+<td><code>10.0.80.5</code></td>
+<td>Data Center</td>
+</tr>
+<tr>
+<td>Web Server</td>
+<td><code>10.0.80.6</code></td>
+<td>Data Center</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Important:</strong> The router's IP on each VLAN is always <code>.1</code> (first usable address). Department nodes start from <code>.2</code>.</p>
+</blockquote>
+<hr />
+<h2>How Subnetting Works (Step by Step)</h2>
+<h3>Understanding <code>/24</code> (255.255.255.0)</h3>
+<pre><code>IP Address:    10  .  0  .  20  .  2
+In Binary:     00001010.00000000.00010100.00000010
+
+Subnet Mask:   255.255.255.0
+In Binary:     11111111.11111111.11111111.00000000
+                ←— Network Part (24 bits) —→←Host→
+
+Network ID:    10.0.20.0    (first address — identifies the subnet)
+Broadcast:     10.0.20.255  (last address — reaches all devices)
+Usable Range:  10.0.20.1 to 10.0.20.254 (254 usable addresses)
+</code></pre>
+<h3>How to Identify Department from IP</h3>
+<p><strong>Just look at the 3rd octet:</strong><br />
+- <code>10.0.10.x</code> → 10 → Admin<br />
+- <code>10.0.20.x</code> → 20 → CSE<br />
+- <code>10.0.30.x</code> → 30 → IT<br />
+- <code>10.0.40.x</code> → 40 → Library<br />
+- <code>10.0.50.x</code> → 50 → COE<br />
+- <code>10.0.60.x</code> → 60 → Hostel<br />
+- <code>10.0.70.x</code> → 70 → IoT Lab<br />
+- <code>10.0.80.x</code> → 80 → Data Center</p>
+<p>This is exactly how our code identifies VLANs! Look at this from the C++ source:</p>
+<pre><code class="language-cpp">uint8_t third = (ip &gt;&gt; 8) &amp; 0xFF;  // Extract 3rd octet
+switch (third) {
+    case 10: return &quot;ADMIN&quot;;
+    case 20: return &quot;CSE&quot;;
+    case 30: return &quot;IT&quot;;
+    // ... and so on
+}
+</code></pre>
+<hr />
+<h2>VLSM — What It Is and How It Applies</h2>
+<h3>What is VLSM?</h3>
+<p><strong>Simple:</strong> VLSM (Variable Length Subnet Masking) means using different subnet sizes for different needs. Instead of giving every department 254 addresses, you give bigger subnets to bigger departments and smaller subnets to smaller ones.</p>
+<h3>Current Design (Uniform /24):</h3>
+<p>Every department gets 254 usable addresses. This wastes addresses for small departments.</p>
+<h3>VLSM Optimized Design (If Sir Asks):</h3>
+<table>
+<thead>
+<tr>
+<th>Department</th>
+<th>Actual Nodes</th>
+<th>VLSM Mask</th>
+<th>Usable IPs</th>
+<th>Waste</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSE</td>
+<td>10</td>
+<td><code>/28</code> (255.255.255.240)</td>
+<td>14</td>
+<td>4 wasted</td>
+</tr>
+<tr>
+<td>IT</td>
+<td>10</td>
+<td><code>/28</code></td>
+<td>14</td>
+<td>4 wasted</td>
+</tr>
+<tr>
+<td>Hostel</td>
+<td>8</td>
+<td><code>/28</code></td>
+<td>14</td>
+<td>6 wasted</td>
+</tr>
+<tr>
+<td>Data Center</td>
+<td>7</td>
+<td><code>/28</code></td>
+<td>14</td>
+<td>7 wasted</td>
+</tr>
+<tr>
+<td>Library</td>
+<td>6</td>
+<td><code>/29</code> (255.255.255.248)</td>
+<td>6</td>
+<td>0 wasted</td>
+</tr>
+<tr>
+<td>IoT Lab</td>
+<td>6</td>
+<td><code>/29</code></td>
+<td>6</td>
+<td>0 wasted</td>
+</tr>
+<tr>
+<td>Admin</td>
+<td>4</td>
+<td><code>/29</code></td>
+<td>6</td>
+<td>2 wasted</td>
+</tr>
+<tr>
+<td>COE</td>
+<td>4</td>
+<td><code>/29</code></td>
+<td>6</td>
+<td>2 wasted</td>
+</tr>
+<tr>
+<td>Backbone</td>
+<td>2</td>
+<td><code>/30</code> (255.255.255.252)</td>
+<td>2</td>
+<td>0 wasted</td>
+</tr>
+<tr>
+<td>Backup Link</td>
+<td>2</td>
+<td><code>/30</code></td>
+<td>2</td>
+<td>0 wasted</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks "Why did you use /24 instead of VLSM?"</strong></p>
+<blockquote>
+<p><em>"We used a uniform /24 addressing scheme in the NS-3 simulation for clarity and simplicity, as NS-3's Ipv4AddressHelper works most naturally with /24 subnets. However, for a real campus deployment, we would apply VLSM to optimize address utilization. For example, the CSE department with 10 nodes only needs a /28 (14 hosts), saving 240 addresses per subnet."</em></p>
+</blockquote>
+<hr />
+<h2>How Addressing Enables Security</h2>
+<p>The IP addressing scheme is critical to our security design because:</p>
+<ol>
+<li><strong>VLAN Identification:</strong> The router identifies which department a packet belongs to by reading the 3rd octet of the IP address</li>
+<li><strong>Policy Enforcement:</strong> The Zero-Trust Access Matrix uses VLAN names (derived from IPs) to decide allow/deny</li>
+<li><strong>Risk Attribution:</strong> When a policy violation occurs, the risk score is attributed to the source IP address</li>
+<li><strong>Quarantine:</strong> The quarantine controller maps IP addresses to specific NS-3 nodes, so it can disable the right device's interfaces</li>
+</ol>
+<hr />
+<h2>Questions Sir May Ask</h2>
+<p><strong>Q: "What IP addressing scheme did you use?"</strong></p>
+<blockquote>
+<p><em>"We used a Class A private address space (10.0.0.0) with /24 subnets for each department. The third octet identifies the department — 10 for Admin, 20 for CSE, 30 for IT, and so on up to 80 for Data Center. Each subnet provides 254 usable host addresses."</em></p>
+</blockquote>
+<p><strong>Q: "What is the subnet mask?"</strong></p>
+<blockquote>
+<p><em>"255.255.255.0, also written as /24. This means the first 24 bits identify the network, and the last 8 bits identify the host. Each subnet supports up to 254 usable addresses."</em></p>
+</blockquote>
+<p><strong>Q: "Why did you choose 10.0.0.0?"</strong></p>
+<blockquote>
+<p><em>"10.0.0.0/8 is a private IP range defined in RFC 1918. It's not routable on the public internet, so it's safe for internal campus use. It also gives us a very large address space — over 16 million addresses — which makes subnet planning flexible."</em></p>
+</blockquote>
+<p><strong>Q: "What is VLSM? Did you use it?"</strong></p>
+<blockquote>
+<p><em>"VLSM stands for Variable Length Subnet Masking. It allows different subnets to have different sizes, reducing IP address waste. In our NS-3 simulation, we used uniform /24 subnets for simplicity. In a real deployment, we would use VLSM — for example, /28 for CSE (14 hosts) and /29 for Admin (6 hosts)."</em></p>
+</blockquote>
+<p><strong>Q: "What is the IP of the attacker?"</strong></p>
+<blockquote>
+<p><em>"<code>10.0.20.2</code> — the first CSE student node in VLAN 20."</em></p>
+</blockquote>
+<p><strong>Q: "How does the router know which department a packet is from?"</strong></p>
+<blockquote>
+<p><em>"By extracting the third octet of the source IP address. If a packet comes from 10.0.20.x, the router knows it's from the CSE department. This is implemented in the <code>VlanNameFromIp()</code> function in our C++ code."</em></p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-04">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 04</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Routing & Switching (OSPF, VLANs, Inter-VLAN)</div>
+                </div>
+                <span class="chapter-badge">5 Marks</span>
+            </div>
+            <h1>🔀 Routing &amp; Switching — Review 2 (5 Marks)</h1>
+<blockquote>
+<p><strong>Rubric Criteria:</strong> Static/Dynamic Routing, VLANs, Inter-VLAN Routing</p>
+</blockquote>
+<hr />
+<h2>Part 1: Switching &amp; VLANs</h2>
+<h3>What is a Switch?</h3>
+<p><strong>Simple:</strong> A switch connects devices within the same network (LAN). It reads the MAC address of incoming data and sends it only to the correct device, not to everyone.</p>
+<h3>What is a VLAN?</h3>
+<p><strong>Simple:</strong> A VLAN (Virtual LAN) is a way to logically divide one physical switch into multiple isolated networks. Devices in the same VLAN can talk to each other. Devices in different VLANs CANNOT talk to each other without a router.</p>
+<p><strong>Real-world analogy:</strong> Think of a school building with different floors. Each floor is a VLAN. Students on the same floor can talk to each other, but to visit another floor, they must go through the staircase (router).</p>
+<h3>Our VLANs</h3>
+<p>We have <strong>8 VLANs</strong>, each representing a campus department:</p>
+<table>
+<thead>
+<tr>
+<th>VLAN ID</th>
+<th>Department</th>
+<th>Subnet</th>
+<th>Number of Devices</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Administration</td>
+<td>10.0.10.0/24</td>
+<td>4</td>
+<td>Admin PCs, ERP terminals</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CSE Department</td>
+<td>10.0.20.0/24</td>
+<td>10</td>
+<td>Student labs, faculty workstations</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT Department</td>
+<td>10.0.30.0/24</td>
+<td>10</td>
+<td>Student labs, faculty workstations</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Library</td>
+<td>10.0.40.0/24</td>
+<td>6</td>
+<td>OPAC systems, digital library, WiFi APs</td>
+</tr>
+<tr>
+<td>50</td>
+<td>COE (Centre of Excellence)</td>
+<td>10.0.50.0/24</td>
+<td>4</td>
+<td>Research systems, HPC clusters</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Hostel</td>
+<td>10.0.60.0/24</td>
+<td>8</td>
+<td>Student WiFi, smart locks</td>
+</tr>
+<tr>
+<td>70</td>
+<td>IoT Lab</td>
+<td>10.0.70.0/24</td>
+<td>6</td>
+<td>Sensors, controllers, gateways</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Data Center</td>
+<td>10.0.80.0/24</td>
+<td>7</td>
+<td>ERP, DB, DHCP, DNS, Web, Email, Backup servers</td>
+</tr>
+</tbody>
+</table>
+<h3>How VLANs Are Created in NS-3</h3>
+<p>In NS-3, each VLAN is implemented as a separate <strong>CSMA (Carrier Sense Multiple Access) segment</strong>:</p>
+<pre><code class="language-cpp">// Helper function used in our code to create each VLAN
+auto createVlan = [&amp;] (NodeContainer &amp;deptNodes, const char *base)
+{
+    NodeContainer lan;
+    lan.Add (topo.router);        // Router connects to every VLAN
+    lan.Add (deptNodes);           // Department devices
+    NetDeviceContainer devs = csma.Install (lan);  // Shared Ethernet bus
+    addr.SetBase (base, &quot;255.255.255.0&quot;);
+    return addr.Assign (devs);     // Assign IP addresses
+};
+
+// Creating all 8 VLANs:
+topo.adminIf   = createVlan (topo.adminNodes,   &quot;10.0.10.0&quot;);
+topo.cseIf     = createVlan (topo.cseNodes,     &quot;10.0.20.0&quot;);
+topo.itIf      = createVlan (topo.itNodes,      &quot;10.0.30.0&quot;);
+topo.libraryIf = createVlan (topo.libraryNodes, &quot;10.0.40.0&quot;);
+topo.coeIf     = createVlan (topo.coeNodes,     &quot;10.0.50.0&quot;);
+topo.hostelIf  = createVlan (topo.hostelNodes,  &quot;10.0.60.0&quot;);
+topo.iotIf     = createVlan (topo.iotNodes,     &quot;10.0.70.0&quot;);
+// Data Center has primary + backup segments
+</code></pre>
+<h3>Why VLANs Are Important for Security</h3>
+<p>Without VLANs (flat network):</p>
+<pre><code>ALL 58 devices on ONE network → attacker can reach EVERYONE
+</code></pre>
+<p>With VLANs (segmented network):</p>
+<pre><code>CSE VLAN │ IT VLAN │ Admin VLAN │ ... │ DC VLAN
+    ↕          ↕         ↕                ↕
+    └──────────┴─────────┴────────────────┘
+                   Must go through Core Router
+                   (Zero-Trust policy applied!)
+</code></pre>
+<p><strong>If Sir asks "What is the benefit of VLANs?"</strong></p>
+<blockquote>
+<p><em>"VLANs provide network segmentation, which limits the blast radius of security incidents. If a CSE laptop is infected with malware, it can only spread within the CSE VLAN — it cannot directly reach Administration, IoT Lab, or Data Center devices. All cross-VLAN traffic must pass through our Core Router where the Zero-Trust policy is enforced."</em></p>
+</blockquote>
+<hr />
+<h2>Part 2: Routing</h2>
+<h3>What is Routing?</h3>
+<p><strong>Simple:</strong> Routing is the process of finding the best path for data packets to travel from the source to the destination across different networks.</p>
+<h3>Static Routing vs Dynamic Routing</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Static Routing</th>
+<th>Dynamic Routing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Configuration</strong></td>
+<td>Manually configured by admin</td>
+<td>Automatically learned by protocol</td>
+</tr>
+<tr>
+<td><strong>Adaptability</strong></td>
+<td>Does NOT adapt to changes</td>
+<td>Automatically adapts to failures</td>
+</tr>
+<tr>
+<td><strong>CPU Usage</strong></td>
+<td>Low</td>
+<td>Higher (protocol overhead)</td>
+</tr>
+<tr>
+<td><strong>Example</strong></td>
+<td>Admin types route commands</td>
+<td>OSPF, RIP, BGP calculate routes</td>
+</tr>
+<tr>
+<td><strong>Best for</strong></td>
+<td>Small, stable networks</td>
+<td>Large, complex networks</td>
+</tr>
+</tbody>
+</table>
+<h3>What We Use: Dynamic Routing (OSPF-like)</h3>
+<p>Our project uses <strong>dynamic routing</strong> via NS-3's <code>Ipv4GlobalRoutingHelper</code>:</p>
+<pre><code class="language-cpp">// Step 1: Initially calculate all routes
+Ipv4GlobalRoutingHelper::PopulateRoutingTables();
+
+// Step 2: When primary link fails, RECOMPUTE all routes
+Ipv4GlobalRoutingHelper::RecomputeRoutingTables();
+// Now traffic automatically flows through the backup path!
+</code></pre>
+<p>This simulates how <strong>OSPF (Open Shortest Path First)</strong> works:<br />
+1. Each router builds a map of the entire network<br />
+2. Uses <strong>Dijkstra's shortest-path algorithm</strong> to find the best route<br />
+3. If a link fails, routes are recalculated automatically</p>
+<p><strong>If Sir asks "Is this static or dynamic routing?"</strong></p>
+<blockquote>
+<p><em>"We use dynamic routing. NS-3's GlobalRoutingHelper simulates OSPF-like link-state routing. Initially, PopulateRoutingTables() calculates optimal routes for all 58 nodes. When the primary Data Center link fails at t=60s, our Self-Healing Controller calls RecomputeRoutingTables(), which automatically reroutes all traffic through the backup distribution switch — just like OSPF reconvergence."</em></p>
+</blockquote>
+<hr />
+<h2>Part 3: Inter-VLAN Routing</h2>
+<h3>What is Inter-VLAN Routing?</h3>
+<p><strong>Simple:</strong> Since devices in different VLANs cannot talk directly, a <strong>router</strong> is needed to pass traffic between them. This is called Inter-VLAN Routing.</p>
+<h3>How It Works in Our Network</h3>
+<pre><code>CSE Student (10.0.20.3) wants to access Web Server (10.0.80.6)
+
+Step 1: CSE Student sends packet to its default gateway (10.0.20.1 = Router)
+Step 2: Router receives packet on CSE VLAN interface
+Step 3: Router checks Zero-Trust Access Matrix:
+        - Source: CSE → Destination: DATACENTER → ALLOWED ✅
+Step 4: Router checks risk score of 10.0.20.3:
+        - Score = 0 → NORMAL state → Forward packet
+Step 5: Router forwards packet out of its Data Center VLAN interface (10.0.80.1)
+Step 6: Web Server (10.0.80.6) receives the packet
+</code></pre>
+<h3>Example of a BLOCKED Inter-VLAN Request</h3>
+<pre><code>CSE Attacker (10.0.20.2) tries to reach Admin PC (10.0.10.2)
+
+Step 1: Attacker sends packet to gateway (10.0.20.1 = Router)
+Step 2: Router receives packet on CSE VLAN interface
+Step 3: Router checks Zero-Trust Access Matrix:
+        - Source: CSE → Destination: ADMIN → DENIED ❌
+Step 4: Router drops the packet
+Step 5: Router adds 25 risk points to 10.0.20.2's score
+Step 6: If score reaches ≥ 70, attacker gets quarantined!
+</code></pre>
+<h3>The Router-on-a-Stick Concept</h3>
+<p>Our Core Router is connected to ALL 8 VLANs simultaneously. It has one interface on each VLAN:</p>
+<table>
+<thead>
+<tr>
+<th>Router Interface</th>
+<th>VLAN</th>
+<th>IP Address</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface for Admin</td>
+<td>VLAN 10</td>
+<td>10.0.10.1</td>
+</tr>
+<tr>
+<td>Interface for CSE</td>
+<td>VLAN 20</td>
+<td>10.0.20.1</td>
+</tr>
+<tr>
+<td>Interface for IT</td>
+<td>VLAN 30</td>
+<td>10.0.30.1</td>
+</tr>
+<tr>
+<td>Interface for Library</td>
+<td>VLAN 40</td>
+<td>10.0.40.1</td>
+</tr>
+<tr>
+<td>Interface for COE</td>
+<td>VLAN 50</td>
+<td>10.0.50.1</td>
+</tr>
+<tr>
+<td>Interface for Hostel</td>
+<td>VLAN 60</td>
+<td>10.0.60.1</td>
+</tr>
+<tr>
+<td>Interface for IoT</td>
+<td>VLAN 70</td>
+<td>10.0.70.1</td>
+</tr>
+<tr>
+<td>Interface for DC</td>
+<td>VLAN 80</td>
+<td>10.0.80.1</td>
+</tr>
+<tr>
+<td>Backbone</td>
+<td>—</td>
+<td>10.0.1.2</td>
+</tr>
+<tr>
+<td>Backup Link</td>
+<td>—</td>
+<td>10.0.2.1</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>The router has <strong>10 interfaces</strong> (one per VLAN + backbone + backup)</p>
+</blockquote>
+<hr />
+<h2>Part 4: Self-Healing Routing (Our Novel Contribution)</h2>
+<h3>The Problem with Normal OSPF</h3>
+<p>Normal OSPF recalculates routes when a link fails — but it is <strong>security-agnostic</strong>. It doesn't know or care which devices are quarantined. So when traffic is rerouted through a backup path, a quarantined device might accidentally regain connectivity.</p>
+<h3>Our Solution: Quarantine-Aware Self-Healing</h3>
+<pre><code>t=60s: Primary DC link fails
+  │
+  ├── Step 1: Heartbeat timeout (0.5 seconds)
+  │           Router detects: &quot;Primary link is DOWN&quot;
+  │
+  ├── Step 2: Activate backup interface
+  │           ipv4-&gt;SetUp(backupIfIndex)
+  │
+  ├── Step 3: Recompute routing tables
+  │           Ipv4GlobalRoutingHelper::RecomputeRoutingTables()
+  │           Traffic now flows through Backup Switch
+  │
+  ├── Step 4: ★ QUARANTINE INTEGRITY CHECK ★
+  │           &quot;Are quarantined devices still isolated?&quot;
+  │           Answer: YES — because quarantine disables the DEVICE's
+  │           interfaces, not the ROUTER's. So rerouting doesn't help them.
+  │
+  └── Step 5: Recovery complete (&lt; 2 seconds total)
+
+t=90s: Primary link restored
+  │
+  ├── Step 1: Enable primary interface
+  ├── Step 2: Recompute routes (primary preferred again)
+  └── Step 3: Quarantine integrity re-verified
+</code></pre>
+<hr />
+<h2>Questions Sir May Ask</h2>
+<p><strong>Q: "What type of routing do you use?"</strong></p>
+<blockquote>
+<p><em>"Dynamic routing. We use NS-3's GlobalRoutingHelper which simulates OSPF-like link-state routing. Routes are automatically recalculated when the network topology changes, such as during our self-healing link failure scenario."</em></p>
+</blockquote>
+<p><strong>Q: "How does Inter-VLAN routing work in your project?"</strong></p>
+<blockquote>
+<p><em>"The Core Router has interfaces on all 8 VLANs. When a device in CSE (VLAN 20) wants to reach the Data Center (VLAN 80), the packet goes to the router (10.0.20.1), which checks the Zero-Trust policy, and if allowed, forwards it through its Data Center interface (10.0.80.1)."</em></p>
+</blockquote>
+<p><strong>Q: "What happens when a link fails?"</strong></p>
+<blockquote>
+<p><em>"Our Self-Healing Controller detects the failure within 500ms using heartbeat monitoring. It activates the backup distribution switch, calls RecomputeRoutingTables() to recalculate all routes, verifies that quarantined devices remain isolated, and completes recovery in under 2 seconds."</em></p>
+</blockquote>
+<p><strong>Q: "What is the difference between a switch and a router?"</strong></p>
+<blockquote>
+<p><em>"A switch operates at Layer 2 (Data Link) and forwards frames based on MAC addresses within the same VLAN. A router operates at Layer 3 (Network) and forwards packets based on IP addresses between different VLANs/subnets. In our design, each CSMA segment acts as a virtual switch, and the Core Router handles inter-VLAN routing."</em></p>
+</blockquote>
+<p><strong>Q: "Why is OSPF called a link-state protocol?"</strong></p>
+<blockquote>
+<p><em>"Because each router maintains the complete 'state' of every 'link' in the network. Unlike distance-vector protocols (like RIP) which only know the next hop, link-state routers have a full topology map and use Dijkstra's algorithm to compute the shortest path tree."</em></p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-05">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 05</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Security Design (Zero-Trust, ACL Matrix, Risk Scoring)</div>
+                </div>
+                <span class="chapter-badge">5 Marks</span>
+            </div>
+            <h1>🔒 Security Design — Review 2 (5 Marks)</h1>
+<blockquote>
+<p><strong>Rubric Criteria:</strong> ACLs, Port Security, Password Policies, Network Segmentation</p>
+</blockquote>
+<hr />
+<h2>Overview: 4 Layers of Security</h2>
+<p>Our project has <strong>4 layers of security</strong> working together:</p>
+<pre><code>┌──────────────────────────────────────────────────────────────┐
+│  LAYER 1: Network Segmentation (8 VLANs)                    │
+│  → Prevents direct access between departments               │
+├──────────────────────────────────────────────────────────────┤
+│  LAYER 2: Zero-Trust Access Control List (ACL)               │
+│  → Only specifically allowed VLAN→VLAN pairs can communicate │
+├──────────────────────────────────────────────────────────────┤
+│  LAYER 3: Behavioural Risk Scoring Engine                    │
+│  → Continuously monitors behaviour, calculates risk scores   │
+├──────────────────────────────────────────────────────────────┤
+│  LAYER 4: Graduated Dynamic Quarantine                       │
+│  → Progressively isolates threats: Warning → Rate-Limit →    │
+│    Full Quarantine (interface shutdown)                       │
+└──────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr />
+<h2>1. Network Segmentation (VLANs)</h2>
+<h3>What is it?</h3>
+<p>Dividing the campus network into 8 isolated segments so that an attack in one department cannot spread to others.</p>
+<h3>How it protects us:</h3>
+<ul>
+<li><strong>Without segmentation:</strong> Malware on one CSE laptop can instantly reach Admin PCs, IoT sensors, hostel devices — infecting 60-80% of the network</li>
+<li><strong>With segmentation:</strong> Malware on a CSE laptop is contained within the CSE VLAN. It can only spread to other CSE devices. To reach Admin or IoT, it must go through the Core Router — where it gets caught.</li>
+</ul>
+<h3>Our 8 Segments:</h3>
+<table>
+<thead>
+<tr>
+<th>VLAN</th>
+<th>Department</th>
+<th>Isolation Benefit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>10</td>
+<td>Admin</td>
+<td>Protects sensitive ERP data and financial records</td>
+</tr>
+<tr>
+<td>20</td>
+<td>CSE</td>
+<td>Contains student traffic (highest attack risk)</td>
+</tr>
+<tr>
+<td>30</td>
+<td>IT</td>
+<td>Contains student traffic</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Library</td>
+<td>Isolates public-facing devices</td>
+</tr>
+<tr>
+<td>50</td>
+<td>COE</td>
+<td>Protects exam systems and HPC clusters</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Hostel</td>
+<td>Contains personal device traffic</td>
+</tr>
+<tr>
+<td>70</td>
+<td>IoT Lab</td>
+<td>Isolates vulnerable IoT sensors</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Data Center</td>
+<td>Protects critical servers (ERP, DB, DNS, Web)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>If Sir asks:</strong> <em>"Network segmentation reduces the attack surface. If a CSE laptop is compromised, the malware is confined to the CSE VLAN. Without segmentation, we estimate 60-80% of devices could be infected. With our design, infection is limited to less than 5% (only devices in the same VLAN)."</em></p>
+<hr />
+<h2>2. ACLs — Zero-Trust Access Control Matrix</h2>
+<h3>What is an ACL?</h3>
+<p><strong>Simple:</strong> A list of rules that tells the router which traffic to <strong>allow</strong> (permit) and which to <strong>block</strong> (deny).</p>
+<h3>Our Zero-Trust ACL (Access Control Matrix)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Source ↓ \ Destination →</th>
+<th style="text-align: center;">Admin</th>
+<th style="text-align: center;">CSE</th>
+<th style="text-align: center;">IT</th>
+<th style="text-align: center;">Library</th>
+<th style="text-align: center;">COE</th>
+<th style="text-align: center;">Hostel</th>
+<th style="text-align: center;">IoT</th>
+<th style="text-align: center;">DataCenter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Administration</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>CSE Department</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IT Department</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Library</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>COE</strong></td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Hostel</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>IoT Lab</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">✅</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Quarantined</strong></td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+<td style="text-align: center;">❌</td>
+</tr>
+</tbody>
+</table>
+<h3>Policy Rules (Easy to Remember):</h3>
+<ol>
+<li>✅ <strong>Admin</strong> can reach <strong>everywhere</strong> (they need full access for management)</li>
+<li>✅ <strong>Students</strong> (CSE, IT) can reach <strong>Library</strong> and <strong>Data Center</strong> (for academics)</li>
+<li>✅ <strong>Hostel</strong> can reach <strong>Library</strong> and <strong>Data Center</strong> (e-books, student portal)</li>
+<li>✅ <strong>COE</strong> can reach <strong>Admin</strong> and <strong>Data Center</strong> (for exam data and research)</li>
+<li>✅ <strong>IoT Lab</strong> can only reach <strong>Data Center</strong> (sensor data upload)</li>
+<li>❌ <strong>No lateral movement</strong> between student departments (CSE ↔ IT ↔ Hostel blocked)</li>
+<li>❌ <strong>Quarantined nodes</strong> have <strong>ZERO access</strong> (all interfaces shut down)</li>
+</ol>
+<h3>How It Works in Code:</h3>
+<pre><code class="language-cpp">class ZeroTrustPolicy {
+    ZeroTrustPolicy() {
+        // Admin can reach everything
+        Allow(&quot;ADMIN&quot;, {&quot;ADMIN&quot;,&quot;CSE&quot;,&quot;IT&quot;,&quot;LIBRARY&quot;,&quot;COE&quot;,&quot;HOSTEL&quot;,&quot;IOT&quot;,&quot;DATACENTER&quot;});
+        // CSE students: limited access
+        Allow(&quot;CSE&quot;, {&quot;CSE&quot;,&quot;LIBRARY&quot;,&quot;DATACENTER&quot;});
+        // IT students: limited access
+        Allow(&quot;IT&quot;, {&quot;IT&quot;,&quot;LIBRARY&quot;,&quot;DATACENTER&quot;});
+        // Library: datacenter only
+        Allow(&quot;LIBRARY&quot;, {&quot;LIBRARY&quot;,&quot;DATACENTER&quot;});
+        // COE: admin + datacenter
+        Allow(&quot;COE&quot;, {&quot;COE&quot;,&quot;ADMIN&quot;,&quot;DATACENTER&quot;});
+        // Hostel: library + datacenter
+        Allow(&quot;HOSTEL&quot;, {&quot;HOSTEL&quot;,&quot;LIBRARY&quot;,&quot;DATACENTER&quot;});
+        // IoT: datacenter only
+        Allow(&quot;IOT&quot;, {&quot;IOT&quot;,&quot;DATACENTER&quot;});
+        // Quarantine: NOTHING (no Allow entry)
+    }
+};
+</code></pre>
+<p><strong>If Sir asks "What type of ACL is this?"</strong></p>
+<blockquote>
+<p><em>"This is an Extended ACL because it filters based on both source and destination addresses. Unlike a standard ACL that only checks source addresses, our Zero-Trust policy matrix evaluates every source-destination VLAN pair. It follows the default-deny principle — any traffic not explicitly permitted is dropped."</em></p>
+</blockquote>
+<hr />
+<h2>3. Behavioural Risk Scoring Engine (Port Security Equivalent)</h2>
+<h3>Traditional Port Security vs Our Approach</h3>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Traditional Port Security</th>
+<th>Our Risk Scoring</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What it checks</strong></td>
+<td>MAC address only</td>
+<td>4 behavioural signals</td>
+</tr>
+<tr>
+<td><strong>Response</strong></td>
+<td>Binary (block/allow)</td>
+<td>Graduated (4 levels)</td>
+</tr>
+<tr>
+<td><strong>False positives</strong></td>
+<td>High (blocks legitimate devices)</td>
+<td>Low (temporal decay forgives)</td>
+</tr>
+<tr>
+<td><strong>Timing</strong></td>
+<td>One-time check</td>
+<td>Continuous monitoring</td>
+</tr>
+</tbody>
+</table>
+<h3>The 4 Behavioural Signals We Monitor</h3>
+<h4>Signal 1: Unauthorized Access Violations (Weight = 0.35)</h4>
+<ul>
+<li><strong>What:</strong> CSE student trying to reach Admin or IoT subnets</li>
+<li><strong>How detected:</strong> Router checks Zero-Trust matrix → packet denied → +25 risk points</li>
+<li><strong>Example:</strong> <code>10.0.20.2 → 10.0.10.2</code> (CSE → Admin) = DENIED, score +25</li>
+</ul>
+<h4>Signal 2: Traffic Volume Anomaly (Weight = 0.25)</h4>
+<ul>
+<li><strong>What:</strong> A device sending unusually high amounts of traffic (possible DoS attack)</li>
+<li><strong>How detected:</strong> If packets per second &gt; 80, risk increases</li>
+<li><strong>Formula:</strong> <code>penalty = MIN(packets_per_second / 3.0, 40.0)</code></li>
+<li><strong>Example:</strong> Attacker sending at 200 pps → penalty = MIN(200/3, 40) = 40 points</li>
+</ul>
+<h4>Signal 3: Port Scan Activity (Weight = 0.25)</h4>
+<ul>
+<li><strong>What:</strong> A device connecting to many different ports on a target (scanning for vulnerabilities)</li>
+<li><strong>How detected:</strong> If unique destination ports &gt; 10 within 5 seconds → +30 risk points</li>
+<li><strong>Example:</strong> Attacker sends packets to ports 1, 2, 3, ..., 100 on ERP server → SCAN DETECTED</li>
+</ul>
+<h4>Signal 4: Protocol Violations (Weight = 0.15)</h4>
+<ul>
+<li><strong>What:</strong> Extremely high traffic rate suggesting flood-based protocol abuse</li>
+<li><strong>How detected:</strong> If packets per second &gt; 160 → risk increases</li>
+<li><strong>Formula:</strong> <code>penalty = MIN(packets_per_second / 10.0, 20.0)</code></li>
+</ul>
+<h3>The Risk Score Formula</h3>
+<pre><code>RiskScore = 0.35 × Access + 0.25 × Traffic + 0.25 × PortScan + 0.15 × Protocol
+</code></pre>
+<p>All capped at maximum 100.</p>
+<h3>Temporal Decay (Automatic Forgiveness)</h3>
+<p>Every 1 second, ALL scores are multiplied by <strong>0.95</strong> (decay factor):</p>
+<pre><code>New Score = Old Score × 0.95 + New Events
+</code></pre>
+<p><strong>Why this matters:</strong><br />
+- A score of 100 decays to ~50 in 14 seconds (if no new suspicious activity)<br />
+- Innocent students who temporarily triggered a warning recover automatically<br />
+- <strong>No manual admin intervention needed</strong> for false positives</p>
+<hr />
+<h2>4. Graduated Dynamic Quarantine (Not Binary!)</h2>
+<h3>Traditional vs Our Approach</h3>
+<table>
+<thead>
+<tr>
+<th>Traditional System</th>
+<th>Our System</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Score &gt; threshold → BLOCK</td>
+<td>4 graduated levels</td>
+</tr>
+<tr>
+<td>Innocent student downloads dataset → BLOCKED</td>
+<td>Innocent student → WARNING only</td>
+</tr>
+<tr>
+<td>Manual admin needed to unblock</td>
+<td>Automatic recovery via temporal decay</td>
+</tr>
+</tbody>
+</table>
+<h3>The 4 Quarantine Levels</h3>
+<pre><code>Score:  0 ──────── 40 ──────── 55 ──────── 70 ──────── 100
+        │          │           │           │
+     NORMAL     WARNING    RATE_LIMITED  QUARANTINED
+     (green)    (yellow)    (orange)      (red)
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Score Range</th>
+<th>What Happens</th>
+<th>Network Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NORMAL</strong></td>
+<td>0 – 39</td>
+<td>Nothing</td>
+<td>Full access per policy</td>
+</tr>
+<tr>
+<td><strong>WARNING</strong></td>
+<td>40 – 54</td>
+<td>Alert generated, logging intensified</td>
+<td>No network change</td>
+</tr>
+<tr>
+<td><strong>RATE_LIMITED</strong></td>
+<td>55 – 69</td>
+<td>Severe alert, device flagged</td>
+<td>State logged (throttling noted for future work)</td>
+</tr>
+<tr>
+<td><strong>QUARANTINED</strong></td>
+<td>70 – 100</td>
+<td><strong>All interfaces disabled</strong></td>
+<td><strong>Complete isolation from network</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>How Quarantine Works (The Code):</h3>
+<pre><code class="language-cpp">case QuarantineLevel::QUARANTINED:
+    // FULL ISOLATION — disable all non-loopback interfaces
+    for (uint32_t i = 1; i &lt; ipv4-&gt;GetNInterfaces(); ++i)
+        ipv4-&gt;SetDown(i);   // Shuts down the device's network connection
+    break;
+</code></pre>
+<h3>Recovery:</h3>
+<pre><code class="language-cpp">case QuarantineLevel::NORMAL:
+    // Re-enable all interfaces
+    for (uint32_t i = 1; i &lt; ipv4-&gt;GetNInterfaces(); ++i)
+        ipv4-&gt;SetUp(i);     // Restores the device's network connection
+    break;
+</code></pre>
+<p><strong>If Sir asks "How does quarantine work?"</strong></p>
+<blockquote>
+<p><em>"When a device's risk score reaches 70 or above, our Quarantine Controller calls ipv4-&gt;SetDown() on all of the device's non-loopback network interfaces. This physically disconnects the device at Layer 3, preventing it from sending or receiving any packets. Recovery is automatic — when the score decays below 70 (due to our temporal decay factor of 0.95), the interfaces are brought back up."</em></p>
+</blockquote>
+<hr />
+<h2>5. Password Policies (Conceptual)</h2>
+<p>While NS-3 doesn't simulate user authentication, our Zero-Trust design assumes:<br />
+- <strong>No implicit trust:</strong> Even devices inside the network are continuously verified<br />
+- <strong>Least privilege:</strong> Each department only gets access to what it needs<br />
+- <strong>Defence in depth:</strong> Multiple security layers (segmentation + ACL + scoring + quarantine)</p>
+<p><strong>If Sir asks about password policies:</strong></p>
+<blockquote>
+<p><em>"Our Zero-Trust architecture goes beyond password-based authentication. Instead of one-time login verification, we implement continuous behavioural monitoring. However, in a real deployment, we would integrate 802.1X port-based authentication with RADIUS for initial device authentication, combined with our behavioural scoring for continuous verification."</em></p>
+</blockquote>
+<hr />
+<h2>Security Metrics (From Our Simulation)</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Traditional Campus</th>
+<th>Our Zero-Trust Design</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Threat Detection Time</strong></td>
+<td>5 – 30 minutes (manual)</td>
+<td>&lt; 5 seconds (automatic)</td>
+</tr>
+<tr>
+<td><strong>Quarantine Activation</strong></td>
+<td>10 – 60 minutes (admin must act)</td>
+<td>&lt; 3 seconds (automatic)</td>
+</tr>
+<tr>
+<td><strong>Link Recovery Time</strong></td>
+<td>30 – 60 seconds</td>
+<td>&lt; 2 seconds</td>
+</tr>
+<tr>
+<td><strong>Infected Nodes During Attack</strong></td>
+<td>60 – 80%</td>
+<td>&lt; 5%</td>
+</tr>
+<tr>
+<td><strong>Network Availability</strong></td>
+<td>40 – 60% during attack</td>
+<td>&gt; 95%</td>
+</tr>
+<tr>
+<td><strong>Packet Loss During Attack</strong></td>
+<td>8 – 15%</td>
+<td>&lt; 1% (actual: 0.68%)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Questions Sir May Ask</h2>
+<p><strong>Q: "What security mechanisms have you implemented?"</strong></p>
+<blockquote>
+<p><em>"Four layers: (1) Network segmentation using 8 VLANs, (2) Zero-Trust ACL that follows default-deny policy, (3) Multi-factor behavioural risk scoring engine monitoring 4 signals with temporal decay, and (4) Graduated dynamic quarantine with 4 levels from Warning to full interface isolation."</em></p>
+</blockquote>
+<p><strong>Q: "What is the default-deny policy?"</strong></p>
+<blockquote>
+<p><em>"It means all traffic is blocked by default unless there is an explicit rule allowing it. In our access matrix, if a source-destination VLAN pair is not listed in the Allow rules, the packet is dropped. This is the core principle of Zero-Trust — never trust, always verify."</em></p>
+</blockquote>
+<p><strong>Q: "How do you detect port scanning?"</strong></p>
+<blockquote>
+<p><em>"We maintain a stateful set of unique destination ports per source IP within a 5-second sliding window. If a single source connects to more than 10 unique ports on the same destination, our Traffic Monitor flags it as a port scan and adds 30 risk points."</em></p>
+</blockquote>
+<p><strong>Q: "What happens if a legitimate student triggers a false positive?"</strong></p>
+<blockquote>
+<p><em>"That's exactly why we use graduated quarantine instead of binary block. A temporary traffic spike only pushes the student to WARNING state (score 40-54), where logging is intensified but access continues. The temporal decay factor of 0.95 reduces the score by 5% every second, so if the student's behaviour returns to normal, their score drops back below 40 within ~14 seconds. No manual admin intervention required."</em></p>
+</blockquote>
+<p><strong>Q: "What is the difference between your approach and a traditional firewall?"</strong></p>
+<blockquote>
+<p><em>"A traditional firewall uses static rules — it either allows or blocks based on source/destination IP and port. Our system is dynamic — it continuously monitors 4 behavioural signals, calculates a real-time risk score, and applies graduated responses. Additionally, our system includes temporal decay for automatic false-positive recovery, which firewalls don't have."</em></p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-06">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 06</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">All 4 Scenarios & Simulation Walkthrough</div>
+                </div>
+                <span class="chapter-badge">Simulation</span>
+            </div>
+            <h1>🎬 All 4 Scenarios — Full Explanation — Review 2</h1>
+<blockquote>
+<p><strong>Every team member must understand all 4 scenarios — what happens, when it happens, and why</strong></p>
+</blockquote>
+<hr />
+<h2>Quick Summary Table</h2>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th>Name</th>
+<th>What Happens</th>
+<th>Key Feature Tested</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Normal Operation</td>
+<td>Only legitimate traffic</td>
+<td>Baseline metrics</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Attack + Quarantine</td>
+<td>Malware attack at t=30s</td>
+<td>Risk Scoring + Graduated Quarantine</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Link Failure + Self-Healing</td>
+<td>Primary link fails at t=60s</td>
+<td>Backup path + Self-Healing</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Combined (Best for Demo)</strong></td>
+<td>Attack at t=30s + Link failure at t=60s</td>
+<td>ALL features working together</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Scenario 1: Normal Operation (Baseline)</h2>
+<h3>What Happens (Timeline)</h3>
+<pre><code>t=0s ─────────────────────────────────────────────── t=120s
+     │                                                   │
+     └── Legitimate traffic flows between all departments ──┘
+         No attacks. No link failures. Everything is normal.
+</code></pre>
+<h3>Step-by-Step</h3>
+<ol>
+<li><strong>t=0s:</strong> Simulation starts. All 58 nodes are created, VLANs assigned, routing tables populated.</li>
+<li><strong>t=1s:</strong> Legitimate traffic begins. Every department sends UDP packets to Data Center servers:<br />
+   - Admin PCs → ERP Server (500 Kbps each)<br />
+   - CSE Labs → Web Server (500 Kbps each)<br />
+   - IT Labs → Web Server (500 Kbps each)<br />
+   - Library → DNS Server (500 Kbps each)<br />
+   - COE → ERP Server (500 Kbps each)<br />
+   - Hostel → Web Server (500 Kbps each)<br />
+   - IoT Sensors → ERP Server (500 Kbps each)</li>
+<li><strong>t=2s:</strong> Risk Scoring Engine starts evaluating every 1 second. Heartbeat starts checking every 0.5 seconds.</li>
+<li><strong>t=2s–120s:</strong> All traffic is legitimate. All risk scores stay at <strong>0</strong> (no violations detected).</li>
+<li><strong>t=120s:</strong> Simulation ends.</li>
+</ol>
+<h3>What to Expect</h3>
+<ul>
+<li><strong>All risk scores:</strong> 0 (no suspicious activity)</li>
+<li><strong>Quarantine events:</strong> 0 (nobody quarantined)</li>
+<li><strong>Self-healing events:</strong> 0 (no link failures)</li>
+<li><strong>Packet loss:</strong> Very low (&lt; 0.5%)</li>
+<li><strong>Throughput:</strong> Full expected throughput</li>
+</ul>
+<h3>Purpose</h3>
+<blockquote>
+<p><em>"Scenario 1 establishes the baseline. We run the network under normal conditions to measure expected throughput, delay, and packet loss. We then compare Scenarios 2, 3, and 4 against this baseline to quantify the impact of attacks and our security mechanisms."</em></p>
+</blockquote>
+<hr />
+<h2>Scenario 2: Malware Attack + Dynamic Quarantine</h2>
+<h3>What Happens (Timeline)</h3>
+<pre><code>t=0s ── t=30s ────── t=36s ──── t=40s ──── t=45s ────── t=120s
+   │       │           │          │          │              │
+   │       │           │          │          └─ QUARANTINED │
+   │       │           │          └─ RATE_LIMITED           │
+   │       │           └─ WARNING                          │
+   │       └─ ATTACK BEGINS (port scan + unauth + flood)   │
+   └─ Normal traffic ─────────────────────────────────────┘
+</code></pre>
+<h3>Step-by-Step</h3>
+<p><strong>Phase 1: Normal (t=0s to t=30s)</strong><br />
+1. All departments send legitimate traffic<br />
+2. Risk scores are 0 for all devices<br />
+3. Network operates normally</p>
+<p><strong>Phase 2: Attack Begins (t=30s)</strong><br />
+4. The <strong>Attacker</strong> (<code>10.0.20.2</code>, first CSE student node) starts 3 attack vectors simultaneously:<br />
+   - <strong>Port Scanning:</strong> Sends packets to ports 1–100 on the ERP Server (<code>10.0.80.2</code>) every 2 seconds<br />
+   - <strong>Unauthorized Access:</strong> Sends packets to Admin PC (<code>10.0.10.2</code>) and COE PC (<code>10.0.50.2</code>) every 1 second<br />
+   - <strong>Traffic Flood:</strong> Sends 50 packets of 1024 bytes to ERP Server every 0.5 seconds (= ~100 pps)</p>
+<p><strong>Phase 3: Detection (t=31s onward)</strong><br />
+5. The Traffic Monitor on the Core Router detects:<br />
+   - <strong>Policy Violation:</strong> <code>10.0.20.2 → 10.0.10.2</code> (CSE → Admin) is DENIED → +25 risk points per violation<br />
+   - <strong>Policy Violation:</strong> <code>10.0.20.2 → 10.0.50.2</code> (CSE → COE) is DENIED → +25 risk points per violation<br />
+   - <strong>Port Scan:</strong> More than 10 unique ports detected from <code>10.0.20.2</code> → +30 risk points<br />
+   - <strong>Traffic Anomaly:</strong> Rate &gt; 80 pps → penalty added<br />
+   - <strong>Protocol Violation:</strong> Rate &gt; 160 pps → additional penalty</p>
+<p><strong>Phase 4: Graduated Response</strong><br />
+6. <strong>~t=36s: Score reaches 40 → WARNING</strong><br />
+   - Risk score crosses 40<br />
+   - Status changes from NORMAL → WARNING<br />
+   - Alert generated, logging intensified<br />
+   - NetAnim: Attacker node turns <strong>YELLOW</strong></p>
+<ol start="7">
+<li>
+<p><strong>~t=40s: Score reaches 55 → RATE_LIMITED</strong><br />
+   - Risk score crosses 55<br />
+   - Status changes from WARNING → RATE_LIMITED<br />
+   - Device flagged for throttling (state logged)<br />
+   - NetAnim: Attacker node turns <strong>ORANGE</strong></p>
+</li>
+<li>
+<p><strong>~t=45s: Score reaches 70 → QUARANTINED</strong><br />
+   - Risk score crosses 70<br />
+   - <strong>ALL network interfaces of the attacker are DISABLED</strong><br />
+   - <code>ipv4-&gt;SetDown()</code> called on all non-loopback interfaces<br />
+   - The attacker is completely cut off from the network<br />
+   - NetAnim: Attacker node turns <strong>DARK RED</strong>, label says "QUARANTINED!"</p>
+</li>
+</ol>
+<p><strong>Phase 5: Post-Quarantine (t=45s to t=120s)</strong><br />
+9. Attacker's packets can no longer leave its node (interfaces are down)<br />
+10. Risk score slowly decays: <code>score = score × 0.95</code> every second<br />
+11. The rest of the network continues operating normally<br />
+12. Other departments are completely unaffected</p>
+<h3>How Identification Works (The Detection Pipeline)</h3>
+<pre><code>Packet from 10.0.20.2 arrives at Core Router
+    │
+    ├── Check 1: Is source-destination pair allowed?
+    │   10.0.20.2 (CSE) → 10.0.10.2 (ADMIN) → ❌ DENIED
+    │   → RecordEvent(UNAUTHORIZED_ACCESS, 25 points)
+    │
+    ├── Check 2: How many unique ports has this source contacted?
+    │   Source 10.0.20.2 has contacted 100 unique ports → &gt; 10 threshold
+    │   → RecordEvent(PORT_SCAN, 30 points)
+    │
+    ├── Check 3: What is this source's packet rate?
+    │   Source 10.0.20.2 sending at 200 packets/second → &gt; 80 threshold
+    │   → RecordEvent(TRAFFIC_ANOMALY, min(200/3, 40) = 40 points)
+    │
+    └── Check 4: Is the rate extremely high?
+        200 pps &gt; 160 (double the threshold)
+        → RecordEvent(PROTOCOL_VIOLATION, min(200/10, 20) = 20 points)
+
+Every 1 second:
+    │
+    ├── Compute weighted score:
+    │   Score = 0.35×Access + 0.25×Traffic + 0.25×PortScan + 0.15×Protocol
+    │
+    ├── Apply decay: score = score × 0.95
+    │
+    └── Check thresholds:
+        Score ≥ 70 → QUARANTINE (disable interfaces)
+        Score ≥ 55 → RATE_LIMITED
+        Score ≥ 40 → WARNING
+        Score &lt; 40 → NORMAL
+</code></pre>
+<hr />
+<h2>Scenario 3: Link Failure + Self-Healing</h2>
+<h3>What Happens (Timeline)</h3>
+<pre><code>t=0s ─── t=60s ──── t=60.5s ──── t=62s ──── t=90s ──── t=120s
+   │       │           │           │          │            │
+   │       │           │           │          └─ Primary link restored
+   │       │           │           └─ Recovery complete (&lt; 2s)
+   │       │           └─ Failure detected (&lt; 0.5s)
+   │       └─ PRIMARY LINK FAILS
+   └─ Normal traffic ──────────────────────────────────────┘
+</code></pre>
+<h3>Step-by-Step</h3>
+<p><strong>Phase 1: Normal (t=0s to t=60s)</strong><br />
+1. All traffic flows normally through the primary Data Center link<br />
+2. Heartbeat monitor checks the primary link every 0.5 seconds: "Are you alive?" → "Yes!"</p>
+<p><strong>Phase 2: Link Failure (t=60s)</strong><br />
+3. The primary CSMA link between Core Router and Data Center is <strong>disabled</strong><br />
+   - <code>ipv4-&gt;SetDown(primaryDcIfIndex)</code> is called on the router<br />
+   - Traffic to/from Data Center is disrupted</p>
+<p><strong>Phase 3: Detection (t=60.5s)</strong><br />
+4. Heartbeat monitor (running every 0.5s) detects: "Primary link is DOWN!"<br />
+5. Detection time: <strong>&lt; 500 milliseconds</strong></p>
+<p><strong>Phase 4: Recovery (t=60.5s – t=62s)</strong><br />
+6. Self-Healing Controller activates the backup path:<br />
+   - <strong>Step 1:</strong> Enable backup interface: <code>ipv4-&gt;SetUp(backupIfIndex)</code><br />
+   - <strong>Step 2:</strong> Recompute all routing tables: <code>Ipv4GlobalRoutingHelper::RecomputeRoutingTables()</code><br />
+   - <strong>Step 3:</strong> All traffic now flows: Router → Backup Switch (<code>10.0.2.0/24</code>) → Data Center (<code>10.0.82.0/24</code>)<br />
+   - <strong>Step 4:</strong> Quarantine Integrity Check: Verify quarantined devices remain isolated<br />
+7. Recovery time: <strong>&lt; 2 seconds</strong></p>
+<p><strong>Phase 5: Restored (t=90s)</strong><br />
+8. Primary link is restored: <code>ipv4-&gt;SetUp(primaryDcIfIndex)</code><br />
+9. Routing tables recomputed again (primary link preferred)<br />
+10. Backup switch returns to standby mode<br />
+11. Quarantine integrity re-verified</p>
+<h3>Why This Matters</h3>
+<p>Normal OSPF self-healing:</p>
+<pre><code>Link fails → OSPF recalculates routes → Traffic rerouted → Done ✅
+But... quarantined device might regain access through new route! ❌
+</code></pre>
+<p>Our quarantine-aware self-healing:</p>
+<pre><code>Link fails → Detect in 0.5s → Activate backup → Recompute routes
+→ VERIFY quarantine integrity → Confirm isolated devices stay isolated ✅
+→ Done (&lt; 2 seconds total) ✅
+</code></pre>
+<hr />
+<h2>Scenario 4: Combined — Attack + Self-Healing (BEST FOR DEMO)</h2>
+<h3>What Happens (Timeline)</h3>
+<pre><code>t=0s ─ t=30s ── t=36s ── t=40s ── t=45s ── t=60s ── t=62s ── t=90s ── t=120s
+  │      │        │        │        │        │        │        │         │
+  │      │        │        │        │        │        │        └─ Link restored
+  │      │        │        │        │        │        └─ Recovery + quarantine OK
+  │      │        │        │        │        └─ PRIMARY LINK FAILS
+  │      │        │        │        └─ QUARANTINED (score ≥ 70)
+  │      │        │        └─ RATE_LIMITED (score ≥ 55)
+  │      │        └─ WARNING (score ≥ 40)
+  │      └─ ATTACK BEGINS
+  └─ Normal traffic
+</code></pre>
+<h3>Step-by-Step</h3>
+<p>This combines Scenario 2 and Scenario 3:</p>
+<ol>
+<li><strong>t=0s–30s:</strong> Normal traffic, all scores at 0</li>
+<li><strong>t=30s:</strong> Attacker (<code>10.0.20.2</code>) begins port scanning, unauthorized access, and flooding</li>
+<li><strong>t=36s:</strong> Score hits 40 → <strong>WARNING</strong> (yellow)</li>
+<li><strong>t=40s:</strong> Score hits 55 → <strong>RATE_LIMITED</strong> (orange)</li>
+<li><strong>t=45s:</strong> Score hits 70 → <strong>QUARANTINED</strong> (dark red, interfaces disabled)</li>
+<li><strong>t=45s–60s:</strong> Attacker is completely isolated. Network operates normally.</li>
+<li><strong>t=60s:</strong> Primary Data Center link <strong>FAILS</strong></li>
+<li><strong>t=60.5s:</strong> Heartbeat detects failure</li>
+<li><strong>t=62s:</strong> Backup path activated, routes recomputed, <strong>quarantine integrity verified</strong><br />
+   - The quarantined attacker is STILL isolated (interfaces are disabled on the DEVICE, not the router)</li>
+<li><strong>t=90s:</strong> Primary link restored, routes recomputed, quarantine re-verified</li>
+<li><strong>t=120s:</strong> Simulation ends</li>
+</ol>
+<h3>Why Scenario 4 is the Best Demo</h3>
+<p>It demonstrates <strong>ALL 3 novel contributions</strong> in one run:<br />
+1. ✅ <strong>Risk Scoring Engine</strong> — detects the attack through 4 signals<br />
+2. ✅ <strong>Graduated Quarantine</strong> — progressively isolates the attacker (Warning → Rate-Limit → Quarantine)<br />
+3. ✅ <strong>Quarantine-Aware Self-Healing</strong> — recovers from link failure while keeping the attacker isolated</p>
+<hr />
+<h2>How to Run Each Scenario</h2>
+<h3>In WSL Terminal:</h3>
+<pre><code class="language-bash">cd ~/ns-allinone-3.41/ns-3.41
+
+# Scenario 1 (Normal)
+./ns3 run &quot;smart-campus-network --scenario=1&quot;
+
+# Scenario 2 (Attack + Quarantine)
+./ns3 run &quot;smart-campus-network --scenario=2&quot;
+
+# Scenario 3 (Self-Healing)
+./ns3 run &quot;smart-campus-network --scenario=3&quot;
+
+# Scenario 4 (Combined — RECOMMENDED FOR DEMO)
+./ns3 run &quot;smart-campus-network --scenario=4&quot;
+
+# Scenario 4 with detailed logging
+./ns3 run &quot;smart-campus-network --scenario=4 --verbose=true&quot;
+</code></pre>
+<hr />
+<h2>Questions Sir May Ask About Scenarios</h2>
+<p><strong>Q: "What scenario are you demonstrating?"</strong></p>
+<blockquote>
+<p><em>"Scenario 4, the combined scenario. It demonstrates all three novel contributions in one run: the risk scoring engine detects the malware attack at t=30s, the graduated quarantine progressively isolates the attacker by t=45s, and the quarantine-aware self-healing recovers from a link failure at t=60s while verifying the attacker remains isolated."</em></p>
+</blockquote>
+<p><strong>Q: "When does the attack start?"</strong></p>
+<blockquote>
+<p><em>"At t=30 seconds. The compromised CSE node at 10.0.20.2 begins three simultaneous attack vectors: port scanning the ERP server, unauthorized access attempts to Admin and COE subnets, and a 5 Mbps UDP traffic flood."</em></p>
+</blockquote>
+<p><strong>Q: "How long does it take to detect the attack?"</strong></p>
+<blockquote>
+<p><em>"Less than 5 seconds. The traffic monitor runs on every forwarded packet, and the risk scoring engine evaluates scores every 1 second. By t=36s (6 seconds after attack start), the score crosses the WARNING threshold of 40."</em></p>
+</blockquote>
+<p><strong>Q: "How long does quarantine take?"</strong></p>
+<blockquote>
+<p><em>"About 15 seconds from attack start. The score crosses 70 (quarantine threshold) at approximately t=45s. This includes the graduated escalation through WARNING and RATE_LIMITED states, which provides time for admin notification before full isolation."</em></p>
+</blockquote>
+<p><strong>Q: "What happens to the rest of the network during the attack?"</strong></p>
+<blockquote>
+<p><em>"Nothing changes. Other departments continue their legitimate traffic unaffected. The attack is contained within the CSE VLAN by our segmentation, and once quarantined, the attacker's interfaces are disabled at the device level, not the router level, so no other traffic is impacted."</em></p>
+</blockquote>
+<p><strong>Q: "What if the link fails while an attacker is quarantined?"</strong></p>
+<blockquote>
+<p><em>"That's exactly what Scenario 4 demonstrates. At t=60s, the primary Data Center link fails — 15 seconds after the attacker was quarantined. Our Self-Healing Controller activates the backup path and recomputes routing tables. Critically, the quarantined attacker remains isolated because the quarantine is applied to the device's own interfaces (ipv4-&gt;SetDown), not to the router's interfaces. The rerouting doesn't help the attacker regain access."</em></p>
+</blockquote>
+        </section>
+        
+        <section class="chapter" id="chapter-07">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 07</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Technical Presentation Guide & 5-Member Roles</div>
+                </div>
+                <span class="chapter-badge">5 Marks</span>
+            </div>
+            <h1>🎤 Technical Presentation &amp; Demo Guide — Review 2 (5 Marks)</h1>
+<blockquote>
+<p><strong>Rubric Criteria:</strong> Demo, explanation, teamwork (5 marks)</p>
+</blockquote>
+<hr />
+<h2>Team Member Roles (5 Members)</h2>
+<p>Each member should OWN a specific part. During the review, that person presents their section. But <strong>ALL members must know ALL sections</strong> in case Sir asks cross-questions.</p>
+<h3>Suggested Role Assignment</h3>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>Member</th>
+<th>Section to Present</th>
+<th>Duration</th>
+<th>Key Slides/Sections</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><strong>Inbathamizhan S</strong></td>
+<td>Project Overview + Live Terminal Demo</td>
+<td>3 min</td>
+<td>Abstract, problem statement, run <code>./ns3 run</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>Sadiq Vali</strong></td>
+<td>Network Topology + IP Addressing</td>
+<td>3 min</td>
+<td>3-tier design, 8 VLANs, IP scheme</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>Judson Pushparaj</strong></td>
+<td>Security Design + ACL</td>
+<td>3 min</td>
+<td>Zero-Trust matrix, 4 security layers</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Surya Prakash</strong></td>
+<td>Risk Scoring Engine + Quarantine</td>
+<td>3 min</td>
+<td>4 signals, formula, graduated levels</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>Balaji</strong></td>
+<td>Self-Healing + Results Dashboard</td>
+<td>3 min</td>
+<td>Link failure, NetAnim, graphs</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>Total: ~15 minutes</strong></p>
+</blockquote>
+<hr />
+<h2>Presentation Flow (Step by Step)</h2>
+<h3>Step 1: Introduction (Member 1 — 2 min)</h3>
+<p><strong>What to say:</strong></p>
+<blockquote>
+<p><em>"Good morning Sir. Our project is titled 'Autonomous Behavioural Risk Scoring and Graduated Quarantine in Zero-Trust Campus Networks.' We have also published a research paper: zero_trust_risk_scoring.docx.</em></p>
+<p><em>The problem: Campus networks face internal threats — compromised student laptops, lateral malware movement, and network outages. Traditional firewalls use binary allow/deny rules that cause false positives, and standard OSPF self-healing doesn't preserve quarantine state during failover.</em></p>
+<p><em>Our solution has 3 novel contributions:</em><br />
+1. <em>Multi-factor behavioural risk scoring engine with temporal decay</em><br />
+2. <em>Graduated dynamic quarantine (4 levels instead of binary block)</em><br />
+3. <em>Quarantine-aware self-healing that maintains isolation during link failures</em></p>
+<p><em>We implemented this in NS-3 with 58 nodes across 8 department VLANs. Let me hand over to [Member 2] to explain the network design."</em></p>
+</blockquote>
+<hr />
+<h3>Step 2: Network Topology + IP (Member 2 — 3 min)</h3>
+<p><strong>What to show:</strong> Draw or display the topology diagram</p>
+<p><strong>What to say:</strong></p>
+<blockquote>
+<p><em>"We use a 3-tier hierarchical design:</em><br />
+- <em>Core Layer: One Core Router acting as the Zero-Trust Policy Enforcement Point</em><br />
+- <em>Distribution Layer: A Backup Distribution Switch for redundancy</em><br />
+- <em>Access Layer: 8 CSMA segments representing campus departments</em></p>
+<p><em>IP addressing uses the 10.0.X.0/24 scheme. The third octet identifies the department — 10 for Admin, 20 for CSE, 30 for IT, up to 80 for Data Center. We have 58 nodes total: 3 infrastructure nodes and 55 department nodes.</em></p>
+<p><em>Each department is on its own VLAN, connected to the router via CSMA at 100 Mbps. The backbone and backup links use Point-to-Point at 1 Gbps.</em></p>
+<p><em>Now [Member 3] will explain our security design."</em></p>
+</blockquote>
+<hr />
+<h3>Step 3: Security Design + ACL (Member 3 — 3 min)</h3>
+<p><strong>What to show:</strong> The Access Control Matrix table</p>
+<p><strong>What to say:</strong></p>
+<blockquote>
+<p><em>"We implement 4 layers of security:</em></p>
+<p><em>Layer 1 — Network Segmentation: 8 VLANs isolate departments. An infection in CSE cannot spread to Admin or IoT.</em></p>
+<p><em>Layer 2 — Zero-Trust Access Control: Our ACL follows default-deny. Only explicitly permitted VLAN-to-VLAN pairs are allowed. For example, CSE can reach Library and Data Center but NOT Admin or COE. Admin has full access. Quarantined nodes have zero access.</em></p>
+<p><em>Layer 3 — Behavioural Monitoring: Instead of one-time authentication, we continuously inspect every packet forwarded by the router and track 4 behavioural signals per source IP.</em></p>
+<p><em>Layer 4 — Graduated Quarantine: Instead of binary block, we have 4 progressive levels. [Member 4] will explain this in detail."</em></p>
+</blockquote>
+<hr />
+<h3>Step 4: Risk Scoring + Quarantine (Member 4 — 3 min)</h3>
+<p><strong>What to show:</strong> The risk formula and quarantine state diagram</p>
+<p><strong>What to say:</strong></p>
+<blockquote>
+<p><em>"The Risk Scoring Engine monitors 4 signals:</em><br />
+1. <em>Unauthorized access violations — +25 points when a packet violates the ACL</em><br />
+2. <em>Traffic volume anomaly — triggered when packets per second exceed 80</em><br />
+3. <em>Port scan detection — triggered when a source contacts more than 10 unique ports</em><br />
+4. <em>Protocol abuse — triggered at extremely high rates above 160 pps</em></p>
+<p><em>The weighted formula is: Score = 0.35×Access + 0.25×Traffic + 0.25×PortScan + 0.15×Protocol</em></p>
+<p><em>The temporal decay factor γ = 0.95 is applied every second. This means if a student accidentally triggers a spike, the score fades automatically — no manual admin intervention needed. A score of 100 decays to about 50 in 14 seconds.</em></p>
+<p><em>Based on the score:</em><br />
+- <em>Below 40 → Normal (full access)</em><br />
+- <em>40-54 → Warning (alert + logging)</em><br />
+- <em>55-69 → Rate-Limited (severe alert)</em><br />
+- <em>70+ → Quarantined (all interfaces disabled, complete isolation)</em></p>
+<p><em>In our Scenario 4 demo, the attacker's score crosses 70 at about t=45 seconds, and its interfaces are shut down. Now [Member 5] will show the self-healing and results."</em></p>
+</blockquote>
+<hr />
+<h3>Step 5: Self-Healing + Demo + Results (Member 5 — 3 min)</h3>
+<p><strong>What to show:</strong> NetAnim visualization + Dashboard graph</p>
+<p><strong>What to say:</strong></p>
+<blockquote>
+<p><em>"The third novel contribution is quarantine-aware self-healing. At t=60s, the primary Data Center link fails. Our heartbeat monitor detects this within 500 milliseconds. The backup distribution switch is activated, routing tables are recomputed, and traffic flows through the alternate path. Total recovery takes under 2 seconds.</em></p>
+<p><em>The critical difference: standard OSPF is security-agnostic — rerouting might restore access to quarantined devices. In our system, quarantine is applied at the device level (ipv4-&gt;SetDown on the device's interfaces), not on the router. So rerouting doesn't help the attacker. We verify this with a quarantine integrity check after every self-healing event.</em></p>
+<p><em>Here are our results from Scenario 4:</em><br />
+- <em>Total flows: 150</em><br />
+- <em>Throughput: 25,030 Kbps</em><br />
+- <em>Average delay: 1.85 ms</em><br />
+- <em>Packet loss: only 0.68%</em><br />
+- <em>Detection time: &lt; 5 seconds vs 5-30 minutes traditionally</em><br />
+- <em>Recovery time: &lt; 2 seconds vs 30-60 seconds traditionally"</em></p>
+</blockquote>
+<hr />
+<h3>Step 6: Live Terminal Demo (Member 1 — 2 min)</h3>
+<p><strong>Commands to run:</strong></p>
+<pre><code class="language-bash"># Open WSL
+wsl
+
+# Navigate to NS-3
+cd ~/ns-allinone-3.41/ns-3.41
+
+# Run the combined scenario
+./ns3 run &quot;smart-campus-network --scenario=4&quot;
+</code></pre>
+<p><strong>What to point out as it runs:</strong><br />
+1. Header showing Scenario 4, 120s duration<br />
+2. Attack scheduled at t=30s from <code>10.0.20.2</code><br />
+3. Link failure at t=60s, restore at t=90s<br />
+4. Results table: flows, throughput, delay, packet loss<br />
+5. Comparison table: Traditional vs Proposed</p>
+<hr />
+<h2>How to Handle Questions from Sir</h2>
+<h3>General Strategy</h3>
+<ol>
+<li><strong>Listen carefully</strong> to the full question before answering</li>
+<li><strong>Start with the simple answer</strong>, then add technical detail</li>
+<li><strong>Relate it to the code</strong> if possible — "In our implementation, line X does Y"</li>
+<li><strong>If you don't know:</strong> Say <em>"That specific detail was handled by [member name], let me ask them to explain"</em> — this shows teamwork</li>
+</ol>
+<h3>Emergency Answers (If Stuck)</h3>
+<p>If Sir asks something you're unsure about, use these safe responses:</p>
+<ul>
+<li>
+<p><strong>"How does X work internally?"</strong> → <em>"Let me explain the high-level flow: [describe what you know], and the implementation details are in our smart-campus-network.cc file, Section [X]."</em></p>
+</li>
+<li>
+<p><strong>"Why did you choose X over Y?"</strong> → <em>"We evaluated both options. X was chosen because [advantage 1] and [advantage 2]. However, Y would be suitable for [different use case]."</em></p>
+</li>
+<li>
+<p><strong>"What is the limitation?"</strong> → <em>"Our current implementation focuses on proving the architecture's feasibility. Rate-limiting enforcement uses state logging rather than actual traffic control, and the performance comparison uses theoretical estimates. These are documented in our paper for future work."</em></p>
+</li>
+</ul>
+<hr />
+<h2>Files to Keep Open During Demo</h2>
+<table>
+<thead>
+<tr>
+<th>File / Tool</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>WSL Terminal</strong></td>
+<td>Run <code>./ns3 run "smart-campus-network --scenario=4"</code></td>
+</tr>
+<tr>
+<td><strong>NetAnim</strong></td>
+<td>Visual animation of the network</td>
+</tr>
+<tr>
+<td><strong>combined_dashboard.png</strong></td>
+<td>4-panel results graph</td>
+</tr>
+<tr>
+<td><strong>risk_score_evolution.png</strong></td>
+<td>Shows attacker's score rising</td>
+</tr>
+<tr>
+<td><strong>This guide (on phone)</strong></td>
+<td>Emergency reference during viva</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>Teamwork Points to Mention</h2>
+<p>When Sir evaluates teamwork, make sure to:</p>
+<ol>
+<li><strong>Reference each other:</strong> "As [member] explained earlier..."</li>
+<li><strong>Don't talk over each other</strong></li>
+<li><strong>If one member struggles with a question, another can politely help:</strong> "I can add to that — in the code we..."</li>
+<li><strong>Show that everyone contributed:</strong><br />
+   - Member 1: Overall architecture and simulation coordination<br />
+   - Member 2: Network topology design and IP addressing<br />
+   - Member 3: Security policy and ACL implementation<br />
+   - Member 4: Risk scoring engine and quarantine logic<br />
+   - Member 5: Self-healing controller and analysis graphs</li>
+</ol>
+<hr />
+<h2>Pre-Review Checklist</h2>
+<ul>
+<li>[ ] All 5 members have read the 01_Technical_Glossary.md</li>
+<li>[ ] All 5 members have read their assigned section file</li>
+<li>[ ] All 5 members know how to run Scenario 4 in WSL</li>
+<li>[ ] Terminal is tested and working (run scenario before the review)</li>
+<li>[ ] NetAnim opens successfully</li>
+<li>[ ] Dashboard image is ready to show</li>
+<li>[ ] Each member can answer basic questions about ANY section (not just their own)</li>
+<li>[ ] Each member can state the project title, 3 contributions, and key metrics from memory</li>
+</ul>
+        </section>
+        
+        <section class="chapter" id="chapter-08">
+            <div class="chapter-header">
+                <div>
+                    <span style="font-size: 8pt; font-weight: 700; color: #64748b; text-transform: uppercase;">Chapter 08</span>
+                    <div style="font-size: 10.5pt; font-weight: 750; color: #1e3a8a;">Viva Questions & Answers (38 Comprehensive Q&As)</div>
+                </div>
+                <span class="chapter-badge">30 Marks Total</span>
+            </div>
+            <h1>❓ Viva Questions &amp; Answers — All 30 Marks Covered</h1>
+<blockquote>
+<p><strong>EVERY possible question Sir can ask, with ready-made answers</strong><br />
+All 5 members should memorize these answers</p>
+</blockquote>
+<hr />
+<h2>Category 1: Network Topology Design (5 Marks)</h2>
+<p><strong>Q1: What topology did you use?</strong></p>
+<blockquote>
+<p><em>"A 3-tier hierarchical topology: Core layer (1 Core Router as Policy Enforcement Point), Distribution layer (1 Backup Switch for redundancy), and Access layer (8 CSMA segments representing campus departments with 55 end devices)."</em></p>
+</blockquote>
+<p><strong>Q2: How many nodes are in your network?</strong></p>
+<blockquote>
+<p><em>"58 nodes total: 1 Internet Server, 1 Core Router, 1 Backup Distribution Switch, and 55 department nodes across 8 VLANs."</em></p>
+</blockquote>
+<p><strong>Q3: Why hierarchical design? Why not a flat network?</strong></p>
+<blockquote>
+<p><em>"A flat network allows any device to directly reach any other device, making security enforcement nearly impossible. Hierarchical design forces all inter-department traffic through the Core Router, enabling 100% packet inspection and Zero-Trust policy enforcement. It's also more scalable and easier to manage."</em></p>
+</blockquote>
+<p><strong>Q4: What is a 3-tier architecture?</strong></p>
+<blockquote>
+<p><em>"It has three layers: Core (handles routing and high-speed forwarding), Distribution (provides redundancy and policy application), and Access (where end devices connect). This is the Cisco-recommended model for campus networks."</em></p>
+</blockquote>
+<p><strong>Q5: What devices are in the Data Center?</strong></p>
+<blockquote>
+<p><em>"7 servers: ERP Server, Database Server, DHCP Server, DNS Server, Web Server, Email Server, and Backup Server. All on VLAN 80 (10.0.80.0/24)."</em></p>
+</blockquote>
+<p><strong>Q6: What is the role of the Core Router?</strong></p>
+<blockquote>
+<p><em>"The Core Router serves as the centralized Policy Enforcement Point. It connects to all 8 VLANs, inspects every forwarded packet against the Zero-Trust policy, runs the behavioural risk scoring engine, and triggers quarantine actions when threats are detected."</em></p>
+</blockquote>
+<p><strong>Q7: What is the Backup Switch for?</strong></p>
+<blockquote>
+<p><em>"The Backup Distribution Switch (DistSwitch2) provides a redundant path to the Data Center. When the primary CSMA link between the Core Router and DC fails, the Self-Healing Controller activates a Point-to-Point link through this switch. It ensures &gt; 95% network availability."</em></p>
+</blockquote>
+<hr />
+<h2>Category 2: IP Addressing &amp; Subnetting (5 Marks)</h2>
+<p><strong>Q8: What IP addressing scheme did you use?</strong></p>
+<blockquote>
+<p><em>"Class A private address space 10.0.0.0 with /24 subnets. The third octet identifies each department: 10 = Admin, 20 = CSE, 30 = IT, 40 = Library, 50 = COE, 60 = Hostel, 70 = IoT, 80 = Data Center."</em></p>
+</blockquote>
+<p><strong>Q9: What is the subnet mask?</strong></p>
+<blockquote>
+<p><em>"255.255.255.0, also written as /24. The first 24 bits identify the network, the last 8 bits identify the host. Each subnet provides up to 254 usable addresses."</em></p>
+</blockquote>
+<p><strong>Q10: What is /24? How many hosts can it support?</strong></p>
+<blockquote>
+<p><em>"/24 means the first 24 bits are the network portion. That leaves 8 bits for hosts, giving 2^8 - 2 = 254 usable host addresses (minus network address and broadcast address)."</em></p>
+</blockquote>
+<p><strong>Q11: Why did you choose 10.0.0.0?</strong></p>
+<blockquote>
+<p><em>"10.0.0.0/8 is a private IP range defined in RFC 1918. It's not routable on the public internet, making it safe for internal campus use. It also provides over 16 million addresses, giving us flexibility in subnet planning."</em></p>
+</blockquote>
+<p><strong>Q12: What is VLSM? Did you apply it?</strong></p>
+<blockquote>
+<p><em>"VLSM stands for Variable Length Subnet Masking — using different subnet sizes for different needs to avoid wasting addresses. In our NS-3 simulation, we used uniform /24 for simplicity. In a real deployment, we would use /28 for large departments like CSE (14 hosts) and /29 for smaller ones like Admin (6 hosts)."</em></p>
+</blockquote>
+<p><strong>Q13: What is the IP address of the attacker?</strong></p>
+<blockquote>
+<p><em>"10.0.20.2 — the first CSE student node in VLAN 20."</em></p>
+</blockquote>
+<p><strong>Q14: How does the router identify which department a packet belongs to?</strong></p>
+<blockquote>
+<p><em>"By extracting the third octet of the source IP. For example, if a packet comes from 10.0.20.x, the third octet is 20, which maps to CSE. This is implemented in our VlanNameFromIp() function."</em></p>
+</blockquote>
+<p><strong>Q15: What is the difference between public and private IP?</strong></p>
+<blockquote>
+<p><em>"Public IPs are globally unique and routable on the internet (e.g., 142.250.182.14 for Google). Private IPs (10.x.x.x, 172.16-31.x.x, 192.168.x.x) are only used within internal networks and are not routable on the internet. We use private IPs for our campus."</em></p>
+</blockquote>
+<hr />
+<h2>Category 3: Routing &amp; Switching (5 Marks)</h2>
+<p><strong>Q16: What type of routing do you use — static or dynamic?</strong></p>
+<blockquote>
+<p><em>"Dynamic routing. NS-3's GlobalRoutingHelper simulates OSPF-like link-state routing. Routes are automatically recalculated when the network topology changes, such as during our self-healing link failure scenario."</em></p>
+</blockquote>
+<p><strong>Q17: What is OSPF?</strong></p>
+<blockquote>
+<p><em>"Open Shortest Path First — a link-state dynamic routing protocol. Each router maintains a complete topology map of the network and uses Dijkstra's shortest-path algorithm to calculate optimal routes. When a link changes, routers flood updates and recompute their routing tables."</em></p>
+</blockquote>
+<p><strong>Q18: What is the difference between static and dynamic routing?</strong></p>
+<blockquote>
+<p><em>"Static routes are manually configured and don't adapt to network changes. Dynamic routes are learned automatically through protocols like OSPF and adapt when links fail or new paths appear. We need dynamic routing for our self-healing feature — when the primary link fails, routes must automatically shift to the backup path."</em></p>
+</blockquote>
+<p><strong>Q19: What is a VLAN?</strong></p>
+<blockquote>
+<p><em>"A Virtual LAN — a logical grouping of devices that behave as if they're on the same physical network, even if they're not. VLANs provide broadcast domain isolation. We use 8 VLANs to segment our campus departments."</em></p>
+</blockquote>
+<p><strong>Q20: How does Inter-VLAN routing work?</strong></p>
+<blockquote>
+<p><em>"Devices in different VLANs cannot communicate directly — they need a router. In our design, the Core Router has interfaces on all 8 VLANs. When a CSE device (10.0.20.3) wants to reach the Web Server (10.0.80.6), the packet goes to the router, which checks the Zero-Trust policy and forwards it to the Data Center VLAN."</em></p>
+</blockquote>
+<p><strong>Q21: What happens when the primary link fails?</strong></p>
+<blockquote>
+<p><em>"Our Self-Healing Controller detects the failure within 500ms using heartbeat monitoring, activates the backup distribution switch, calls RecomputeRoutingTables() to recalculate all routes, verifies quarantine integrity, and completes recovery in under 2 seconds."</em></p>
+</blockquote>
+<p><strong>Q22: What is the difference between a switch and a router?</strong></p>
+<blockquote>
+<p><em>"A switch operates at Layer 2 and forwards frames based on MAC addresses within the same VLAN. A router operates at Layer 3 and forwards packets based on IP addresses between different subnets/VLANs. Our CSMA segments act as switches, and the Core Router handles inter-VLAN routing."</em></p>
+</blockquote>
+<hr />
+<h2>Category 4: Security Design (5 Marks)</h2>
+<p><strong>Q23: What security mechanisms have you implemented?</strong></p>
+<blockquote>
+<p><em>"Four layers: (1) Network segmentation with 8 VLANs, (2) Zero-Trust ACL with default-deny policy, (3) Multi-factor behavioural risk scoring engine with 4 signals and temporal decay, (4) Graduated dynamic quarantine with 4 progressive levels."</em></p>
+</blockquote>
+<p><strong>Q24: What is Zero-Trust?</strong></p>
+<blockquote>
+<p><em>"A security model based on 'never trust, always verify.' Unlike the old perimeter model that trusts everything inside the firewall, Zero-Trust continuously verifies every device regardless of location. In our implementation, every packet forwarded by the router is checked against the access policy, and every device has a continuously computed risk score."</em></p>
+</blockquote>
+<p><strong>Q25: What is an ACL?</strong></p>
+<blockquote>
+<p><em>"Access Control List — a set of permit/deny rules on a router. Our Zero-Trust Access Matrix is an extended ACL that filters based on both source and destination VLAN. It follows default-deny: any traffic not explicitly permitted is dropped and flagged as a security event."</em></p>
+</blockquote>
+<p><strong>Q26: How does the risk scoring work?</strong></p>
+<blockquote>
+<p><em>"Four behavioural signals are monitored: unauthorized access violations (+25 points), traffic anomaly (&gt;80 pps), port scanning (&gt;10 unique ports), and protocol abuse (&gt;160 pps). The weighted formula is: Score = 0.35×Access + 0.25×Traffic + 0.25×PortScan + 0.15×Protocol. A temporal decay of 0.95 per second prevents permanent quarantine."</em></p>
+</blockquote>
+<p><strong>Q27: What is temporal decay and why is it important?</strong></p>
+<blockquote>
+<p><em>"Temporal decay is a multiplicative factor (γ = 0.95) applied to risk scores every second. It makes old events fade away — a score of 100 decays to ~50 in 14 seconds if no new suspicious activity occurs. This is crucial for false-positive recovery: if a student temporarily triggers high traffic (like downloading a large dataset), their score drops back to normal automatically without admin intervention."</em></p>
+</blockquote>
+<p><strong>Q28: How does quarantine physically work?</strong></p>
+<blockquote>
+<p><em>"When a device's risk score reaches 70 or above, the Quarantine Controller calls ipv4-&gt;SetDown() on all non-loopback interfaces of that device's NS-3 node. This disables the device's network connectivity at Layer 3, completely isolating it from the network. Recovery occurs when the score decays below 70 and ipv4-&gt;SetUp() is called."</em></p>
+</blockquote>
+<p><strong>Q29: Why graduated quarantine instead of binary?</strong></p>
+<blockquote>
+<p><em>"Binary quarantine has a false-positive problem: a student downloading a large file might get immediately blocked, disrupting their academics. Our graduated system first moves them to WARNING (admin gets alert, student keeps working), then RATE_LIMITED if behaviour persists, and only QUARANTINES if multiple signals confirm malicious activity. This reduces false-positive disruption while maintaining rapid response to real threats."</em></p>
+</blockquote>
+<p><strong>Q30: What is port scanning and how do you detect it?</strong></p>
+<blockquote>
+<p><em>"Port scanning is when an attacker sends packets to many different ports on a target to discover running services. We maintain a stateful set of unique destination ports per source IP within a 5-second window. If a source contacts more than 10 unique ports, we flag it as a scan and add 30 risk points."</em></p>
+</blockquote>
+<p><strong>Q31: What is network segmentation? Why is it important?</strong></p>
+<blockquote>
+<p><em>"Network segmentation divides a large network into isolated pieces using VLANs. If malware infects a CSE laptop, it's confined to the CSE VLAN — it cannot directly spread to Admin, IoT, or Data Center. Without segmentation, 60-80% of nodes could be infected. With segmentation, we limit it to under 5%."</em></p>
+</blockquote>
+<hr />
+<h2>Category 5: Technical Presentation (5 Marks)</h2>
+<p><strong>Q32: Which simulator did you use and why?</strong></p>
+<blockquote>
+<p><em>"NS-3 (Network Simulator 3). We chose NS-3 over Cisco Packet Tracer because Packet Tracer only supports pre-built Cisco IOS commands and cannot implement custom algorithms. NS-3 lets us write custom C++ classes for our risk scoring engine, traffic monitor, quarantine controller, and self-healing controller."</em></p>
+</blockquote>
+<p><strong>Q33: Can you show the simulation running?</strong></p>
+<blockquote>
+<p><em>Point out: scenario number, attack timing, quarantine event, link failure, results table</em></p>
+</blockquote>
+<p><strong>Q34: What are your simulation results?</strong></p>
+<blockquote>
+<ul>
+<li><em>Total Flows: 150</em></li>
+<li><em>Total Throughput: 25,030 Kbps</em></li>
+<li><em>Average Delay: 1.85 ms</em></li>
+<li><em>Packet Loss: 0.68%</em></li>
+<li><em>Detection Time: &lt; 5 seconds (vs 5-30 min traditional)</em></li>
+<li><em>Quarantine Time: &lt; 3 seconds (vs 10-60 min traditional)</em></li>
+<li><em>Link Recovery: &lt; 2 seconds (vs 30-60 sec traditional)</em></li>
+</ul>
+</blockquote>
+<p><strong>Q35: What is the contribution of each member?</strong></p>
+<blockquote>
+<p><em>"Member 1 designed the overall architecture and coordinated the simulation. Member 2 handled network topology and IP addressing. Member 3 implemented the security policy and ACL. Member 4 developed the risk scoring engine and quarantine logic. Member 5 built the self-healing controller and analysis graphs."</em></p>
+</blockquote>
+<p><strong>Q36: What are the limitations of your project?</strong></p>
+<blockquote>
+<p><em>"Three main limitations: (1) Rate-limiting enforcement — the RATE_LIMITED state is logged but actual traffic throttling via TC queuing disciplines is not simulated. (2) The comparison metrics (Traditional vs Proposed) are theoretical estimates, not experimental measurements from a real campus. (3) The simulation uses centralized routing rather than a fully distributed OSPF implementation."</em></p>
+</blockquote>
+<p><strong>Q37: What is your future work?</strong></p>
+<blockquote>
+<p><em>"Three directions: (1) Implement actual bandwidth throttling using NS-3's TrafficControlHelper for the RATE_LIMITED state. (2) Integrate machine learning for anomaly detection to improve risk scoring accuracy. (3) Deploy on a real campus testbed and compare actual vs simulated performance."</em></p>
+</blockquote>
+<p><strong>Q38: Do you have a research paper?</strong></p>
+<blockquote>
+<p><em>"Yes, our paper 'Autonomous Behavioural Risk Scoring and Graduated Quarantine in Zero-Trust Campus Networks' is saved as zero_trust_risk_scoring.docx. It covers the full methodology, NS-3 implementation, results, and comparison with existing work."</em></p>
+</blockquote>
+<hr />
+<h2>Bonus: Unexpected Questions</h2>
+<p><strong>Q: What is the OSI model?</strong></p>
+<blockquote>
+<p><em>"The 7-layer model: Physical, Data Link, Network, Transport, Session, Presentation, Application. Our project primarily works at Layer 3 (Network — IP routing and forwarding) and Layer 2 (Data Link — CSMA segments and MAC addressing)."</em></p>
+</blockquote>
+<p><strong>Q: What is TCP vs UDP?</strong></p>
+<blockquote>
+<p><em>"TCP is connection-oriented (reliable delivery, checks for errors, retransmits lost packets). UDP is connectionless (faster, no error checking, used for real-time applications). Our simulation uses UDP for all traffic because campus traffic like streaming and web browsing benefits from speed over reliability."</em></p>
+</blockquote>
+<p><strong>Q: What is a MAC address?</strong></p>
+<blockquote>
+<p><em>"A hardware address (48-bit) burned into every network interface card. Written as six pairs of hex digits (AA:BB:CC:DD:EE:FF). Used by switches at Layer 2 for forwarding frames within the same VLAN."</em></p>
+</blockquote>
+<p><strong>Q: What is the difference between a hub, switch, and router?</strong></p>
+<blockquote>
+<p><em>"Hub: Layer 1, broadcasts everything to all ports (dumb). Switch: Layer 2, forwards frames based on MAC addresses to specific ports (smart). Router: Layer 3, forwards packets based on IP addresses between different networks/VLANs (smartest)."</em></p>
+</blockquote>
+<p><strong>Q: What is NAT?</strong></p>
+<blockquote>
+<p><em>"Network Address Translation — converts private IPs (like our 10.0.x.x) to public IPs for internet access. In our simulation, the Internet Server represents the external network, and the router would perform NAT in a real deployment."</em></p>
+</blockquote>
+<p><strong>Q: What is a firewall?</strong></p>
+<blockquote>
+<p><em>"A network security device that monitors and controls traffic based on rules. Our Core Router functions as an advanced next-generation firewall — instead of static allow/deny rules, it uses continuous behavioural monitoring and dynamic risk scoring."</em></p>
+</blockquote>
+<hr />
+<blockquote>
+<p><strong>Final tip:</strong> The most important thing is <strong>confidence</strong>. Speak clearly, point to the terminal output, and say <em>"as you can see in the simulation..."</em> — showing is more convincing than telling.</p>
+</blockquote>
+        </section>
+        
+
+</body>
+</html>
