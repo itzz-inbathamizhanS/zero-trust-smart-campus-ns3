@@ -1,4 +1,4 @@
-# ⚡ Zero-Trust Self-Healing Smart Campus Network
+# Zero-Trust Self-Healing Smart Campus Network
 
 ### System and Method for Risk-Based Dynamic Network Quarantine with Autonomous Self-Healing in Zero-Trust Campus Networks
 
